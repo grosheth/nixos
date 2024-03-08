@@ -26,7 +26,7 @@
     let
       username = "salledelavage";
       system = "x86_64-linux";
-      #pkgs = nixpkgs.legacyPackages.${system};
+      # pkgs = nixpkgs.legacyPackages.${system};
     in
     {
       nixosConfigurations = {
@@ -34,13 +34,13 @@
           specialArgs = {inherit inputs username system;};
           modules = [
               ./nixos/configuration.nix
-              # inputs.home-manager.nixosModules.default
+              inputs.home-manager.nixosModules.default
           ];
       };
   
       homeConfigurations = {
-          #"${username}" = home-manager.lib.homeManagerConfiguration {
-          default = home-manager.lib.homeManagerConfiguration {
+          "${username}" = home-manager.lib.homeManagerConfiguration {
+          # default = home-manager.lib.homeManagerConfiguration {
               pkgs = import nixpkgs {
                   inherit system;
                   config.allowUnfree = true;
@@ -48,6 +48,7 @@
               extraSpecialArgs = { inherit inputs username; };
               modules = [ ./home-manager/home.nix ];
           };
-     };
+      };
+    };
   };
 }
