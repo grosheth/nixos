@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Startup folder cloning and installation from github
+
+projectList = []
+configList = []
+
+# Create folder
+mkdir ~/work
+mkdir ~/project
+mkdir ~/config
+
+# Cloning project repos from list
+
+for project in projectList; do;
+    cd ~/work/project
+    git clone git@github.com:grosheth/${project}.git ${project}
+done
+
+# Cloning config repos from list
+
+for config in configList; do;
+    cd ~/work/config
+    git clone git@github.com:grosheth/${config}.git ${config}
+done
