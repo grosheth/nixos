@@ -1,0 +1,53 @@
+# flake.nix
+{
+  description = "Salledelavage Nixos config flake";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lf-icons = {
+      url = "github:gokcehan/lf";
+      flake = false;
+    };
+    more-waita = {
+      url = "github:somepaulo/MoreWaita";
+      flake = false;
+    };
+    firefox-gnome-theme = {
+      url = "github:rafaelmardojai/firefox-gnome-theme";
+      flake = false;
+    };
+  };
+
+  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+    let
+      username = "salledelavage";
+      system = "x86_64-linux";
+      #pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      nixosConfigurations = {
+          default = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit inputs username system;};
+          modules = [
+              ./nixos/configuration.nix
+              # inputs.home-manager.nixosModules.default
+          ];
+      };
+  
+      homeConfigurations = {
+          #"${username}" = home-manager.lib.homeManagerConfiguration {
+          default = home-manager.lib.homeManagerConfiguration {
+              pkgs = import nixpkgs {
+                  inherit system;
+                  config.allowUnfree = true;
+              };
+              extraSpecialArgs = { inherit inputs username; };
+              modules = [ ./home-manager/home.nix ];
+          };
+     };
+  };
+}

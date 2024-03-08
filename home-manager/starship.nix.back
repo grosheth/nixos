@@ -1,0 +1,101 @@
+{ lib, ... }:
+let
+  lang = icon: color: {
+    symbol = icon;
+    format = "[$symbol ](${color})";
+  };
+  pad = {
+    left = "";
+    right = "";
+  };
+in
+{
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = true;
+      format = "[](#246449)$os$username[](bg:#2d745f fg:#246449)$directory[](fg:#2d745f bg:#598277)$git_branch$git_status[](fg:#598277 bg:#598277)$nodejs$python$rust$golang$lua[](fg:#598277 bg:#84afa3)$time[ ](fg:#84afa3)$line_break[ ](fg:#84afa3)";
+      continuation_prompt = "[∙](bright-black) ";
+      line_break = { disabled = false; };
+      status = {
+        symbol = "✗";
+        not_found_symbol = "󰍉 Not Found";
+        not_executable_symbol = " Can't Execute E";
+        sigint_symbol = "󰂭 ";
+        signal_symbol = "󱑽 ";
+        success_symbol = "";
+        format = "[$symbol](fg:red)";
+        map_symbol = true;
+        disabled = false;
+      };
+			username = {
+				show_always = true;
+				style_user = "bg:#246449";
+				style_root = "bg:#246449";
+				format = "[$user ]($style)";
+			};
+      cmd_duration = {
+        min_time = 1000;
+        format = "[$duration ](fg:yellow)";
+      };
+      nix_shell = {
+        disabled = false;
+        format = "[${pad.left}](fg:white)[ ](bg:white fg:black)[${pad.right}](fg:white) ";
+      };
+      container = {
+        symbol = " 󰏖";
+        format = "[$symbol ](yellow dimmed)";
+      };
+      directory = {
+				style = "bg:#2d745f";
+        format = "[ $path ]($style)";
+        truncation_length = 3;
+        truncation_symbol = "~/󰇘/";
+      };
+      git_branch = {
+        symbol = "";
+        format = "[ $symbol $branch](bg:#598277)(:$remote_branch)";
+      };
+      os = {
+        disabled = false;
+        format = "$symbol";
+      };
+      os.symbols = {
+        Arch = "[ ](fg:bright-blue)";
+        Debian = "[ ](fg:red)";
+        EndeavourOS = "[ ](fg:purple)";
+        Fedora = "[ ](fg:blue bg:#246449)";
+        NixOS = "[ ](fg:white bg:#246449)";
+        openSUSE = "[ ](fg:green)";
+        SUSE = "[ ](fg:green)";
+        Ubuntu = "[ ](fg:bright-purple)";
+      };
+			time = {
+				disabled = false;
+				time_format = "%R";
+				style = "bg:#84afa3";
+				format = "[ ♥ $time ]($style)";	
+			};
+			python = {
+				symbol = " ";
+				format = "[$symbol($version)](bg:#598277)";
+			};
+			nodejs = {
+				symbol = " ";
+				format = "[$symbol($version)](bg:#598277)";
+			};
+			lua = {
+				symbol = "󰢱 ";
+				format = "[$symbol($version)](bg:#598277)";
+			};
+      rust = {
+				symbol = " ";
+				format = "[$symbol($version)](bg:#598277)";
+			};
+      golang = {
+				symbol = " ";
+				format = "[$symbol($version)](bg:#598277)";
+			};
+    };
+  };
+}
