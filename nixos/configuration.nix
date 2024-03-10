@@ -36,6 +36,10 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
+    # trying to fix Displaymanager error
+    kernelPackages = pkgs.linuxPackages_latest;
+    blacklistedKernelModules = [ "nouveau" ];
+    kernelParams = [ "nomodeset" ];
   };
 
   # Networking
@@ -50,6 +54,7 @@
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # package = config.boot.kernelPackages.nvidiaPackages.beta;
     # package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
