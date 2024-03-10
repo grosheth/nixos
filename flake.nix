@@ -32,7 +32,7 @@
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs username system;};
         modules = [
-            ./nixos/configuration.nix
+            ./configuration.nix
             inputs.home-manager.nixosModules.default
         ];
       };

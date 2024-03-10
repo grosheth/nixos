@@ -32,6 +32,7 @@
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" ];
     loader = {
+      grub.configurationLimit = 10;
       timeout = 2;
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -54,8 +55,8 @@
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-    # package = config.boot.kernelPackages.nvidiaPackages.beta;
-    # package = config.boot.kernelPackages.nvidiaPackages.production;
+    #package = config.boot.kernelPackages.nvidiaPackages.beta;
+    #package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
   # Enable OpenGL
