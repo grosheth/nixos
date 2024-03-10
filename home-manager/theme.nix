@@ -29,7 +29,7 @@ in
       adw-gtk3
       font-awesome
       nerdfonts
-      # moreWaita
+      moreWaita
       # papirus-icon-theme
       # qogir-icon-theme
       # whitesur-icon-theme

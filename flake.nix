@@ -8,7 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    more-waita = {
+      url = "github:somepaulo/MoreWaita";
+      flake = false;
+    };
     lf-icons = {
       url = "github:gokcehan/lf";
       flake = false;
