@@ -78,7 +78,8 @@
       };
     
       displayManager = {
-        defaultSession = "none+i3";
+        # defaultSession = "none+i3";
+        defaultSession = "plasma";
         sddm.enable = true;
         # lightdm.enable = true;
       };
@@ -96,7 +97,7 @@
 	hardware.keyboard.zsa.enable = true;
 
   # # XDG
-  xdg.portal.config = {
+  xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };

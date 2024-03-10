@@ -4,7 +4,6 @@ let
 in
 {
   imports = [
-    ./browser.nix
     ./dconf.nix
     ./git.nix
     ./kitty.nix

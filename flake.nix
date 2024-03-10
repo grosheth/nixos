@@ -8,6 +8,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     lf-icons = {
       url = "github:gokcehan/lf";
       flake = false;
@@ -32,6 +33,7 @@
               ./nixos/configuration.nix
               inputs.home-manager.nixosModules.default
           ];
+        };
       };
   
       homeConfigurations = {
@@ -42,9 +44,8 @@
                 config.allowUnfree = true;
             };
             extraSpecialArgs = { inherit inputs username; };
-            modules = [ ./home-manager/home.nix ];
+            modules = [ home-manager/home.nix ];
         };
       };
     };
-  };
 }
