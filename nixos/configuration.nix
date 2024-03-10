@@ -82,6 +82,7 @@
         defaultSession = "none+i3";
         # defaultSession = "plasma";
         sddm.enable = true;
+        startx.enable = true;
         # lightdm.enable = true;
       };
     
@@ -89,7 +90,9 @@
       enable = true;
       extraPackages = with pkgs; [
         dmenu #application launcher most people use
+        i3status
         i3lock #default i3 screen locker
+        i3blocks
      ];
     };
   };
@@ -98,10 +101,7 @@
 	hardware.keyboard.zsa.enable = true;
 
   # # XDG
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
+  xdg.portal.config.common.default = "*";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

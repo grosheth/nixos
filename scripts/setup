@@ -2,9 +2,9 @@
 
 ./remove
 
-sudo nixos-rebuild switch --flake ~/nixos
+sudo nixos-rebuild switch --flake ~/nixos#default
 
-home-manager switch --flake ~/nixos
+home-manager switch --flake ~/nixos#default
 
-
+systemctl --user start kdeconnect-indicator.service kdeconnect.service
 qdbus org.kde.ksmserver /KSMServer logout 0 0 0
