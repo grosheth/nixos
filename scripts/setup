@@ -1,0 +1,10 @@
+#!/bin/sh
+
+./remove
+
+sudo nixos-rebuild switch --flake ~/nixos
+
+home-manager switch --flake ~/nixos
+
+
+qdbus org.kde.ksmserver /KSMServer logout 0 0 0

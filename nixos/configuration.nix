@@ -63,6 +63,7 @@
 
   services.xserver = {
     enable = true;
+    autorun = true;
 
     videoDrivers = ["nvidia"];
     
@@ -78,19 +79,19 @@
       };
     
       displayManager = {
-        # defaultSession = "none+i3";
-        defaultSession = "plasma";
+        defaultSession = "none+i3";
+        # defaultSession = "plasma";
         sddm.enable = true;
         # lightdm.enable = true;
       };
     
-    # windowManager.i3 = {
-    #   enable = true;
-    #   extraPackages = with pkgs; [
-    #     dmenu #application launcher most people use
-    #     i3lock #default i3 screen locker
-    #  ];
-    # };
+    windowManager.i3 = {
+      enable = true;
+      extraPackages = with pkgs; [
+        dmenu #application launcher most people use
+        i3lock #default i3 screen locker
+     ];
+    };
   };
 
 	# udev rules for ZSA keyboard
