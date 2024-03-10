@@ -49,8 +49,8 @@
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    #package = config.boot.kernelPackages.nvidiaPackages.production;
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
   # Enable OpenGL
@@ -74,7 +74,7 @@
 
       desktopManager = {
         xterm.enable = false;
-        # plasma5.enable = true;
+        plasma5.enable = true;
       };
     
       displayManager = {
@@ -83,15 +83,13 @@
         # lightdm.enable = true;
       };
     
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu #application launcher most people use
-        # i3status # gives you the default i3 status bar
-        i3lock #default i3 screen locker
-        # i3blocks #if you are planning on using i3blocks over i3status
-     ];
-    };
+    # windowManager.i3 = {
+    #   enable = true;
+    #   extraPackages = with pkgs; [
+    #     dmenu #application launcher most people use
+    #     i3lock #default i3 screen locker
+    #  ];
+    # };
   };
 
 	# udev rules for ZSA keyboard

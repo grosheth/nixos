@@ -12,10 +12,6 @@
       url = "github:gokcehan/lf";
       flake = false;
     };
-    more-waita = {
-      url = "github:somepaulo/MoreWaita";
-      flake = false;
-    };
     firefox-gnome-theme = {
       url = "github:rafaelmardojai/firefox-gnome-theme";
       flake = false;
@@ -39,15 +35,15 @@
       };
   
       homeConfigurations = {
-          "${username}" = home-manager.lib.homeManagerConfiguration {
-          # default = home-manager.lib.homeManagerConfiguration {
-              pkgs = import nixpkgs {
-                  inherit system;
-                  config.allowUnfree = true;
-              };
-              extraSpecialArgs = { inherit inputs username; };
-              modules = [ ./home-manager/home.nix ];
-          };
+          # "${username}" = home-manager.lib.homeManagerConfiguration {
+        default = home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs {
+                inherit system;
+                config.allowUnfree = true;
+            };
+            extraSpecialArgs = { inherit inputs username; };
+            modules = [ ./home-manager/home.nix ];
+        };
       };
     };
   };
