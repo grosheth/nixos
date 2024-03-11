@@ -44,6 +44,7 @@
     glib
 		xclip
 		obsidian
+    okular
 
     # monitoring
     htop
@@ -67,9 +68,8 @@
 		#nvim
 		neovide
 		lazygit
-
-		#Starship
 		starship
+
     # langs
     nodejs
     bun

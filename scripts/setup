@@ -8,4 +8,7 @@ home-manager switch --flake ~/nixos#default
 
 systemctl --user start kdeconnect-indicator.service kdeconnect.service
 # systemctl restart display-managr
-qdbus org.kde.ksmserver /KSMServer logout 0 0 0
+# qdbus org.kde.ksmserver /KSMServer logout 0 0 0
+
+
+pkill -KILL -u salledelavage
