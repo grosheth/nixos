@@ -13,7 +13,7 @@
     (mpv.override { scripts = [mpvScripts.mpris]; })
     libreoffice
     spotify
-    caprine-bin
+    caprine-bisn
     d-spy
     easyeffects
     github-desktop

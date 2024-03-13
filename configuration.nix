@@ -187,6 +187,7 @@
     imagemagick
     pavucontrol
     home-manager
+    dolphin
 
     #neovim
     git
