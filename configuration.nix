@@ -170,6 +170,17 @@
   # Change Default Shell
   users.defaultUserShell = pkgs.zsh;
 
+  # enable KDE connect
+  # programs.kdeconnect.enable = true;
+  # networking.firewall = { 
+  #   enable = true;
+  #   allowedTCPPortRanges = [ 
+  #     { from = 1714; to = 1764; } # KDE Connect
+  #   ];  
+  #   allowedUDPPortRanges = [ 
+  #     { from = 1714; to = 1764; } # KDE Connect
+  #   ];  
+  # };  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -188,6 +199,7 @@
     pavucontrol
     home-manager
     dolphin
+    gwenview
 
     #neovim
     git

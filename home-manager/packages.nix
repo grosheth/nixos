@@ -13,15 +13,13 @@
     (mpv.override { scripts = [mpvScripts.mpris]; })
     libreoffice
     spotify
-    caprine-bisn
-    d-spy
+    # d-spy
     easyeffects
     github-desktop
     gimp
     transmission_4-gtk
     discord
     bottles
-    teams-for-linux
     icon-library
     dconf-editor
     figma-linux
