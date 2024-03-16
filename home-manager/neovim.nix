@@ -38,8 +38,7 @@ let
       rust-analyzer-unwrapped
     ];
 
-	
-	home.sessionVariables = {
+      home.sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
@@ -95,7 +94,7 @@ let
     {
       enable = true;
 
-	  viAlias = true;
+      viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
 
