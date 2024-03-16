@@ -71,6 +71,14 @@ return {
     },
   },
 
+  -- Arrow
+  {
+    "otavioschwanck/arrow.nvim",
+    opts = {
+      show_icons = true,
+      leader_key = ' ' -- Recommended to be a single key
+    }
+  },
   -- add telescope-fzf-native
   {
     "telescope.nvim",

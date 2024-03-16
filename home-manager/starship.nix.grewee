@@ -8,13 +8,20 @@ let
     left = "";
     right = "";
   };
+	colors = {
+		color = "#ac9d82";
+		color2 = "#bbab7e"; 
+		color3 = "#e6dfc1";
+		black = "#060301";
+		white = "#faf7dd";
+	};
 in
 {
   programs.starship = {
     enable = true;
     settings = {
       add_newline = true;
-      format = "[](#246449)$os$username[](bg:#2d745f fg:#246449)$directory[](fg:#2d745f bg:#598277)$git_branch$git_status[](fg:#598277 bg:#598277)$nodejs$python$rust$golang$lua[](fg:#598277 bg:#84afa3)$time[ ](fg:#84afa3)$line_break[ ](fg:#84afa3)";
+      format = "[](${colors.color})$os$username[](bg:${colors.color2} fg:${colors.color})$directory[](fg:${colors.color2} bg:${colors.color3})$git_branch[](fg:${colors.color3} bg:${colors.color3})$nodejs$python$rust$golang$lua[](fg:${colors.color3} bg:${colors.white})$time[ ](fg:${colors.white})$line_break[ ](fg:${colors.white})";
       continuation_prompt = "[∙](bright-black) ";
       line_break = { disabled = false; };
       status = {
@@ -24,14 +31,14 @@ in
         sigint_symbol = "󰂭 ";
         signal_symbol = "󱑽 ";
         success_symbol = "";
-        format = "[$symbol](fg:red)";
+        format = "[$symbol](fg:${colors.black})";
         map_symbol = true;
         disabled = false;
       };
 			username = {
 				show_always = true;
-				style_user = "bg:#246449";
-				style_root = "bg:#246449";
+				style_user = "bg:${colors.color} fg:${colors.black}";
+				style_root = "bg:${colors.color} fg:${colors.black}";
 				format = "[$user ]($style)";
 			};
       cmd_duration = {
@@ -40,32 +47,32 @@ in
       };
       nix_shell = {
         disabled = false;
-        format = "[${pad.left}](fg:white)[ ](bg:white fg:black)[${pad.right}](fg:white) ";
+        format = "[${pad.left}](fg:${colors.white})[ ](bg:${colors.white} fg:${colors.white})[${pad.right}](fg:${colors.white}) ";
       };
       container = {
         symbol = " 󰏖";
         format = "[$symbol ](yellow dimmed)";
       };
       directory = {
-				style = "bg:#2d745f";
+				style = "bg:${colors.color2} fg:${colors.black}";
         format = "[ $path ]($style)";
         truncation_length = 3;
         truncation_symbol = "~/󰇘/";
       };
       git_branch = {
         symbol = "";
-        format = "[ $symbol $branch](bg:#598277)(:$remote_branch)";
+        format = "[ $symbol $branch](bg:${colors.color3} fg:${colors.black})(:$remote_branch)";
       };
       os = {
         disabled = false;
         format = "$symbol";
       };
       os.symbols = {
-        Arch = "[ ](fg:bright-blue)";
+        Arch = "[ ](fg:bright-color)";
         Debian = "[ ](fg:red)";
         EndeavourOS = "[ ](fg:purple)";
-        Fedora = "[ ](fg:blue bg:#246449)";
-        NixOS = "[ ](fg:white bg:#246449)";
+        Fedora = "[ ](fg:color bg:#246449)";
+        NixOS = "[ ](fg:${colors.black} bg:${colors.color})";
         openSUSE = "[ ](fg:green)";
         SUSE = "[ ](fg:green)";
         Ubuntu = "[ ](fg:bright-purple)";
@@ -73,28 +80,28 @@ in
 			time = {
 				disabled = false;
 				time_format = "%R";
-				style = "bg:#84afa3";
+				style = "bg:${colors.white} fg:${colors.black}";
 				format = "[ ♥ $time ]($style)";	
 			};
 			python = {
 				symbol = " ";
-				format = "[$symbol($version)](bg:#598277)";
+				format = "[$symbol$pyenv_prefix($version )(\($virtualenv\) )](bg:${colors.color3} fg:${colors.black})";
 			};
 			nodejs = {
 				symbol = " ";
-				format = "[$symbol($version)](bg:#598277)";
+				format = "[$symbol($version)](bg:${colors.color3} fg:${colors.black})";
 			};
 			lua = {
 				symbol = "󰢱 ";
-				format = "[$symbol($version)](bg:#598277)";
+				format = "[$symbol($version)](bg:${colors.color3} fg:${colors.black})";
 			};
       rust = {
 				symbol = " ";
-				format = "[$symbol($version)](bg:#598277)";
+				format = "[$symbol($version)](bg:${colors.color3} fg:${colors.black})";
 			};
       golang = {
 				symbol = " ";
-				format = "[$symbol($version)](bg:#598277)";
+				format = "[$symbol($version)](bg:${colors.color3} fg:${colors.black})";
 			};
     };
   };

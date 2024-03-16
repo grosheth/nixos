@@ -17,7 +17,7 @@ let
     "l" = "ls";
     # Quick move aliases
     "work" = "cd ~/work";
-    "n" = "nvim .";
+    "n" = "neovide .";
     "pool" = "cd ~/work/hockey-pool/ && n";
     "bot" = "cd ~/work/discord-bot/ && n";
     "nixcfg" = "cd ~/nixos-configs && n";
@@ -26,7 +26,10 @@ let
 		"nv" = "neovide";
     "vim" = "neovide";
 		"nvim" = "neovide";
-		# "neovim" = "neovim"
+		# "nv" = "neovim";
+		# "vim" = "neovim";
+		# "nvim" = "neovim";
+		"neovim" = "nvim";
   };
 in
 { 
