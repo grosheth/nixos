@@ -17,15 +17,15 @@ let
     "l" = "ls";
     # Quick move aliases
     "work" = "cd ~/work";
-    "n" = "neovide .";
     "pool" = "cd ~/work/hockey-pool/ && n";
     "bot" = "cd ~/work/discord-bot/ && n";
     "nixcfg" = "cd ~/nixos-configs && n";
 		"termify" = "cd ~/work/termify && n";
     # Neovim / Neovide
+    "n" = "neovide .";
 		"nv" = "neovide";
     "vim" = "neovide";
-		"nvim" = "neovide";
+		# "nvim" = "neovide";
 		# "nv" = "neovim";
 		# "vim" = "neovim";
 		# "nvim" = "neovim";
