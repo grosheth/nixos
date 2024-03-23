@@ -1,1 +1,0 @@
-require("grewee")._load()
