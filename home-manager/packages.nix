@@ -63,8 +63,8 @@
     wine-staging
     distrobox
 
-		#nvim
-		neovide
+    # nvim
+    neovide
 		lazygit
 		starship
 

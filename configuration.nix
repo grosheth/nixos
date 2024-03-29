@@ -201,6 +201,7 @@
     dolphin
     gwenview
 
+    tmux
     #neovim
     git
     wget
