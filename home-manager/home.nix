@@ -15,7 +15,6 @@ in
     ./sh.nix
     ./starship.nix
     ./theme.nix
-    ./tmux.nix
   ];
 
   news.display = "show";
