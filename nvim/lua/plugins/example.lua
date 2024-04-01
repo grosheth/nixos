@@ -16,13 +16,6 @@ return {
       colorscheme = "tokyonight",
     },
   },
-  {
-    "otavioschwanck/arrow.nvim",
-    opts = {
-      show_icons = true,
-      leader_key = '<leader>;' -- Recommended to be a single key
-    },
-  },
   -- change trouble config
   {
     "folke/trouble.nvim",

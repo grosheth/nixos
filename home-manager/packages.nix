@@ -62,6 +62,8 @@
     yabridgectl
     wine-staging
     distrobox
+    bsdgames
+    asciiquarium
 
     # nvim
     neovide
