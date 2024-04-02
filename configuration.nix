@@ -8,7 +8,7 @@
   ];
 
   # nix
-  documentation.nixos.enable = false; # .desktop
+  documentation.nixos.enable = false;
   nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
@@ -42,10 +42,8 @@
       systemd-boot.enable = true;
       efi = {
         canTouchEfiVariables = true;
-        # efiSysMountPoint = "/boot/efi"; 
-      }; 
+      };
     };
-    # trying to fix Display manager error
     kernelPackages = pkgs.linuxPackages_6_6;
     blacklistedKernelModules = [ "nouveau" ];
     kernelParams = [ "nomodeset" ];
@@ -86,7 +84,6 @@
       #openSha256 = "sha256-mRUTEWVsbjq+psVe+kAT6MjyZuLkG2yRDxCMvDJRL1I=";
       #settingsSha256 = "sha256-c30AQa4g4a1EHmaEu1yc05oqY01y+IusbBuq+P6rMCs=";
       #persistencedSha256 = "sha256-11tLSY8uUIl4X/roNnxf5yS2PQvHvoNjnd2CB67e870=";
-
       # patches = [ rcu_patch ];
   
   # Enable OpenGL
@@ -111,7 +108,6 @@
 
       desktopManager = {
         xterm.enable = false;
-        # plasma5.enable = true;
       };
     
       displayManager = {
