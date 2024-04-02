@@ -32,16 +32,18 @@
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" ];
     loader = {
-      grub = {
-        configurationLimit = 10;
-        devices = [ "nodev" ];
-        efiSupport = true;
-        useOSProber = true;
-      };
+      # grub = {
+      #   configurationLimit = 10;
+      #   devices = [ "nodev" ];
+      #   efiSupport = true;
+      #   useOSProber = true;
+      # };
       timeout = 2;
       systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-      efi.efiSysMountPoint = "/boot/efi";
+      efi = {
+        canTouchEfiVariables = true;
+        # efiSysMountPoint = "/boot/efi"; 
+      }; 
     };
     # trying to fix Display manager error
     kernelPackages = pkgs.linuxPackages_6_6;
@@ -166,18 +168,6 @@
   # Change Default Shell
   users.defaultUserShell = pkgs.zsh;
 
-  # enable KDE connect
-  # programs.kdeconnect.enable = true;
-  # networking.firewall = { 
-  #   enable = true;
-  #   allowedTCPPortRanges = [ 
-  #     { from = 1714; to = 1764; } # KDE Connect
-  #   ];  
-  #   allowedUDPPortRanges = [ 
-  #     { from = 1714; to = 1764; } # KDE Connect
-  #   ];  
-  # };  
-  # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     brave
