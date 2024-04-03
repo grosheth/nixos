@@ -43,6 +43,7 @@
 		xclip
 		obsidian
     okular
+    picom
 
     # monitoring
     htop

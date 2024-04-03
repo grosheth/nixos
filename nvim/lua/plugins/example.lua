@@ -11,9 +11,13 @@
 -- * override the configuration of LazyVim plugins
 return {
   {
-    "LazyVim/LazyVim",
+    "folke/tokyonight.nvim",
     opts = {
-      colorscheme = "tokyonight",
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
     },
   },
   -- change trouble config
