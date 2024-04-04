@@ -71,6 +71,7 @@
 		starship
 
     # langs
+    ansible
     nodejs
     bun
     go
