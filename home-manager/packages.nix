@@ -1,10 +1,10 @@
 { pkgs, ... }:
 {
   imports = [
-    ./languages/lang.nix
-    ./monitoring/monitoring.nix
-    ./tools/tools.nix
-    ./fun/fun.nix
+    ./packages/languages/lang.nix
+    ./packages/monitoring/monitoring.nix
+    ./packages/tools/tools.nix
+    ./packages/fun/fun.nix
   ];
 	xdg.desktopEntries = {
     "lf" = {
