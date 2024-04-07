@@ -194,14 +194,12 @@
     git
     os-prober
     zsh
-    lutris
     xorg.libxcb
     xorg.xorgserver
     arandr
 
     # Window manager 
     feh
-    # lightdm 
     
 		# Audio stuff
     qpwgraph
@@ -210,19 +208,8 @@
     # VPN
     openvpn
 
-    # Shell stuff
-    onefetch
-    neofetch
-    pfetch
-    nitch
-
-		# Python BS
-    python311Packages.matplotlib
-		python3
-
 		# ZSA Keyboard
 		wally-cli 
-
   ];
 
 

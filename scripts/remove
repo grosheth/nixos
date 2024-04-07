@@ -1,7 +1,5 @@
 #!/bin/sh
-
-# this is just so that I don't have to home-manager switch
-# when working on these configs
+# basic but useful
 rm -rf ~/.mozilla/firefox/profiles.ini
 rm -rf ~/.local/share/applications/mimeapps.list
 rm -rf ~/.gtkrc-2.0
@@ -10,3 +8,4 @@ rm -rf ~/.config/gtk-4.0/settings.ini
 rm -rf ~/.config/gtk-4.0/gtk.css
 rm -rf ~/.config/gtk-3.0/settings.ini
 rm -rf ~/.config/gtk-3.0/gtk.css
+

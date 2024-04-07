@@ -2,7 +2,6 @@
 {
   home.packages = with pkgs; with nodePackages_latest; with gnome; [
     bat
-    gimp
     bottles
     libreoffice
     eza
@@ -20,8 +19,11 @@
     unzip
     glib
 		xclip
-		obsidian
     okular
     picom
+    gimp
+    spotify
+    discord
+		obsidian
   ];
 }

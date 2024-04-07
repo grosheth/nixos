@@ -2,8 +2,6 @@
 {
   home.packages = with pkgs; with nodePackages_latest; with gnome; [
     # fun
-    spotify
-    discord
     jp2a
     fortune
     pywal
@@ -18,5 +16,7 @@
     wine-staging
     distrobox
     asciiquarium
+    onefetch
+    nitch
   ];
 }
