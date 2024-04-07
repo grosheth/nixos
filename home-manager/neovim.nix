@@ -33,6 +33,8 @@ let
   {
     home.packages = with pkgs; [
       ripgrep
+      neovide
+      lazygit
       fd
       lua-language-server
       rust-analyzer-unwrapped

@@ -1,5 +1,11 @@
 { pkgs, ... }:
 {
+  imports = [
+    ./languages/lang.nix
+    ./monitoring/monitoring.nix
+    ./tools/tools.nix
+    ./fun/fun.nix
+  ];
 	xdg.desktopEntries = {
     "lf" = {
       name = "lf";
@@ -8,79 +14,7 @@
   };
 
   home.packages = with pkgs; with nodePackages_latest; with gnome; [
-    # colorscript
     (import ./colorscript.nix { inherit pkgs; })
     (mpv.override { scripts = [mpvScripts.mpris]; })
-    libreoffice
-    spotify
-    # d-spy
-    easyeffects
-    github-desktop
-    gimp
-    transmission_4-gtk
-    discord
-    bottles
-    icon-library
-    dconf-editor
-    figma-linux
-
-    # tools
-    bat
-    eza
-    fd
-    ripgrep
-    fzf
-    socat
-    jq
-    acpi
-    inotify-tools
-    ffmpeg
-    libnotify
-    killall
-    zip
-    unzip
-    glib
-		xclip
-		obsidian
-    okular
-    picom
-
-    # monitoring
-    htop
-    bottom
-
-    # fun
-    fortune
-    jp2a
-    pywal
-    glow
-    vhs
-    gum
-    slides
-    charm
-    skate
-    yabridge
-    yabridgectl
-    wine-staging
-    distrobox
-    asciiquarium
-
-    # nvim
-    neovide
-		lazygit
-		starship
-
-    # langs
-    ansible
-    nodejs
-    bun
-    go
-    gcc
-    typescript
-    eslint
-		
-		# Python BS
-    python311Packages.matplotlib
-		python3
   ];
 }

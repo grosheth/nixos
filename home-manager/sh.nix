@@ -25,15 +25,12 @@ let
     "n" = "neovide .";
 		"nv" = "neovide";
     "vim" = "neovide";
-		# "nvim" = "neovide";
-		# "nv" = "neovim";
-		# "vim" = "neovim";
-		# "nvim" = "neovim";
 		"neovim" = "nvim";
   };
 in
 { 
   programs = {
+		starship.enable = true;
     thefuck.enable = true;
 
     zsh = {
