@@ -17,20 +17,21 @@ let
     "l" = "ls";
     # Quick move aliases
     "work" = "cd ~/work";
+    "wrk" = "cd ~/work";
+    "advent" = "cd ~/work/Advent-of-code/";
     "pool" = "cd ~/work/hockey-pool/ && n";
     "bot" = "cd ~/work/discord-bot/ && n";
     "nixcfg" = "cd ~/nixos-configs && n";
 		"termify" = "cd ~/work/termify && n";
-    # Neovim / Neovide
-    "n" = "neovide .";
-		"nv" = "neovide";
-    "vim" = "neovide";
+    # Neovim
+    "n" = "nvim .";
+		"nv" = "nvim";
+    "vim" = "nvim";
 		"neovim" = "nvim";
   };
 in
 { 
   programs = {
-		starship.enable = true;
     thefuck.enable = true;
 
     zsh = {

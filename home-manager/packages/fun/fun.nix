@@ -2,10 +2,10 @@
 {
   home.packages = with pkgs; with nodePackages_latest; with gnome; [
     # fun
-    fortune
     spotify
     discord
     jp2a
+    fortune
     pywal
     glow
     vhs

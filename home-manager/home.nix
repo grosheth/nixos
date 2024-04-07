@@ -8,8 +8,6 @@ in
     ./git.nix
     ./kitty.nix
     ./lf.nix
-    ./mimelist.nix
-    ./neofetch.nix
     ./neovim.nix
     ./packages.nix
     ./sh.nix

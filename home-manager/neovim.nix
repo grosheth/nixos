@@ -1,6 +1,5 @@
 { pkgs, ... }:
 let
-  
   treesitterWithGrammars = (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
 		p.bash
 		p.c
@@ -39,7 +38,6 @@ let
       lua-language-server
       rust-analyzer-unwrapped
     ];
-
       home.sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
@@ -56,41 +54,38 @@ let
      mimeType = [ "text/plain" ];
     };
 
-
     #xdg.configFile.nvim.source = ../../../nvim;
-
-	xdg.configFile."nvim/parser".source = "${pkgs.symlinkJoin {
-	  name = "treesitter-parsers";
-	  paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
-		bash
-		c
-		comment
-		css
-		dockerfile
-		gitattributes
-		gitignore
-		go
-		gomod
-		gowork
-		hcl
-		javascript
-		jq
-		json5
-		json
-		lua
-		make
-		markdown
-		nix
-		python
-		rust
-		toml
-		typescript
-		vue
-		vimdoc
-		yaml
-	  ])).dependencies;
+    xdg.configFile."nvim/parser".source = "${pkgs.symlinkJoin {
+      name = "treesitter-parsers";
+      paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
+      bash
+      c
+      comment
+      css
+      dockerfile
+      gitattributes
+      gitignore
+      go
+      gomod
+      gowork
+      hcl
+      javascript
+      jq
+      json5
+      json
+      lua
+      make
+      markdown
+      nix
+      python
+      rust
+      toml
+      typescript
+      vue
+      vimdoc
+      yaml
+      ])).dependencies;
 	}}/parser";
-
 
     programs.neovim = 
     {
@@ -121,6 +116,4 @@ let
       recursive = true;
       source = treesitterWithGrammars;
     };
-
-
   }

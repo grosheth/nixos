@@ -24,27 +24,12 @@ in
       format = "[](${colors.color})$os$username[](bg:${colors.color2} fg:${colors.color})$directory[](fg:${colors.color2} bg:${colors.color3})$git_branch[](fg:${colors.color3} bg:${colors.color3})$nodejs$python$rust$golang$lua[](fg:${colors.color3} bg:${colors.white})$time[ ](fg:${colors.white})$line_break[ ](fg:${colors.white})";
       continuation_prompt = "[∙](bright-black) ";
       line_break = { disabled = false; };
-      status = {
-        symbol = "✗";
-        not_found_symbol = "󰍉 Not Found";
-        not_executable_symbol = " Can't Execute E";
-        sigint_symbol = "󰂭 ";
-        signal_symbol = "󱑽 ";
-        success_symbol = "";
-        format = "[$symbol](fg:${colors.black})";
-        map_symbol = true;
-        disabled = false;
-      };
 			username = {
 				show_always = true;
 				style_user = "bg:${colors.color} fg:${colors.black}";
 				style_root = "bg:${colors.color} fg:${colors.black}";
 				format = "[$user ]($style)";
 			};
-      cmd_duration = {
-        min_time = 1000;
-        format = "[$duration ](fg:yellow)";
-      };
       nix_shell = {
         disabled = false;
         format = "[${pad.left}](fg:${colors.white})[ ](bg:${colors.white} fg:${colors.white})[${pad.right}](fg:${colors.white}) ";
