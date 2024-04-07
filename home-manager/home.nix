@@ -1,10 +1,9 @@
-{ config,  pkgs, username, ... }:
+{ pkgs, username, ... }:
 let
   homeDirectory = "/home/${username}";
 in
 {
   imports = [
-    ./dconf.nix
     ./git.nix
     ./kitty.nix
     ./lf.nix

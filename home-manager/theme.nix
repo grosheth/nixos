@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 let
   # gtk-theme = "adw-gtk3-dark";
 
