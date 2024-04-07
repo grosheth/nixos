@@ -2,7 +2,6 @@
 {
   imports = [
     ./packages/languages/lang.nix
-    ./packages/monitoring/monitoring.nix
     ./packages/tools/tools.nix
     ./packages/fun/fun.nix
   ];

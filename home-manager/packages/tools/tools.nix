@@ -1,23 +1,19 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; with nodePackages_latest; with gnome; [
-    bat
+    htop
+    bottom
     bottles
+    distrobox
     libreoffice
     eza
     fd
     ripgrep
     fzf
-    socat
     jq
-    acpi
-    inotify-tools
     ffmpeg
-    libnotify
-    killall
     zip
     unzip
-    glib
 		xclip
     okular
     picom

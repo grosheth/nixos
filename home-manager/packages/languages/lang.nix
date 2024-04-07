@@ -6,8 +6,7 @@
     go
     gcc
     eslint
-		
-    python311Packages.matplotlib
+		python311Packages.matplotlib
 		python3
   ];
 }
