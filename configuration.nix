@@ -32,12 +32,6 @@
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" ];
     loader = {
-      # grub = {
-      #   configurationLimit = 10;
-      #   devices = [ "nodev" ];
-      #   efiSupport = true;
-      #   useOSProber = true;
-      # };
       timeout = 2;
       systemd-boot.enable = true;
       efi = {
@@ -139,8 +133,6 @@
 
   # Enable ZSH to set it as main shell
   programs.zsh.enable = true;
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # user
   users.users.${username} = {
     # Set default shell
     shell = pkgs.zsh;
