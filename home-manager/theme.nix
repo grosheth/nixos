@@ -1,4 +1,5 @@
 { pkgs, ... }:
+# fonts
 let
   # gtk-theme = "adw-gtk3-dark";
 
