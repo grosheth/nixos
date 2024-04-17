@@ -15,6 +15,8 @@
     zip
     unzip
 		xclip
+    xdotool
+    maim
     okular
     picom
     gimp
