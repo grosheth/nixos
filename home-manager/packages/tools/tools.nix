@@ -23,5 +23,6 @@
     spotify
     discord
 		obsidian
+    firefox
   ];
 }
