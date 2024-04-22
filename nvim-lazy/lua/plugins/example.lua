@@ -27,9 +27,6 @@ return {
     opts = { use_diagnostic_signs = true },
   },
 
-  -- disable trouble
-  { "folke/trouble.nvim", enabled = false },
-
   -- add symbols-outline
   {
     "simrat39/symbols-outline.nvim",
@@ -151,9 +148,10 @@ return {
     },
   },
 
-  -- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
-  -- treesitter, mason and typescript.nvim. So instead of the above, you can use:
+  -- Imports for Treesitter
   { import = "lazyvim.plugins.extras.lang.typescript" },
+  { import = "lazyvim.plugins.extras.lang.go" },
+  { import = "lazyvim.plugins.extras.lang.json" },
 
   -- add more treesitter parsers
   {
@@ -175,21 +173,10 @@ return {
         "vim",
         "yaml",
       },
+      filetype = {
+        ejs = "html",
+      }
     },
-  },
-
-  -- since `vim.tbl_deep_extend`, can only merge tables and not lists, the code above
-  -- would overwrite `ensure_installed` with the new value.
-  -- If you'd rather extend the default config, use the code below instead:
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      -- add tsx and treesitter
-      vim.list_extend(opts.ensure_installed, {
-        "tsx",
-        "typescript",
-      })
-    end,
   },
 
   -- the opts function can also be used to change the default opts:
@@ -202,21 +189,18 @@ return {
   },
 
   -- or you can return new options to override all the defaults
-  {
-    "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
-    opts = function()
-      return {
-        --[[add your custom lualine config here]]
-      }
-    end,
-  },
+  -- {
+  --   "nvim-lualine/lualine.nvim",
+  --   event = "VeryLazy",
+  --   opts = function()
+  --     return {
+  --       --[[add your custom lualine config here]]
+  --     }
+  --   end,
+  -- },
 
   -- use mini.starter instead of alpha
   { import = "lazyvim.plugins.extras.ui.mini-starter" },
-
-  -- add jsonls and schemastore packages, and setup treesitter for json, json5 and jsonc
-  { import = "lazyvim.plugins.extras.lang.json" },
 
   -- add any tools you want to have installed below
   {
