@@ -24,6 +24,5 @@
     discord
 		obsidian
     firefox
-    zed-editor
   ];
 }
