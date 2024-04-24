@@ -193,6 +193,9 @@
     # Window manager 
     feh
     
+    #nixos
+    nh
+
 		# Audio stuff
     qpwgraph
     audacity
