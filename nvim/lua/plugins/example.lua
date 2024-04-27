@@ -10,13 +10,6 @@
 -- * disable/enabled LazyVim plugins
 -- * override the configuration of LazyVim plugins
 return {
-  -- change trouble config
-  {
-    "folke/trouble.nvim",
-    -- opts will be merged with the parent spec
-    opts = { use_diagnostic_signs = true },
-  },
-
   -- add symbols-outline
   {
     "simrat39/symbols-outline.nvim",
@@ -34,62 +27,6 @@ return {
       table.insert(opts.sources, { name = "emoji" })
     end,
   },
-
-  -- change some telescope options and a keymap to browse plugin files
-  {
-    "nvim-telescope/telescope.nvim",
-    keys = {
-      -- add a keymap to browse plugin files
-      -- stylua: ignore
-      {
-        "<leader>fp",
-        function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
-        desc = "Find Plugin File",
-      },
-    },
-    -- change some options
-    opts = {
-      defaults = {
-        layout_strategy = "horizontal",
-        -- layout_config = { prompt_position = "top" },
-        layout_config = { prompt_position = "bottom" },
-        sorting_strategy = "ascending",
-        -- winblend = 25,
-      },
-    },
-  },
-  -- Grapple
-  {
-    "cbochs/grapple.nvim",
-    opts = {
-        scope = "git", -- also try out "git_branch"
-    },
-    event = { "BufReadPost", "BufNewFile" },
-    cmd = "Grapple",
-    keys = {
-        { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
-        { "<leader>k", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
-        { "<leader>K", "<cmd>Grapple toggle_scopes<cr>", desc = "Grapple toggle scopes" },
-        { "<leader>j", "<cmd>Grapple cycle forward<cr>", desc = "Grapple cycle forward" },
-        { "<leader>J", "<cmd>Grapple cycle backward<cr>", desc = "Grapple cycle backward" },
-        { "<leader>1", "<cmd>Grapple select index=1<cr>", desc = "Grapple select 1" },
-        { "<leader>2", "<cmd>Grapple select index=2<cr>", desc = "Grapple select 2" },
-        { "<leader>3", "<cmd>Grapple select index=3<cr>", desc = "Grapple select 3" },
-        { "<leader>4", "<cmd>Grapple select index=4<cr>", desc = "Grapple select 4" },
-    },
-  },
-  -- add telescope-fzf-native
-  {
-    "telescope.nvim",
-    dependencies = {
-      "nvim-telescope/telescope-fzf-native.nvim",
-      build = "make",
-      config = function()
-        require("telescope").load_extension("fzf")
-      end,
-    },
-  },
-
   -- add pyright to lspconfig
   {
     "neovim/nvim-lspconfig",
@@ -135,37 +72,6 @@ return {
         -- Specify * to use this function as a fallback for any server
         -- ["*"] = function(server, opts) end,
       },
-    },
-  },
-
-  -- Imports for Treesitter
-  { import = "lazyvim.plugins.extras.lang.go" },
-  { import = "lazyvim.plugins.extras.lang.json" },
-  { import = "lazyvim.plugins.extras.lang.yaml" },
-  { import = "lazyvim.plugins.extras.lang.python" },
-  -- add more treesitter parsers
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "bash",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
-        "tsx",
-        "typescript",
-        "vim",
-        "yaml",
-      },
-      filetype = {
-        ejs = "html",
-      }
     },
   },
 
