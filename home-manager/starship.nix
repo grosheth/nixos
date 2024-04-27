@@ -5,7 +5,9 @@ let
     right = "";
   };
 	colors = {
-		color = "#545454";
+    # black 
+		# color = "#545454";
+		color = "#bd92f8";
 		color2 = "#ff78c5";
 		# color2 = "#ff5555"; 
     # green
