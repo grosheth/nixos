@@ -29,7 +29,7 @@ require("lazy").setup({
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
 
-  install = { colorscheme = { "dracula" } },
+  install = { colorscheme = { "dracula-soft" } },
 
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {

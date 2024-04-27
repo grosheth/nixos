@@ -1,6 +1,10 @@
 return {
   -- COLORSCHEME
-
+  -- {
+  --   "Mofiqul/dracula.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  -- },
   {
     "binhtran432k/dracula.nvim",
     lazy = false,
@@ -20,5 +24,6 @@ return {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "dracula",
+    },
   },
 }

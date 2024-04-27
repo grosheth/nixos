@@ -5,11 +5,23 @@ let
     right = "";
   };
 	colors = {
-		color = "#f7768e";
-		color2 = "#e0af68"; 
-		color3 = "#9ece6a";
-		white = "#7aa2f7";
-		black = "#1d202f";
+		color = "#545454";
+		color2 = "#ff78c5";
+		# color2 = "#ff5555"; 
+    # green
+		color3 = "#50fa7b";
+    # purple
+		# color3 = "#bd92f8";
+    # yellow
+		# color3 = "#f0fa8b";
+		white = "#f8f8f2";
+		black = "#1e1f28";
+    # Tokyonight
+		# color = "#f7768e";
+		# color2 = "#e0af68"; 
+		# color3 = "#9ece6a";
+		# white = "#7aa2f7";
+		# black = "#1d202f";
 	};
 in
 {
