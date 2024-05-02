@@ -90,10 +90,6 @@ in
 				symbol = "󰢱 ";
 				format = "[$symbol($version)](bg:${colors.color3} fg:${colors.black})";
 			};
-      rust = {
-				symbol = " ";
-				format = "[$symbol($version)](bg:${colors.color3} fg:${colors.black})";
-			};
       golang = {
 				symbol = " ";
 				format = "[$symbol($version)](bg:${colors.color3} fg:${colors.black})";
