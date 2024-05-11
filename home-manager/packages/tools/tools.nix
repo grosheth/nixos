@@ -25,6 +25,7 @@
 		obsidian
     firefox
     tldr
-    qutebrowser
+    # TO debug
+    # qutebrowser
   ];
 }
