@@ -20,9 +20,13 @@
       url = "github:rafaelmardojai/firefox-gnome-theme";
       flake = false;
     };
+    homeage = {
+      url = "github:jordanisaacs/homeage";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, homeage, ... } @ inputs:
     let
       username = "salledelavage";
       system = "x86_64-linux";
@@ -44,6 +48,16 @@
         };
         extraSpecialArgs = { inherit inputs username; };
         modules = [ home-manager/home.nix ];
+
+        # homeage = {
+        #     identityPaths = [ "~/.ssh/id_rsa" ];
+        #     installationType = "sytstemd";
+        #
+        #     file."
+        #   };
+          
       };
+
+      imports = [ homeage.homeManagerModules.homeage ];
     };
 }

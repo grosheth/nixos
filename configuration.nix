@@ -175,7 +175,6 @@
     dolphin
     gwenview
 
-    #neovim
     git
     wget
     pkgs.dunst
@@ -195,6 +194,7 @@
     
     #nixos
     nh
+    age
 
 		# Audio stuff
     qpwgraph
