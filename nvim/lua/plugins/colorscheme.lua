@@ -1,29 +1,28 @@
 return {
-  -- COLORSCHEME
+  {
+    "folke/tokyonight.nvim",
+    opts = {
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+    },
+  },
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "tokyonight",
+    },
+  },
   -- {
-  --   "Mofiqul/dracula.nvim",
+  --   "binhtran432k/dracula.nvim",
   --   lazy = false,
   --   priority = 1000,
   -- },
-  {
-    "binhtran432k/dracula.nvim",
-    lazy = false,
-    priority = 1000,
-  },
   -- {
-  --   "folke/tokyonight.nvim",
+  --   "LazyVim/LazyVim",
   --   opts = {
-  --     transparent = true,
-  --     styles = {
-  --       sidebars = "transparent",
-  --       floats = "transparent",
-  --     },
+  --     colorscheme = "dracula",
   --   },
   -- },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "dracula",
-    },
-  },
 }
