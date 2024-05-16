@@ -7,14 +7,17 @@ let
     "gc" = "git commit -am";
 		"gp" = "git push";
     "ga" = "git add --all";
+
     # ssh rapspberry pies
     "pi1" = "ssh pi@192.168.10.120";
     "pi2" = "ssh pi@192.168.10.121";
+    
     # basic commands
     "cls" = "clear";
     "ll" = "ls -la";
     "lr" = "ls -lrt";
     "l" = "ls";
+
     # Quick move aliases
     "work" = "cd ~/work";
     "wrk" = "cd ~/work";
@@ -23,6 +26,7 @@ let
     "bot" = "cd ~/work/discord-bot/ && n";
     "nixcfg" = "cd ~/nixos-configs && n";
 		"termify" = "cd ~/work/termify && n";
+
     # Neovim
     "n" = "nvim .";
 		"nv" = "nvim";
@@ -53,7 +57,6 @@ in
             if [[ -d .git ]]; then
                 onefetch
             fi
-
         }
       '';
       shellAliases = aliases;
