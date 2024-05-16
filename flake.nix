@@ -50,14 +50,16 @@
         modules = [ home-manager/home.nix ];
 
         # homeage = {
-        #     identityPaths = [ "~/.ssh/id_rsa" ];
-        #     installationType = "sytstemd";
+        #   identityPaths = [ "~/.ssh/test.txt" ];
+        #   installationType = "systemd";
         #
-        #     file."
+        #   file."salledelavageSecretKey" = {
+        #     source = ./home-manager/important/test.txt;
+        #     symlinks = [ "" ];
+        #     copies = [ "" ];
         #   };
-          
+        # }; 
       };
-
       imports = [ homeage.homeManagerModules.homeage ];
     };
 }
