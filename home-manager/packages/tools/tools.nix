@@ -25,5 +25,12 @@
 		obsidian
     firefox
     tldr
+    glow
+    vhs
+    slides
+    wine-staging
+    asciiquarium
+    onefetch
+    nitch
   ];
 }

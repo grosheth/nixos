@@ -181,6 +181,7 @@
     libnotify
     swww
     kitty
+    tmux
     networkmanagerapplet
     git
     os-prober

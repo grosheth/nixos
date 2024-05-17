@@ -1,4 +1,5 @@
-return {
+return { 
+  -- Tokyonight
   -- {
   --   "folke/tokyonight.nvim",
   --   opts = {
@@ -14,6 +15,7 @@ return {
   --     colorscheme = "tokyonight",
   --   },
   -- },
+  -- Dracula
   {
     "binhtran432k/dracula.nvim",
     lazy = false,
@@ -25,4 +27,16 @@ return {
       colorscheme = "dracula",
     },
   },
+  -- Kanagawa
+  -- {
+  --   "rebelot/kanagawa.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  -- },
+  -- {
+  --   "LazyVim/LazyVim",
+  --   opts = {
+  --     colorscheme = "kanagawa",
+  --   },
+  -- },
 }

@@ -50,16 +50,16 @@
         modules = [ home-manager/home.nix ];
 
         # homeage = {
-        #   identityPaths = [ "~/.ssh/test.txt" ];
-        #   installationType = "systemd";
-        #
-        #   file."salledelavageSecretKey" = {
-        #     source = ./home-manager/important/test.txt;
-        #     symlinks = [ "" ];
-        #     copies = [ "" ];
-        #   };
+          # identityPaths = [ "~/.ssh/test.txt" ];
+          # installationType = "systemd";
+
+          # file."salledelavageSecretKey" = {
+          #   source = ./home-manager/important/test.txt;
+          #   symlinks = [ "" ];
+          #   copies = [ "" ];
+          # };
         # }; 
       };
-      imports = [ homeage.homeManagerModules.homeage ];
+      # imports = [ homeage.homeManagerModules.homeage ];
     };
 }

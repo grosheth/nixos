@@ -1,5 +1,4 @@
 return {
-
   -- Grapple
   {
     "cbochs/grapple.nvim",
