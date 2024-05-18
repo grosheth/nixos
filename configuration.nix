@@ -103,23 +103,23 @@
       desktopManager = {
         xterm.enable = false;
       };
-    
-      displayManager = {
-        defaultSession = "none+i3";
-        sddm.enable = true;
-        # startx.enable = true;
-        # lightdm.enable = true;
-      };
-    
+        
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
-        dmenu #application launcher most people use
-        i3status
+        dmenu
+        # i3status
         i3lock #default i3 screen locker
         i3blocks
      ];
     };
+  };
+
+  services = {
+    displayManager = {
+        defaultSession = "none+i3";
+        sddm.enable = true;
+      };
   };
 
 	# udev rules for ZSA keyboard

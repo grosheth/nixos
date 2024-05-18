@@ -6,7 +6,7 @@ in
   imports = [
     ./git.nix
     # ./kitty.nix
-    # ./i3.nix
+    ./i3.nix
     ./lf.nix
     ./neovim.nix
     ./packages.nix
@@ -64,7 +64,6 @@ in
   };
 
   programs.home-manager.enable = true;
-  # programs.home-manager.enable = false;
   home.stateVersion = "21.11";
 
 }

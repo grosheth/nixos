@@ -6,8 +6,8 @@ let
   };
 	colors = {
     # black 
-		# color = "#545454";
-		color = "#bd92f8";
+		color = "#545454";
+		# color = "#bd92f8";
 		color2 = "#ff78c5";
 		# color2 = "#ff5555"; 
     # green
@@ -37,7 +37,6 @@ in
 			username = {
 				show_always = true;
 				style_user = "bg:${colors.color} fg:${colors.black}";
-				style_root = "bg:${colors.color} fg:${colors.black}";
 				format = "[$user ]($style)";
 			};
       nix_shell = {
