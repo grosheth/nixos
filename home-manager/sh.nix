@@ -32,6 +32,7 @@ let
 		"nv" = "nvim";
     "vim" = "nvim";
 		"neovim" = "nvim";
+		"nvim" = "neovide";
   };
 in
 { 
