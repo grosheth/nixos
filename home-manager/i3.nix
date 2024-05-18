@@ -1,265 +1,154 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-
-  cfg = config.xsession.windowManager.i3;
-
-  configModule = types.submodule {
-    options = {
-      inherit (commonOptions)
-        fonts window floating focus assigns modifier workspaceLayout
-        workspaceAutoBackAndForth keycodebindings colors bars startup gaps menu
-        terminal defaultWorkspace workspaceOutputAssign;
-
-      keybindings = mkOption {
-        type = types.attrsOf (types.nullOr types.str);
-        default = mapAttrs (n: mkOptionDefault) {
-          "${cfg.config.modifier}+Return" = "exec ${cfg.config.terminal}";
-          "${cfg.config.modifier}+Shift+q" = "kill";
-          "${cfg.config.modifier}+d" = "exec ${cfg.config.menu}";
-
-          "${cfg.config.modifier}+Left" = "focus left";
-          "${cfg.config.modifier}+Down" = "focus down";
-          "${cfg.config.modifier}+Up" = "focus up";
-          "${cfg.config.modifier}+Right" = "focus right";
-
-          "${cfg.config.modifier}+Shift+Left" = "move left";
-          "${cfg.config.modifier}+Shift+Down" = "move down";
-          "${cfg.config.modifier}+Shift+Up" = "move up";
-          "${cfg.config.modifier}+Shift+Right" = "move right";
-
-          "${cfg.config.modifier}+h" = "split h";
-          "${cfg.config.modifier}+v" = "split v";
-          "${cfg.config.modifier}+f" = "fullscreen toggle";
-
-          "${cfg.config.modifier}+s" = "layout stacking";
-          "${cfg.config.modifier}+w" = "layout tabbed";
-          "${cfg.config.modifier}+e" = "layout toggle split";
-
-          "${cfg.config.modifier}+Shift+space" = "floating toggle";
-          "${cfg.config.modifier}+space" = "focus mode_toggle";
-
-          "${cfg.config.modifier}+a" = "focus parent";
-
-          "${cfg.config.modifier}+Shift+minus" = "move scratchpad";
-          "${cfg.config.modifier}+minus" = "scratchpad show";
-
-          "${cfg.config.modifier}+1" = "workspace number 1";
-          "${cfg.config.modifier}+2" = "workspace number 2";
-          "${cfg.config.modifier}+3" = "workspace number 3";
-          "${cfg.config.modifier}+4" = "workspace number 4";
-          "${cfg.config.modifier}+5" = "workspace number 5";
-          "${cfg.config.modifier}+6" = "workspace number 6";
-          "${cfg.config.modifier}+7" = "workspace number 7";
-          "${cfg.config.modifier}+8" = "workspace number 8";
-          "${cfg.config.modifier}+9" = "workspace number 9";
-          "${cfg.config.modifier}+0" = "workspace number 10";
-
-          "${cfg.config.modifier}+Shift+1" =
-            "move container to workspace number 1";
-          "${cfg.config.modifier}+Shift+2" =
-            "move container to workspace number 2";
-          "${cfg.config.modifier}+Shift+3" =
-            "move container to workspace number 3";
-          "${cfg.config.modifier}+Shift+4" =
-            "move container to workspace number 4";
-          "${cfg.config.modifier}+Shift+5" =
-            "move container to workspace number 5";
-          "${cfg.config.modifier}+Shift+6" =
-            "move container to workspace number 6";
-          "${cfg.config.modifier}+Shift+7" =
-            "move container to workspace number 7";
-          "${cfg.config.modifier}+Shift+8" =
-            "move container to workspace number 8";
-          "${cfg.config.modifier}+Shift+9" =
-            "move container to workspace number 9";
-          "${cfg.config.modifier}+Shift+0" =
-            "move container to workspace number 10";
-
-          "${cfg.config.modifier}+Shift+c" = "reload";
-          "${cfg.config.modifier}+Shift+r" = "restart";
-          "${cfg.config.modifier}+Shift+e" =
-            "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
-
-          "${cfg.config.modifier}+r" = "mode resize";
-        };
-        defaultText = "Default i3 keybindings.";
-        description = ''
-          An attribute set that assigns a key press to an action using a key symbol.
-          See <https://i3wm.org/docs/userguide.html#keybindings>.
-
-          Consider to use `lib.mkOptionDefault` function to extend or override
-          default keybindings instead of specifying all of them from scratch.
-        '';
-        example = literalExpression ''
-          let
-            modifier = config.xsession.windowManager.i3.config.modifier;
-          in lib.mkOptionDefault {
-            "''${modifier}+Return" = "exec i3-sensible-terminal";
-            "''${modifier}+Shift+q" = "kill";
-            "''${modifier}+d" = "exec ''${pkgs.dmenu}/bin/dmenu_run";
-          }
-        '';
-      };
-
-      modes = mkOption {
-        type = types.attrsOf (types.attrsOf types.str);
-        default = {
-          resize = {
-            "Left" = "resize shrink width 10 px or 10 ppt";
-            "Down" = "resize grow height 10 px or 10 ppt";
-            "Up" = "resize shrink height 10 px or 10 ppt";
-            "Right" = "resize grow width 10 px or 10 ppt";
-            "Escape" = "mode default";
-            "Return" = "mode default";
-          };
-        };
-        description = ''
-          An attribute set that defines binding modes and keybindings
-          inside them
-
-          Only basic keybinding is supported (bindsym keycomb action),
-          for more advanced setup use 'i3.extraConfig'.
-        '';
-      };
-    };
-  };
-
-  commonFunctions = import ./lib/functions.nix {
-    inherit config cfg lib;
-    moduleName = "i3";
-  };
-
-  inherit (commonFunctions)
-    keybindingsStr keycodebindingsStr modeStr assignStr barStr gapsStr
-    floatingCriteriaStr windowCommandsStr colorSetStr windowBorderString
-    fontConfigStr keybindingDefaultWorkspace keybindingsRest workspaceOutputStr;
-
-  startupEntryStr = { command, always, notification, workspace, ... }:
-    concatStringsSep " " [
-      (if always then "exec_always" else "exec")
-      (if (notification && workspace == null) then "" else "--no-startup-id")
-      (if (workspace == null) then
-        command
-      else
-        "i3-msg 'workspace ${workspace}; exec ${command}'")
-    ];
-
-  configFile = pkgs.writeText "i3.conf" (concatStringsSep "\n"
-    ((if cfg.config != null then
-      with cfg.config;
-      ([
-        (fontConfigStr fonts)
-        "floating_modifier ${floating.modifier}"
-        (windowBorderString window floating)
-        "hide_edge_borders ${window.hideEdgeBorders}"
-        "focus_wrapping ${focus.wrapping}"
-        "focus_follows_mouse ${lib.hm.booleans.yesNo focus.followMouse}"
-        "focus_on_window_activation ${focus.newWindow}"
-        "mouse_warping ${if focus.mouseWarping then "output" else "none"}"
-        "workspace_layout ${workspaceLayout}"
-        "workspace_auto_back_and_forth ${
-          lib.hm.booleans.yesNo workspaceAutoBackAndForth
-        }"
-        "client.focused ${colorSetStr colors.focused}"
-        "client.focused_inactive ${colorSetStr colors.focusedInactive}"
-        "client.unfocused ${colorSetStr colors.unfocused}"
-        "client.urgent ${colorSetStr colors.urgent}"
-        "client.placeholder ${colorSetStr colors.placeholder}"
-        "client.background ${colors.background}"
-        (keybindingsStr { keybindings = keybindingDefaultWorkspace; })
-        (keybindingsStr { keybindings = keybindingsRest; })
-        (keycodebindingsStr keycodebindings)
-      ] ++ mapAttrsToList (modeStr false) modes
-        ++ mapAttrsToList assignStr assigns ++ map barStr bars
-        ++ optional (gaps != null) gapsStr
-        ++ map floatingCriteriaStr floating.criteria
-        ++ map windowCommandsStr window.commands ++ map startupEntryStr startup
-        ++ map workspaceOutputStr workspaceOutputAssign)
-    else
-      [ ]) ++ [ cfg.extraConfig ]));
-
-  # Validates the i3 configuration
-  checkI3Config =
-    pkgs.runCommandLocal "i3-config" { buildInputs = [ cfg.package ]; } ''
-      # We have to make sure the wrapper does not start a dbus session
-      export DBUS_SESSION_BUS_ADDRESS=1
-
-      # A zero exit code means i3 successfully validated the configuration
-      i3 -c ${configFile} -C -d all || {
-        echo "i3 configuration validation failed"
-        echo "For a verbose log of the failure, run 'i3 -c ${configFile} -C -d all'"
-        exit 1
-      };
-      cp ${configFile} $out
-    '';
-
-in {
-  meta.maintainers = with maintainers; [ sumnerevans ];
-
-  options = {
-    xsession.windowManager.i3 = {
-      # enable = mkEnableOption "i3 window manager";
-
-      package = mkPackageOption pkgs "i3" { };
-
-      config = mkOption {
-        type = types.nullOr configModule;
-        default = { };
-        description = "i3 configuration options.";
-      };
-
-      extraConfig = mkOption {
-        type = types.lines;
-        default = "";
-        description =
-          "Extra configuration lines to add to ~/.config/i3/config.";
-      };
-    };
-  };
-
-  config = mkIf cfg.enable (mkMerge [
-    {
-      assertions = [
-        (hm.assertions.assertPlatform "xsession.windowManager.i3" pkgs
-          platforms.linux)
-      ];
-
-      home.packages = [ cfg.package ];
-
-      xsession.windowManager.command = "${cfg.package}/bin/i3";
-
-      xdg.configFile."i3/config" = {
-        source = checkI3Config;
-        onChange = ''
-          # There may be several sockets after log out/log in, but the old ones
-          # will fail with "Connection refused".
-          for i3Socket in ''${XDG_RUNTIME_DIR:-/run/user/$UID}/i3/ipc-socket.*; do
-            if [[ -S $i3Socket ]]; then
-              ${cfg.package}/bin/i3-msg -s $i3Socket reload >/dev/null |& grep -v "Connection refused" || true
-            fi
-          done
-        '';
-      };
-    }
-
-    (mkIf (cfg.config != null) {
-      warnings = (optional (isList cfg.config.fonts)
-        "Specifying i3.config.fonts as a list is deprecated. Use the attrset version instead.")
-        ++ flatten (map (b:
-          optional (isList b.fonts)
-          "Specifying i3.config.bars[].fonts as a list is deprecated. Use the attrset version instead.")
-          cfg.config.bars) ++ [
-            (mkIf (any (s: s.workspace != null) cfg.config.startup)
-              ("'xsession.windowManager.i3.config.startup.*.workspace' is deprecated, "
-                + "use 'xsession.windowManager.i3.config.assigns' instead."
-                + "See https://github.com/nix-community/home-manager/issues/265."))
-            (mkIf cfg.config.focus.forceWrapping
-              ("'xsession.windowManager.i3.config.focus.forceWrapping' is deprecated, "
-                + "use 'xsession.windowManager.i3.config.focus.wrapping' instead."))
-          ];
-    })
-  ]);
-}
+# { config, lib, pkgs, programs, ... }:
+# {
+#   home-manager.users.salledelavage ={
+#     programs.i3 = {
+#       enable = true;
+#       config = ''
+#       set $mod Mod1
+#
+#       set $monitor1 HDMI-2
+#       set $monitor2 HDMI-1
+#       set $monitor3 DP-2
+#
+#       set $refresh_i3status killall -SIGUSR1 i3status
+#       bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+#       bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+#       bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+#       bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+#
+#       floating_modifier $mod
+#
+#       tiling_drag modifier titlebar
+#
+#       bindsym $mod+Return exec kitty
+#
+#       bindsym $mod+c kill
+#
+#       bindsym $mod+d exec --no-startup-id dmenu_run
+#
+#       # Change focus
+#       bindsym $mod+Left focus left
+#       bindsym $mod+Down focus down
+#       bindsym $mod+Up focus up
+#       bindsym $mod+Right focus right
+#
+#       # move focused window
+#       bindsym $mod+Shift+h move left
+#       bindsym $mod+Shift+j move down
+#       bindsym $mod+Shift+k move up
+#       bindsym $mod+Shift+l move right
+#
+#       # alternatively, you can use the cursor keys:
+#       bindsym $mod+Shift+Left move left
+#       bindsym $mod+Shift+Down move down
+#       bindsym $mod+Shift+Up move up
+#       bindsym $mod+Shift+Right move right
+#
+#
+#       # split in vertical orientation
+#       bindsym $mod+v split v
+#
+#       # enter fullscreen mode for the focused container
+#       bindsym $mod+f fullscreen toggle
+#
+#       # change container layout (stacked, tabbed, toggle split)
+#       bindsym $mod+s layout stacking
+#       bindsym $mod+w layout tabbed
+#       bindsym $mod+e layout toggle split
+#
+#       # toggle tiling / floating
+#       bindsym $mod+Shift+space floating toggle
+#
+#       # change focus between tiling / floating windows
+#       bindsym $mod+space focus mode_toggle
+#
+#       # focus the parent container
+#       bindsym $mod+a focus parent
+#
+#       set $ws1 "1"
+#       set $ws2 "2"
+#       set $ws3 "3"
+#       set $ws4 "1"
+#       set $ws5 "2"
+#
+#
+#       # switch to workspace
+#       bindsym $mod+6 workspace number $ws1
+#       bindsym $mod+7 workspace number $ws2
+#       bindsym $mod+8 workspace number $ws3
+#       bindsym $mod+9 workspace number $ws4
+#       bindsym $mod+0 workspace number $ws5
+#
+#       # move focused container to workspace
+#       bindsym $mod+Shift+6 move container to workspace number $ws1
+#       bindsym $mod+Shift+7 move container to workspace number $ws2
+#       bindsym $mod+Shift+8 move container to workspace number $ws3
+#       bindsym $mod+Shift+9 move container to workspace number $ws4
+#       bindsym $mod+Shift+0 move container to workspace number $ws5
+#
+#       # reload the configuration file
+#       bindsym $mod+Shift+c reload
+#       bindsym $mod+Shift+r restart
+#       # exit i3 (logs you out of your X session)
+#       bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+#
+#       # resize window (you can also use the mouse for that)
+#       mode "resize" {
+#               # These bindings trigger as soon as you enter the resize mode
+#
+#               # Pressing left will shrink the window’s width.
+#               # Pressing right will grow the window’s width.
+#               # Pressing up will shrink the window’s height.
+#               # Pressing down will grow the window’s height.
+#               bindsym l resize shrink width 10 px or 10 ppt
+#               bindsym k resize grow height 10 px or 10 ppt
+#               bindsym j resize shrink height 10 px or 10 ppt
+#               bindsym semicolon resize grow width 10 px or 10 ppt
+#
+#               # same bindings, but for the arrow keys
+#               bindsym Left resize shrink width 10 px or 10 ppt
+#               bindsym Down resize grow height 10 px or 10 ppt
+#               bindsym Up resize shrink height 10 px or 10 ppt
+#               bindsym Right resize grow width 10 px or 10 ppt
+#
+#               # back to normal: Enter or Escape or $mod+r
+#               bindsym Return mode "default"
+#               bindsym Escape mode "default"
+#               bindsym $mod+r mode "default"
+#       }
+#
+#       bindsym $mod+r mode "resize"
+#
+#
+#       # Setup Wallpaper
+#       exec --no-startup-id feh --bg-scale /home/salledelavage/nixos-configs/ags/assets/nasa.png
+#       exec --no-startup-id feh --bg-scale /home/salledelavage/nixos-configs/ags/assets/coffee.jpg
+#
+#       # Setup transparency
+#       exec --no-startup-id picom
+#       exec --no-startup-id xrandr --output $monitor2 --pos 0x0
+#       exec --no-startup-id xrandr --output $monitor1 --pos 2560x0
+#       exec --no-startup-id xrandr --output $monitor3 --pos 5120x0
+#
+#       # screenshot
+#       bindsym Print exec maim -s -u | xclip -selection clipboard -t image/png -i
+#
+#       exec xset s off
+#       exec xset -dpms
+#
+#       # Windows Gaps
+#       gaps inner 5
+#       gaps outer 5
+#
+#       # Remove Title bar
+#       new_window 1pixel
+#
+#
+#       # class                 border  backgr. text    indicator child_border                                                                     
+#       client.focused_inactive #0d1010 #212121 #d9d9d9 #0d1010 #063340                                                                            
+#       client.unfocused        #0d1010 #212121 #d9d9d9 #424242 #063340                                                                            
+#       client.focused          #d9d9d9 #cecece #000000 #d9d9d9 #d9d9d9
+#       '';
+#     };
+#   };
+# }
