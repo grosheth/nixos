@@ -15,28 +15,30 @@ return {
   --     colorscheme = "tokyonight",
   --   },
   -- },
+
   -- Dracula
-  {
-    "binhtran432k/dracula.nvim",
-    lazy = false,
-    priority = 1000,
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "dracula",
-    },
-  },
-  -- Kanagawa
   -- {
-  --   "rebelot/kanagawa.nvim",
+  --   "binhtran432k/dracula.nvim",
   --   lazy = false,
   --   priority = 1000,
   -- },
   -- {
   --   "LazyVim/LazyVim",
   --   opts = {
-  --     colorscheme = "kanagawa",
+  --     colorscheme = "dracula",
   --   },
   -- },
+
+  -- Kanagawa
+  {
+    "rebelot/kanagawa.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "kanagawa",
+    },
+  },
 }
