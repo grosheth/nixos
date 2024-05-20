@@ -32,5 +32,6 @@
     asciiquarium
     onefetch
     nitch
+    lynx
   ];
 }

@@ -17,18 +17,18 @@ return {
   -- },
 
   -- Dracula
-  {
-    "binhtran432k/dracula.nvim",
-    lazy = false,
-    priority = 1000,
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "dracula",
-    },
-  },
-
+  -- {
+  --   "binhtran432k/dracula.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  -- },
+  -- {
+  --   "LazyVim/LazyVim",
+  --   opts = {
+  --     colorscheme = "dracula",
+  --   },
+  -- },
+  --
   -- Kanagawa
   -- {
   --   "rebelot/kanagawa.nvim",
@@ -43,15 +43,15 @@ return {
   -- },
  
   -- Gruvbox
-  -- {
-  --   "ellisonleao/gruvbox.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  -- },
-  -- {
-  --   "LazyVim/LazyVim",
-  --   opts = {
-  --     colorscheme = "gruvbox",
-  --   },
-  -- },
+  {
+    "ellisonleao/gruvbox.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "gruvbox",
+    },
+  },
 }

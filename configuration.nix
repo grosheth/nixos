@@ -102,10 +102,14 @@
 
       desktopManager = {
         xterm.enable = false;
+        wallpaper = {
+            combineScreens = true;
+          }; 
       };
-        
+ 
     windowManager.i3 = {
       enable = true;
+      configFile = "$HOME/nixos/configs/i3/config";
       extraPackages = with pkgs; [
         dmenu
         # i3status
