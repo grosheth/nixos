@@ -5,7 +5,6 @@
     ./hardware-configuration.nix
     ./audio.nix
     ./locale.nix
-    ./i3.nix
   ];
 
   # nix
