@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ./audio.nix
     ./locale.nix
+    ./i3.nix
   ];
 
   # nix
@@ -109,7 +110,6 @@
  
     windowManager.i3 = {
       enable = true;
-      configFile = "$HOME/nixos/configs/i3/config";
       extraPackages = with pkgs; [
         dmenu
         # i3status
