@@ -28,6 +28,7 @@ let
 		"termify" = "cd ~/work/termify && n";
 
     # Neovim
+		"nvim" = "neovim";
     "n" = "nvim .";
 		"nv" = "nvim";
     "vim" = "nvim";
