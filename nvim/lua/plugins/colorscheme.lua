@@ -28,7 +28,7 @@ return {
       colorscheme = "dracula",
     },
   },
-  --
+
   -- Kanagawa
   -- {
   --   "rebelot/kanagawa.nvim",
