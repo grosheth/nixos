@@ -5,6 +5,5 @@ return{
     opts = {
       disable_mouse = false;
       },
-    }
   },
 }
