@@ -29,7 +29,7 @@
         default = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs username system;};
         modules = [
-            ./default/configuration.nix
+            ../nixos/default/configuration.nix
             # ./configuration.nix
             inputs.home-manager.nixosModules.default
         ];
@@ -38,7 +38,7 @@
         specialArgs = {inherit inputs username system;};
         modules = [
             # ./configuration.nix
-            ./laptop/configuration.nix
+            ./nixos/laptop/configuration.nix
             inputs.home-manager.nixosModules.laptop
         ];
         };
