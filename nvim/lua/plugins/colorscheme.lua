@@ -18,7 +18,7 @@ return {
 
   -- Dracula
   {
-    "binhtran432k/dracula.nvim",
+    "mofiqul/dracula.nvim",
     lazy = false,
     priority = 1000,
   },
