@@ -16,14 +16,6 @@
       url = "github:gokcehan/lf";
       flake = false;
     };
-    firefox-gnome-theme = {
-      url = "github:rafaelmardojai/firefox-gnome-theme";
-      flake = false;
-    };
-    homeage = {
-      url = "github:jordanisaacs/homeage";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = { self, nixpkgs, home-manager, homeage, ... } @ inputs:
@@ -33,33 +25,42 @@
       # pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+      nixosConfigurations = {
+        default = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs username system;};
         modules = [
-            ./configuration.nix
+            ./default/configuration.nix
+            # ./configuration.nix
             inputs.home-manager.nixosModules.default
         ];
+        };
+        laptop = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs username system;};
+        modules = [
+            # ./configuration.nix
+            ./laptop/configuration.nix
+            inputs.home-manager.nixosModules.laptop
+        ];
+        };
       };
   
-      homeConfigurations.default = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations = {
+        default = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
         };
         extraSpecialArgs = { inherit inputs username; };
-        modules = [ home-manager/home.nix ];
-
-        # homeage = {
-          # identityPaths = [ "~/.ssh/test.txt" ];
-          # installationType = "systemd";
-
-          # file."salledelavageSecretKey" = {
-          #   source = ./home-manager/important/test.txt;
-          #   symlinks = [ "" ];
-          #   copies = [ "" ];
-          # };
-        # }; 
+        modules = [ home-manager/home-default.nix ];
+        };
+        laptop = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+        };
+        extraSpecialArgs = { inherit inputs username; };
+        modules = [ home-manager/home-laptop.nix ];
+        };
       };
-      # imports = [ homeage.homeManagerModules.homeage ];
     };
 }

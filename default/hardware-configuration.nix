@@ -23,11 +23,6 @@
       fsType = "vfat";
     };
 
-  # fileSystems."/boot/efi" =
-  #   { device = "/dev/disk/by-uuid/ED99-9257";
-  #     fsType = "vfat";
-  #   };
-
   swapDevices =
     [ { device = "/dev/disk/by-uuid/25f9d92c-d79b-4e45-9827-0ead6088db7b"; }
     ];
