@@ -29,7 +29,7 @@
         default = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs username system;};
         modules = [
-            ../nixos/default/configuration.nix
+            ./nixos/default/configuration.nix
             # ./configuration.nix
             inputs.home-manager.nixosModules.default
         ];
@@ -46,18 +46,19 @@
   
       homeConfigurations = {
         default = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-        };
+          pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+          };
         extraSpecialArgs = { inherit inputs username; };
         modules = [ home-manager/home-default.nix ];
         };
+
         laptop = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-        };
+          pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+          };
         extraSpecialArgs = { inherit inputs username; };
         modules = [ home-manager/home-laptop.nix ];
         };
