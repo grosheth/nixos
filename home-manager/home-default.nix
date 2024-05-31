@@ -14,7 +14,6 @@ in
     ./starship.nix
     ./theme.nix
   ];
-
   news.display = "show";
 
   targets.genericLinux.enable = true;
