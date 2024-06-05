@@ -14,7 +14,7 @@
     ffmpeg
     zip
     unzip
-		xclip
+    xclip
     xdotool
     maim
     okular
@@ -22,7 +22,7 @@
     gimp
     spotify
     discord
-		obsidian
+    obsidian
     firefox
     tldr
     glow
@@ -33,5 +33,6 @@
     onefetch
     nitch
     lynx
+    neovim
   ];
 }
