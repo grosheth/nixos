@@ -1,4 +1,4 @@
-{ config,  pkgs, username, ... }:
+{ pkgs, username, ... }:
 let
   homeDirectory = "/home/${username}";
 in
@@ -6,7 +6,7 @@ in
   imports = [
     ./git.nix
     # ./kitty.nix
-    # ./i3.nix
+    ./i3.nix
     ./lf.nix
     ./neovim.nix
     ./packages.nix
@@ -14,7 +14,6 @@ in
     ./starship.nix
     ./theme.nix
   ];
-
   news.display = "show";
 
   targets.genericLinux.enable = true;
