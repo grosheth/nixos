@@ -14,12 +14,7 @@
     enable = true;
     autorun = true;
   
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu
-      ];
-    };
+    windowManager.i3.enable = true;
   };
 
   # Bootloader.

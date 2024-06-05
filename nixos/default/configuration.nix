@@ -108,15 +108,6 @@
       };
 
     windowManager.i3.enable = true;
-    # windowManager.i3 = {
-    #   enable = true;
-    #   extraPackages = with pkgs; [
-    #     dmenu
-    #     # i3status
-    #     i3lock #default i3 screen locker
-    #     i3blocks
-    #  ];
-    # };
   };
 
   services = {
