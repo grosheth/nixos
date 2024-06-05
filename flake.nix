@@ -39,7 +39,7 @@
         modules = [
             # ./configuration.nix
             ./nixos/laptop/configuration.nix
-            inputs.home-manager.nixosModules.laptop
+            inputs.home-manager.nixosModules.default
         ];
         };
       };

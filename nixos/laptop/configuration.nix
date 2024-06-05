@@ -11,6 +11,18 @@
     ./locale.nix
   ];
 
+  services.xserver = {
+    enable = true;
+    autorun = true;
+  
+    windowManager.i3 = {
+      enable = true;
+      extraPackages = with pkgs; [
+        dmenu
+      ];
+    };
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -22,7 +34,7 @@
   networking.networkmanager.enable = true;
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  #services.xserver.enable = true;
 
   # Enable the XFCE Desktop Environment.
   services.xserver.displayManager.lightdm.enable = true;
