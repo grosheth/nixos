@@ -82,6 +82,13 @@
   # Install firefox.
   programs.firefox.enable = true;
 
+  nix = {
+    settings = {
+      experimental-features = "nix-command flakes";
+      auto-optimise-store = true;
+    };
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -91,6 +98,8 @@
     git
     vim
     neofetch
+    home-manager
+    neovim
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
