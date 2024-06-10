@@ -6,7 +6,8 @@ in
   imports = [
     ./git.nix
     # ./kitty.nix
-    ./i3.nix
+    # ./i3.nix
+    ./bspwm.nix
     ./lf.nix
     ./neovim.nix
     ./packages.nix
