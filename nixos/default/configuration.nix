@@ -108,15 +108,16 @@
       };
 
     # windowManager.i3.enable = true;
+    windowManager.bspwm.enable = true;
   };
 
-  services = {
-    displayManager = {
-        # defaultSession = "none+i3";
-        defaultSession = "none+bspwm";
-        sddm.enable = true;
-      };
-  };
+  # Uncomment when using i3
+  # services = {
+  #   displayManager = {
+  #       defaultSession = "none+i3";
+  #       sddm.enable = true;
+  #     };
+  # };
 
 	# udev rules for ZSA keyboard
 	hardware.keyboard.zsa.enable = true;
