@@ -107,12 +107,13 @@
           }; 
       };
 
-    windowManager.i3.enable = true;
+    # windowManager.i3.enable = true;
   };
 
   services = {
     displayManager = {
-        defaultSession = "none+i3";
+        # defaultSession = "none+i3";
+        defaultSession = "none+bspwm";
         sddm.enable = true;
       };
   };
