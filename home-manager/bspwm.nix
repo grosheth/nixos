@@ -9,15 +9,23 @@
       extraConfig = ''
         bspc monitor HDMI-0 -d I II III IV
         bspc monitor HDMI-1 -d V VI VII
-        bspc monitor HDMI-2 -d VIII IX X
+        bspc monitor DP-4 -d VIII IX X
 
         bspc config border_width 2
         bspc config window_gap 5
         bspc config split_ratio 0.52
         bspc config borderless_monocle true
         bspc config gapless_monocle true
-        
-        kitty &
+
+        feh --bg-scale /home/salledelavage/wallpapers/gruvbox_disco-elysium.png
+        picom
+        xrandr --output HDMI-0 --pos 2560x0
+        xrandr --output HDMI-1 --pos 0x0
+        xrandr --output DP-4 --pos 5120x0
+        xset s off
+        xset -dpms
+
+        kitty
         pgrep -x sxhkd > /dev/null || sxhkd & 
       '';
     };
@@ -41,15 +49,19 @@
 #
 
 # terminal emulator
-ctrl + Return
+alt + Return
   kitty
 
 # program launcher
-ctrl + @space
+alt + @space
+  rofi
+
+# program launcher
+alt + d
   dmenu_run
 
 # make sxhkd reload its configuration files:
-ctrl + Escape
+alt + Escape
   pkill -USR1 -x sxhkd
 
 #
@@ -57,7 +69,7 @@ ctrl + Escape
 #
 
 # quit/restart bspwm
-alt + alt + {q,r}
+ctrl + alt + {q,r}
   bspc {quit,wm -r}
 
 # close and kill
