@@ -11,6 +11,7 @@ in
     ./lf.nix
     ./neovim.nix
     ./packages.nix
+    # ./polybar.nix
     ./rofi.nix
     ./sh.nix
     ./starship.nix

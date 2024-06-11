@@ -11,7 +11,7 @@
       };
       settings = {
         border_width = 1;
-        window_gap = 20;
+        window_gap = 15;
         split_ratio = 0.52;
         borderless_monocle = true;
         gapless_monocle = true; 
