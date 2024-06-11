@@ -1,23 +1,41 @@
-{ config, pkgs, ... }:
-
+{ pkgs, ... }:
 {
   xsession = {
     enable = true;
-    # layout = "us";
     windowManager.bspwm = {
       enable = true;
+      rules = {
+        "kitty" = {
+          state = "floating";
+        };
+      };
+      settings = {
+        border_width = 1;
+        window_gap = 20;
+        split_ratio = 0.52;
+        borderless_monocle = true;
+        gapless_monocle = true; 
+      };
+      monitors = {
+        HDMI-0 = [
+          "I"
+          "II"
+          "III"
+          "IV"
+        ];
+        HDMI-1 = [
+          "V"
+          "VI"
+          "VII"
+        ];
+        DP-4 = [
+          "VIII"
+          "IX"
+          "X"
+        ];
+      };
       extraConfig = ''
-        bspc monitor HDMI-0 -d I II III IV
-        bspc monitor HDMI-1 -d V VI VII
-        bspc monitor DP-4 -d VIII IX X
-
-        bspc config border_width 2
-        bspc config window_gap 5
-        bspc config split_ratio 0.52
-        bspc config borderless_monocle true
-        bspc config gapless_monocle true
-
-        feh --bg-scale /home/salledelavage/wallpapers/gruvbox_disco-elysium.png
+        feh --bg-scale /home/salledelavage/wallpapers/gruvbox_sekiro.png
         bash /home/salledelavage/.screenlayout/screen_setup.sh
         picom
         xrandr --output HDMI-0 --pos 2560x0
@@ -26,7 +44,8 @@
         xset s off
         xset -dpms
 
-        kitty
+        polybar example &
+ 
         pgrep -x sxhkd > /dev/null || sxhkd & 
       '';
     };
@@ -36,6 +55,5 @@
     bspwm
     dmenu
     polybar # Status bar
-    rofi    # Application launcher
   ];
 }

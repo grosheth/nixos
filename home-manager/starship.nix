@@ -7,9 +7,7 @@ let
 	colors = {
     # black 
 		color = "#545454";
-		# color = "#bd92f8";
 		color2 = "#ff78c5";
-		# color2 = "#ff5555"; 
     # green
 		color3 = "#50fa7b";
     # purple
