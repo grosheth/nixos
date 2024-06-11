@@ -8,6 +8,7 @@ in
     # ./kitty.nix
     # ./i3.nix
     ./bspwm.nix
+    ./sxhkd.nix
     ./lf.nix
     ./neovim.nix
     ./packages.nix
