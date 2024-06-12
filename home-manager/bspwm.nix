@@ -53,6 +53,5 @@
   home.packages = with pkgs; [
     bspwm
     dmenu
-    polybar # Status bar
   ];
 }
