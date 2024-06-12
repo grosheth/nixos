@@ -9,7 +9,7 @@
     enable = true;
     keybindings = {
       "alt + Return" = "kitty";
-      "alt + @space" = "rofi -show run";
+      "alt + @space" = "rofi -show drun";
       "alt + d" = "dmenu_run";
       "alt + c" = "bspc node -c";
       "alt + t" = "bspc node -t tiled";
