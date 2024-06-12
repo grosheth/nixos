@@ -4,12 +4,12 @@
     enable = true;
     windowManager.bspwm = {
       enable = true;
-      rules = {
+      # rules = {
         # "kitty" = {
         #   state = "floating";
         #   rectangle = "800x600+32+32"; 
         # };
-      };
+      # };
       settings = {
         border_width = 2;
         window_gap = 15;
@@ -44,8 +44,6 @@
         xrandr --output DP-4 --pos 5120x0
         xset s off
         xset -dpms
-
-        polybar example &
  
         pgrep -x sxhkd > /dev/null || sxhkd & 
       '';
