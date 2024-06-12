@@ -1,7 +1,8 @@
 { pkgs, ... }:
+# Keyboard daemon for bspwm
 {
   home.packages = with pkgs; [
-    sxhkd   # Keyboard daemon for bspwm
+    sxhkd 
   ];
 
   services.sxhkd = {
