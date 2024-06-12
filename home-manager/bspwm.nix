@@ -7,10 +7,11 @@
       rules = {
         "kitty" = {
           state = "floating";
+          rectangle = "800x600+32+32"; 
         };
       };
       settings = {
-        border_width = 1;
+        border_width = 2;
         window_gap = 15;
         split_ratio = 0.52;
         borderless_monocle = true;
