@@ -32,7 +32,8 @@ let
   {
     home.packages = with pkgs; [
       ripgrep
-      neovide
+      # neovide
+      neovim
       lazygit
       fd
       lua-language-server

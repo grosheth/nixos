@@ -9,8 +9,8 @@ let
     "ga" = "git add --all";
 
     # ssh rapspberry pies
-    "pi1" = "ssh pi@192.168.10.120";
-    "pi2" = "ssh pi@192.168.10.121";
+    # "pi1" = "ssh pi@192.168.10.120";
+    # "pi2" = "ssh pi@192.168.10.121";
     
     # basic commands
     "cls" = "clear";

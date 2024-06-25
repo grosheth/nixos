@@ -8,8 +8,6 @@
     enable = true;
     location = "center";
     theme = "dracula";
-    # yoffset = 50;
-    # xoffset = 50;
     font = "JetBrainsMonoNerdFontMono-Regular";
     extraConfig = {
       show-icons = true;

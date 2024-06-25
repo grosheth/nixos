@@ -6,7 +6,7 @@
     commands = let
       trash = ''''${{
         set -f
-        gio trash $fx
+        rm $fx
       }}'';
     in {
       trash = trash;
@@ -14,7 +14,7 @@
 
       open = ''''${{
         case $(file --mime-type -Lb $f) in
-            text/*) lf -remote "send $id \$$EDITOR \$fx";;
+            text/*) lf -remote "send $id \nvim \$fx";;
             *) for f in $fx; do $OPENER "$f" > /dev/null 2> /dev/null & done;;
         esac
       }}'';

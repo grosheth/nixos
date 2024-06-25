@@ -4,12 +4,6 @@
     enable = true;
     windowManager.bspwm = {
       enable = true;
-      # rules = {
-        # "kitty" = {
-        #   state = "floating";
-        #   rectangle = "800x600+32+32"; 
-        # };
-      # };
       settings = {
         border_width = 2;
         window_gap = 15;
