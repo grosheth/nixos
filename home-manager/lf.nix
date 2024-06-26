@@ -20,7 +20,7 @@
       }}'';
 
       fzf = ''''${{
-        res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location')"
+        res="$(find . -maxdepth 3 | fzf --reverse --header='Jump to location')"
         if [ -n "$res" ]; then
             if [ -d "$res" ]; then
                 cmd="cd"
