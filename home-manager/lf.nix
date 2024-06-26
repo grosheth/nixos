@@ -52,10 +52,6 @@
         rm -rf $1
       }}'';
 
-      pager = ''
-        $bat --paging=always "$f"
-      '';
-
       on-select = ''&{{
         lf -remote "send $id set statfmt \"$(eza -ld --color=always "$f")\""
       }}'';
@@ -71,7 +67,6 @@
       "." = "set hidden!";
       "<delete>" = "trash";
       "<enter>" = "open";
-      V = "pager";
       f = "fzf";
     };
 
@@ -89,11 +84,11 @@
     };
 
     extraConfig = ''
-      $mkdir -p ~/.trash
-
-      &${pkgs.ctpv}/bin/ctpv -s $id
-      cmd on-quit %${pkgs.ctpv}/bin/ctpv -e $id
-      set cleaner ${pkgs.ctpv}/bin/ctpvclear
+      # $mkdir -p ~/.trash
+      #
+      # &${pkgs.ctpv}/bin/ctpv -s $id
+      # cmd on-quit %${pkgs.ctpv}/bin/ctpv -e $id
+      # set cleaner ${pkgs.ctpv}/bin/ctpvclear
     '';
   };
 
