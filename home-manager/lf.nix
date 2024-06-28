@@ -84,11 +84,6 @@
     };
 
     extraConfig = ''
-      # $mkdir -p ~/.trash
-      #
-      # &${pkgs.ctpv}/bin/ctpv -s $id
-      # cmd on-quit %${pkgs.ctpv}/bin/ctpv -e $id
-      # set cleaner ${pkgs.ctpv}/bin/ctpvclear
     '';
   };
 
