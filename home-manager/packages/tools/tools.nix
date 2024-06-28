@@ -34,5 +34,6 @@
     nitch
     lynx
     neovim
+    pip2nix
   ];
 }
