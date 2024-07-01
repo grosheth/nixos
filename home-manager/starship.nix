@@ -54,7 +54,7 @@ in
       };
 			time = {
 				disabled = false;
-				time_format = "%Y-%m-%d %R";
+				time_format = "%Y-%m-%d %R:%S";
 				style = "bg:${colors.white} fg:${colors.bg}";
 				format = "[[${pad.left}](bg:${colors.bg} fg:${colors.white})󰔟 $time[${pad.right}](bg:${colors.bg} fg:${colors.white})]($style)";	
 			};
