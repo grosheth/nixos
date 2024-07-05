@@ -18,7 +18,6 @@
     xdotool
     maim
     okular
-    picom
     gimp
     spotify
     discord

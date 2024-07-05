@@ -11,6 +11,7 @@ in
     ./lf.nix
     ./neovim.nix
     ./packages.nix
+    ./picom.nix
     # ./polybar.nix
     ./rofi.nix
     ./sh.nix
