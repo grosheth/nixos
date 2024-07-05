@@ -4,6 +4,7 @@
     picom
   ];
   services.picom = {
+    enable = true;
     inactiveOpacity = 0.83;
     opacityRules =  [
                       "99:class_g *?= 'brave'"
