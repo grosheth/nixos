@@ -9,7 +9,10 @@
         window_gap = 15;
         split_ratio = 0.52;
         borderless_monocle = true;
-        gapless_monocle = true; 
+        gapless_monocle = true;
+        active_border_color = "#ffffff";
+        normal_border_color = "#ffffff";
+        focused_border_color = "#ffffff";
       };
       monitors = {
         HDMI-0 = [
@@ -43,7 +46,6 @@
       '';
     };
   };
-
 
   home.packages = with pkgs; [
     bspwm

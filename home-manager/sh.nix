@@ -33,7 +33,6 @@ let
 		"nv" = "nvim";
     "vim" = "nvim";
 		"neovim" = "nvim";
-		# "nvim" = "neovide";
   };
 in
 { 
@@ -48,8 +47,7 @@ in
       oh-my-zsh = {
         enable = true;
         plugins = [ "git" ];
-        theme = "rkj-repos";
-        # theme = "simonoff";
+        # theme = "rkj-repos";
       };
       initExtra = ''
         SHELL=${pkgs.zsh}/bin/zsh
