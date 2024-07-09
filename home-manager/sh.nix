@@ -58,6 +58,7 @@ in
                 onefetch
             fi
         }
+        nitch
       '';
       shellAliases = aliases;
     };
