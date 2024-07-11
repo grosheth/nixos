@@ -7,7 +7,7 @@
       settings = {
         border_width = 2;
         window_gap = 15;
-        split_ratio = 0.52;
+        split_ratio = 0.5;
         borderless_monocle = true;
         gapless_monocle = true;
         active_border_color = "#ffffff";
