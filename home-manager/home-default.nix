@@ -4,9 +4,10 @@ let
 in
 {
   imports = [
-    ./git.nix
+    ./dev.nix
     # ./i3.nix
     ./bspwm.nix
+    ./git.nix
     ./kitty.nix
     ./lf.nix
     ./neovim.nix

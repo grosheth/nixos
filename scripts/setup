@@ -1,7 +1,0 @@
-#!/bin/sh
-
-./remove
-
-sudo nixos-rebuild switch --flake ~/nixos#default
-
-home-manager switch --flake ~/nixos#default
