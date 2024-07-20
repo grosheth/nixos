@@ -11,4 +11,4 @@ while [[ ! "${project}" =~ ^[0-9]+$ ]]; do
 	read -p "Which project do you want to work on: (number)" project
 done
 
-nvim ~/work/"${WORK_REPO[${project}]}"
+/bin/bash ~/work/"${WORK_REPO[${project}]}"/dev.sh || nvim ~/work/"${WORK_REPO[${project}]}"
