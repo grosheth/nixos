@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; with nodePackages_latest; with gnome; [
-   (import ../../dev.nix {inherit pkgs; })
+  home.packages = with pkgs; with nodePackages_latest; with gnome; [ 
+    [ pkgs.writeShellScriptBin "dev" ./dev.sh ]
     htop
     bottom
     bottles

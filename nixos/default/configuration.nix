@@ -155,6 +155,7 @@
 
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+   (import ../modules/dev.nix {inherit pkgs; })
     brave
     vscode
     sassc

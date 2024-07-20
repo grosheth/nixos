@@ -4,7 +4,6 @@ let
 in
 {
   imports = [
-    ./dev.nix
     # ./i3.nix
     ./bspwm.nix
     ./git.nix
