@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; with nodePackages_latest; with gnome; [ 
-    [ pkgs.writeShellScriptBin "dev" ./dev.sh ]
+    (writeShellScriptBin "dev" (builtins.readFile ./dev))
     htop
     bottom
     bottles
@@ -34,5 +34,5 @@
     nitch
     lynx
     neovim
-  ];
+  ]; 
 }
