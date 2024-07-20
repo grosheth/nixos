@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; with nodePackages_latest; with gnome; [
+   (import ../../dev.nix {inherit pkgs; })
     htop
     bottom
     bottles
