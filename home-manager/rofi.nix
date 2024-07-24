@@ -13,7 +13,7 @@
       show-icons = true;
       display-drun = "";
       disable-history = false;
-      combi-modi = "window,drun,ssh,Project:~/nixos/home-manager/packages/tools/rofi-list.sh";
+      combi-modi = "Project:~/nixos/scripts/rofi-projects.sh";
       modi = "combi";
     };
   };
