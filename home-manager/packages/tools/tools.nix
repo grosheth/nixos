@@ -1,7 +1,8 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; with nodePackages_latest; with gnome; [ 
-    (writeShellScriptBin "dev" (builtins.readFile ./dev))
+    (writeShellScriptBin "dev" (builtins.readFile ./dev.sh))
+    (writeShellScriptBin "rofi-list" (builtins.readFile ./rofi-list.sh))
     htop
     bottom
     bottles
