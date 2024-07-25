@@ -61,12 +61,8 @@ generate_rofi_menu() {
 }
 
 open_project() {
-	kitty -d
-	if [ -f ~/${PATHNAME}/"${PICKED_ENTRY}"/dev.sh ]; then
-		bash ~/${PATHNAME}/"${PICKED_ENTRY}"/dev.sh
-	else
-		nvim ~/${PATHNAME}/"${PICKED_ENTRY}"
-	fi
+	command="if [ -f ~/${PATHNAME}/"${PICKED_ENTRY}"/dev.sh ]; then bash ~/${PATHNAME}/"${PICKED_ENTRY}"/dev.sh; else nvim ~/${PATHNAME}/"${PICKED_ENTRY}"; fi"
+	kitty --detach "${command}"
 	return 0
 }
 
