@@ -12,6 +12,7 @@ readonly POSITION=0
 readonly WIDTH=0
 readonly XOFF=0
 readonly YOFF=0
+readonly PATHNAME='work'
 
 declare PICKED_ENTRY=""
 
@@ -45,7 +46,7 @@ parse_args() {
 }
 
 determine_project_list() {
-	PROJECT_LIST=$(ls -rt ~/work)
+	PROJECT_LIST=$(ls -rt ~/${PATHNAME})
 
 	return 0
 }
@@ -60,10 +61,11 @@ generate_rofi_menu() {
 }
 
 open_project() {
-	if [ -f ~/work/"${PICKED_ENTRY}"/dev.sh ]; then
-		bash ~/work/"${PICKED_ENTRY}"/dev.sh
+	kitty -d
+	if [ -f ~/${PATHNAME}/"${PICKED_ENTRY}"/dev.sh ]; then
+		bash ~/${PATHNAME}/"${PICKED_ENTRY}"/dev.sh
 	else
-		nvim ~/work/"${PICKED_ENTRY}"
+		nvim ~/${PATHNAME}/"${PICKED_ENTRY}"
 	fi
 	return 0
 }
