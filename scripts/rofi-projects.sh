@@ -13,9 +13,6 @@ readonly WIDTH=0
 readonly XOFF=0
 readonly YOFF=0
 
-declare CONNECTION_LIST=""
-declare CONNECTION_STATE=false
-declare MENU_TITLE=""
 declare PICKED_ENTRY=""
 
 usage() {
@@ -48,13 +45,13 @@ parse_args() {
 }
 
 determine_project_list() {
-	while IFS='' read -r line; do PROJECT_LIST+=("$line"); done < <(ls -rt ~/work)
+	PROJECT_LIST=$(ls -rt ~/work)
 
 	return 0
 }
 
 generate_rofi_menu() {
-	local length=${#PROJECT_LIST[@]}
+	local length="$(($(echo "${PROJECT_LIST}" | wc -l) + 2))"
 	local layout=(-location "${POSITION}" -width "${WIDTH}" -xoffset "${XOFF}" -yoffset "${YOFF}" -lines "${length}")
 
 	PICKED_ENTRY=$(echo -e "${PROJECT_LIST[@]}" | rofi -dmenu -p "PROJECT" "${layout[@]}" -font "${FONT}")
