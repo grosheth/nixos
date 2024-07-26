@@ -12,7 +12,7 @@ readonly POSITION=0
 readonly WIDTH=0
 readonly XOFF=0
 readonly YOFF=0
-readonly PATHNAME='work'
+readonly PROJECTS_PATH="${HOME}/work"
 
 declare PICKED_ENTRY=""
 
@@ -46,10 +46,15 @@ parse_args() {
 }
 
 determine_project_list() {
-	PROJECT_LIST=$(ls -rt ~/${PATHNAME})
+	PROJECT_LIST=$(ls -rt "${PROJECTS_PATH}")
 
 	return 0
 }
+
+# obtaining_language_logo() {
+# 	echo "TODO"
+# 	REPO_LANG=$()
+# }
 
 generate_rofi_menu() {
 	local length="$(($(echo "${PROJECT_LIST}" | wc -l) + 2))"
@@ -61,7 +66,8 @@ generate_rofi_menu() {
 }
 
 open_project() {
-	command="if [ -f ~/${PATHNAME}/"${PICKED_ENTRY}"/dev.sh ]; then bash ~/${PATHNAME}/"${PICKED_ENTRY}"/dev.sh; else nvim ~/${PATHNAME}/"${PICKED_ENTRY}"; fi"
+	# command="[ -f ${PROJECTS_PATH}/${PICKED_ENTRY}/dev.sh ] && bash ${PROJECTS_PATH}/${PICKED_ENTRY}/dev.sh || nvim ${PROJECTS_PATH}/${PICKED_ENTRY}"
+	command="nvim ${PROJECTS_PATH}/${PICKED_ENTRY}"
 	kitty --detach "${command}"
 	return 0
 }
@@ -72,6 +78,7 @@ main() {
 	fi
 
 	determine_project_list
+	# obtaining_language_logo
 	generate_rofi_menu
 	open_project
 
