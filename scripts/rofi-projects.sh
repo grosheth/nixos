@@ -13,6 +13,12 @@ readonly WIDTH=0
 readonly XOFF=0
 readonly YOFF=0
 readonly PROJECTS_PATH="${HOME}/work"
+golang=" "
+nixos=""
+branch=""
+lua="󰢱 "
+nodejs=" "
+python=" "
 
 declare PICKED_ENTRY=""
 
@@ -51,10 +57,9 @@ determine_project_list() {
 	return 0
 }
 
-# obtaining_language_logo() {
-# 	echo "TODO"
-# 	REPO_LANG=$()
-# }
+obtaining_language_logo() {
+	REPO_LANG=$(onefetch)
+}
 
 generate_rofi_menu() {
 	local length="$(($(echo "${PROJECT_LIST}" | wc -l) + 2))"
@@ -67,8 +72,7 @@ generate_rofi_menu() {
 
 open_project() {
 	# command="[ -f ${PROJECTS_PATH}/${PICKED_ENTRY}/dev.sh ] && bash ${PROJECTS_PATH}/${PICKED_ENTRY}/dev.sh || nvim ${PROJECTS_PATH}/${PICKED_ENTRY}"
-	command="nvim ${PROJECTS_PATH}/${PICKED_ENTRY}"
-	kitty --detach "${command}"
+	kitty --detach nvim "${PROJECTS_PATH}"/"${PICKED_ENTRY}"
 	return 0
 }
 
