@@ -11,8 +11,8 @@
       "alt + Return" = "kitty";
       "alt + @space" = "rofi -show drun";
       "alt + q" = "rofi -show ssh";
-      "alt + v" = "bash ~/nixos/scripts/rofi-vpn.sh";
-      "alt + p" = "bash ~/nixos/scripts/rofi-projects.sh";
+      "alt + v" = "bash rofi-vpn";
+      "alt + p" = "bash rofi-projects";
       "alt + d" = "dmenu_run";
       "alt + c" = "bspc node -c";
       "alt + t" = "bspc node -t tiled";

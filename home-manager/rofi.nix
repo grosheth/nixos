@@ -13,8 +13,8 @@
       show-icons = true;
       display-drun = "";
       disable-history = false;
-      combi-modi = "Project:~/nixos/scripts/rofi-projects.sh";
-      modi = "combi";
+      # combi-modi = "Project:~/nixos/scripts/rofi-projects.sh";
+      # modi = "combi";
     };
   };
 }

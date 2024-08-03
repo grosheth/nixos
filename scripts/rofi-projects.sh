@@ -13,6 +13,7 @@ readonly WIDTH=0
 readonly XOFF=0
 readonly YOFF=0
 readonly PROJECTS_PATH="${HOME}/work"
+
 golang=" "
 nixos=""
 branch=""
@@ -57,9 +58,15 @@ determine_project_list() {
 	return 0
 }
 
-obtaining_language_logo() {
-	REPO_LANG=$(onefetch)
-}
+# obtaining_language_logo() {
+# 	for project in "${PROJECT_LIST}"; do
+# 		REPO_LANG=$(onefetch "${PROJECT_PATH}/${project}" | grep -A 5 "Languages")
+# 		if [ $? != 1 ]; then
+# 			echo -e "test"
+# 			# Add symbol next to the project in string
+# 		fi
+# 	done
+# }
 
 generate_rofi_menu() {
 	local length="$(($(echo "${PROJECT_LIST}" | wc -l) + 2))"
