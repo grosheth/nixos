@@ -30,6 +30,7 @@
     vhs
     slides
     wine-staging
+    minecraft
     asciiquarium
     onefetch
     nitch
