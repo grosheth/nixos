@@ -52,9 +52,7 @@ parse_args() {
 }
 
 determine_project_list() {
-	# if [ -z "${PROJECT_LIST}" ]; then
 	PROJECT_LIST=$(ls -rt "${PROJECTS_PATH}")
-	# fi
 
 	return 0
 }
