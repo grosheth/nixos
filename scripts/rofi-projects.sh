@@ -14,9 +14,8 @@ readonly XOFF=0
 readonly YOFF=0
 readonly PROJECTS_PATH="${HOME}/work"
 
-golang=" "
-nixos=""
-branch=""
+go=" "
+nix=""
 lua="󰢱 "
 nodejs=" "
 python=" "
@@ -53,20 +52,37 @@ parse_args() {
 }
 
 determine_project_list() {
+	# if [ -z "${PROJECT_LIST}" ]; then
 	PROJECT_LIST=$(ls -rt "${PROJECTS_PATH}")
+	# fi
 
 	return 0
 }
 
-# obtaining_language_logo() {
-# 	for project in "${PROJECT_LIST}"; do
-# 		REPO_LANG=$(onefetch "${PROJECT_PATH}/${project}" | grep -A 5 "Languages")
-# 		if [ $? != 1 ]; then
-# 			echo -e "test"
-# 			# Add symbol next to the project in string
-# 		fi
-# 	done
-# }
+obtaining_language_logo() {
+	for project in ${PROJECT_LIST}; do
+		REPO_LANG=$(onefetch "${PROJECTS_PATH}/${project}" | grep -A 5 "Languages" || exit 0)
+		if [ $? != 1 ]; then
+			new_project=$project
+			if [[ ${REPO_LANG} == *"Python"* ]]; then
+				new_project="${new_project} ${python}"
+			fi
+			if [[ ${REPO_LANG} == *"Go"* ]]; then
+				new_project="${new_project} ${go}"
+			fi
+			if [[ ${REPO_LANG} == *"JavaScript"* ]]; then
+				new_project="${new_project} ${nodejs}"
+			fi
+			if [[ ${REPO_LANG} == *"Nix"* ]]; then
+				new_project="${new_project} ${nix}"
+			fi
+			if [[ ${REPO_LANG} == *"Lua"* ]]; then
+				new_project="${new_project} ${lua}"
+			fi
+		fi
+		PROJECT_LIST="${PROJECT_LIST//$project/$new_project}"
+	done
+}
 
 generate_rofi_menu() {
 	local length="$(($(echo "${PROJECT_LIST}" | wc -l) + 2))"
@@ -89,7 +105,7 @@ main() {
 	fi
 
 	determine_project_list
-	# obtaining_language_logo
+	obtaining_language_logo
 	generate_rofi_menu
 	open_project
 
