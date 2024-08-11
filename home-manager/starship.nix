@@ -1,98 +1,94 @@
 { ... }:
 let
+  arrow = "";
   pad = {
     left = "";
     right = "";
   };
+  langs = "$nodejs$python$rust$golang$lua";
 	colors = {
-    # black 
-		color = "#545454";
-		# color = "#bd92f8";
-		color2 = "#ff78c5";
-		# color2 = "#ff5555"; 
-    # green
-		color3 = "#50fa7b";
-    # purple
-		# color3 = "#bd92f8";
-    # yellow
-		# color3 = "#f0fa8b";
+		black = "#545454";
+		pink = "#ff78c5";
+		green = "#50fa7b";
+		purple = "#bd92f8";
+		yellow = "#f0fa8b";
 		white = "#f8f8f2";
-		black = "#1e1f28";
-    # Tokyonight
-		# color = "#f7768e";
-		# color2 = "#e0af68"; 
-		# color3 = "#9ece6a";
-		# white = "#7aa2f7";
-		# black = "#1d202f";
+		bg = "#1e1f28";
 	};
 in
 {
   programs.starship = {
     enable = true;
     settings = {
-      add_newline = true;
-      format = "[](${colors.color})$os$username[](bg:${colors.color2} fg:${colors.color})$directory[](fg:${colors.color2} bg:${colors.color3})$git_branch[](fg:${colors.color3} bg:${colors.color3})$nodejs$python$rust$golang$lua[](fg:${colors.color3} bg:${colors.white})$time[ ](fg:${colors.white})$line_break[ ](fg:${colors.white})";
+      format = ''
+        $os$username $directory $time $git_branch ${langs} $nix_shell
+        ${arrow} 
+        '';
       continuation_prompt = "[∙](bright-black) ";
       line_break = { disabled = false; };
+      os = {
+        disabled = false;
+        style = "bg:${colors.black} fg:${colors.white}";
+        format = "[[${pad.left}](bg:${colors.bg} fg:${colors.black})$symbol]($style)";
+      };
 			username = {
 				show_always = true;
-				style_user = "bg:${colors.color} fg:${colors.black}";
-				format = "[$user ]($style)";
+				style_user = "bg:${colors.black} fg:${colors.bg}";
+				format = "[$user[${pad.right}](bg:${colors.bg} fg:${colors.black})]($style)";
 			};
-      nix_shell = {
-        disabled = false;
-        format = "[${pad.left}](fg:${colors.white})[ ](bg:${colors.white} fg:${colors.white})[${pad.right}](fg:${colors.white}) ";
-      };
-      container = {
-        symbol = " 󰏖";
-        format = "[$symbol ](yellow dimmed)";
-      };
       directory = {
-				style = "bg:${colors.color2} fg:${colors.black}";
-        format = "[ $path ]($style)";
+				style = "bg:${colors.pink} fg:${colors.bg}";
+        format = "[[${pad.left}](bg:${colors.bg} fg:${colors.pink}) $path[${pad.right}](bg:${colors.bg} fg:${colors.pink})]($style)";
         truncation_length = 3;
         truncation_symbol = "~/󰇘/";
       };
+      nix_shell = {
+        disabled = false;
+        style = "bg:${colors.purple} fg:${colors.bg}";
+        format = "[[${pad.left}](bg:${colors.bg} fg:${colors.purple}) NIX SHELL[${pad.right}](bg:${colors.bg} fg:${colors.purple})]($style)";
+      };
       git_branch = {
         symbol = "";
-        format = "[ $symbol $branch](bg:${colors.color3} fg:${colors.black})(:$remote_branch)";
+        style = "bg:${colors.yellow} fg:${colors.bg}";
+        format = "[[${pad.left}](bg:${colors.bg} fg:${colors.yellow})$symbol $branch [${pad.right}](bg:${colors.bg} fg:${colors.yellow})]($style)(:$remote_branch)";
       };
-      os = {
-        disabled = false;
-        format = "$symbol";
-      };
+			time = {
+				disabled = false;
+				time_format = "%Y-%m-%d %R:%S";
+				style = "bg:${colors.white} fg:${colors.bg}";
+				format = "[[${pad.left}](bg:${colors.bg} fg:${colors.white})󰔟 $time[${pad.right}](bg:${colors.bg} fg:${colors.white})]($style)";	
+			};
+			python = {
+				symbol = " ";
+				format = "[[${pad.left}](bg:${colors.bg} fg:${colors.green})$symbol$pyenv_prefix($version)(\($virtualenv\)) [${pad.right}](bg:${colors.bg} fg:${colors.green})](bg:${colors.green} fg:${colors.black})";
+			};
+			nodejs = {
+				symbol = " ";
+				format = "[[${pad.left}](bg:${colors.bg} fg:${colors.green})$symbol($version)[${pad.right}](bg:${colors.bg} fg:${colors.green})](bg:${colors.green} fg:${colors.black})";
+			};
+			lua = {
+				symbol = "󰢱 ";
+				format = "[[${pad.left}](bg:${colors.bg} fg:${colors.green})$symbol($version)[${pad.right}](bg:${colors.bg} fg:${colors.green})](bg:${colors.green} fg:${colors.black})";
+			};
+      golang = {
+				symbol = " ";
+				format = "[[${pad.left}](bg:${colors.bg} fg:${colors.green})$symbol($version)[${pad.right}](bg:${colors.bg} fg:${colors.green})](bg:${colors.green} fg:${colors.black})";
+			};
       os.symbols = {
         Arch = "[ ](fg:bright-color)";
         Debian = "[ ](fg:red)";
         EndeavourOS = "[ ](fg:purple)";
         Fedora = "[ ](fg:color bg:#246449)";
-        NixOS = "[ ](fg:${colors.white} bg:${colors.color})";
+        NixOS = "[ ](fg:${colors.white} bg:${colors.black})";
         openSUSE = "[ ](fg:green)";
         SUSE = "[ ](fg:green)";
         Ubuntu = "[ ](fg:bright-purple)";
       };
-			time = {
-				disabled = false;
-				time_format = "%R";
-				style = "bg:${colors.white} fg:${colors.black}";
-				format = "[ ♥ $time ]($style)";	
-			};
-			python = {
-				symbol = " ";
-				format = "[$symbol$pyenv_prefix($version )(\($virtualenv\) )](bg:${colors.color3} fg:${colors.black})";
-			};
-			nodejs = {
-				symbol = " ";
-				format = "[$symbol($version)](bg:${colors.color3} fg:${colors.black})";
-			};
-			lua = {
-				symbol = "󰢱 ";
-				format = "[$symbol($version)](bg:${colors.color3} fg:${colors.black})";
-			};
-      golang = {
-				symbol = " ";
-				format = "[$symbol($version)](bg:${colors.color3} fg:${colors.black})";
-			};
+      container = {
+        style = "bg:${colors.black} fg:${colors.bg}";
+        symbol = " 󰏖";
+        format = "[$symbol ](style)";
+      };
     };
   };
 }

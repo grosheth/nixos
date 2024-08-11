@@ -6,7 +6,7 @@
     commands = let
       trash = ''''${{
         set -f
-        gio trash $fx
+        rm $fx
       }}'';
     in {
       trash = trash;
@@ -14,13 +14,13 @@
 
       open = ''''${{
         case $(file --mime-type -Lb $f) in
-            text/*) lf -remote "send $id \$$EDITOR \$fx";;
+            text/*) lf -remote "send $id \nvim \$fx";;
             *) for f in $fx; do $OPENER "$f" > /dev/null 2> /dev/null & done;;
         esac
       }}'';
 
       fzf = ''''${{
-        res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location')"
+        res="$(find . -maxdepth 3 | fzf --reverse --header='Jump to location')"
         if [ -n "$res" ]; then
             if [ -d "$res" ]; then
                 cmd="cd"
@@ -52,10 +52,6 @@
         rm -rf $1
       }}'';
 
-      pager = ''
-        $bat --paging=always "$f"
-      '';
-
       on-select = ''&{{
         lf -remote "send $id set statfmt \"$(eza -ld --color=always "$f")\""
       }}'';
@@ -71,7 +67,6 @@
       "." = "set hidden!";
       "<delete>" = "trash";
       "<enter>" = "open";
-      V = "pager";
       f = "fzf";
     };
 
@@ -89,11 +84,6 @@
     };
 
     extraConfig = ''
-      $mkdir -p ~/.trash
-
-      &${pkgs.ctpv}/bin/ctpv -s $id
-      cmd on-quit %${pkgs.ctpv}/bin/ctpv -e $id
-      set cleaner ${pkgs.ctpv}/bin/ctpvclear
     '';
   };
 

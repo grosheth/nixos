@@ -1,4 +1,4 @@
-{ config,  pkgs, username, ... }:
+{ pkgs, username, ... }:
 let
   homeDirectory = "/home/${username}";
 in
@@ -10,6 +10,7 @@ in
     ./lf.nix
     ./neovim.nix
     ./packages.nix
+    # ./picom.nix
     ./sh.nix
     ./starship.nix
     ./theme.nix

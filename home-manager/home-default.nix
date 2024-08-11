@@ -4,14 +4,19 @@ let
 in
 {
   imports = [
+    # ./i3.nix
+    ./bspwm.nix
     ./git.nix
-    # ./kitty.nix
-    ./i3.nix
+    ./kitty.nix
     ./lf.nix
     ./neovim.nix
     ./packages.nix
+    ./picom.nix
+    # ./polybar.nix
+    ./rofi.nix
     ./sh.nix
     ./starship.nix
+    ./sxhkd.nix
     ./theme.nix
   ];
   news.display = "show";
