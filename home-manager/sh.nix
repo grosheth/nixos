@@ -66,31 +66,31 @@ in
         }
         nitch
       '';
-      envExtra = '' 
-        _PROJECTS_PATH="''${HOME}/work"
-        for project in $(ls -rt ''${PROJECT_PATH}); do
-          REPO_LANG=$(onefetch "''${PROJECTS_PATH}/''${project}" | grep -A 5 "Languages" || exit 0)
-          if [ $? != 1 ]; then
-            new_project=$project
-            if [[ ''${REPO_LANG} == *"Python"* ]]; then
-              new_project="''${new_project} ''${PYTHON}"
-            fi
-            if [[ ''${REPO_LANG} == *"Go"* ]]; then
-              new_project="''${new_project} ''${GO}"
-            fi
-            if [[ ''${REPO_LANG} == *"JavaScript"* ]]; then
-              new_project="''${new_project} ''${NODEJS}"
-            fi
-            if [[ ''${REPO_LANG} == *"Nix"* ]]; then
-              new_project="''${new_project} ''${NIX}"
-            fi
-            if [[ ''${REPO_LANG} == *"Lua"* ]]; then
-              new_project="''${new_project} ''${LUA}"
-            fi
-          fi
-          _PROJECT_LIST="''${PROJECT_LIST/''$project/''$new_project}"
-        done
-      '';
+      # envExtra = '' 
+      #   _PROJECTS_PATH="''${HOME}/work"
+      #   for project in $(ls -rt ''${PROJECT_PATH}); do
+      #     REPO_LANG=$(onefetch "''${PROJECTS_PATH}/''${project}" | grep -A 5 "Languages" || exit 0)
+      #     if [ $? != 1 ]; then
+      #       new_project=$project
+      #       if [[ ''${REPO_LANG} == *"Python"* ]]; then
+      #         new_project="''${new_project} ''${PYTHON}"
+      #       fi
+      #       if [[ ''${REPO_LANG} == *"Go"* ]]; then
+      #         new_project="''${new_project} ''${GO}"
+      #       fi
+      #       if [[ ''${REPO_LANG} == *"JavaScript"* ]]; then
+      #         new_project="''${new_project} ''${NODEJS}"
+      #       fi
+      #       if [[ ''${REPO_LANG} == *"Nix"* ]]; then
+      #         new_project="''${new_project} ''${NIX}"
+      #       fi
+      #       if [[ ''${REPO_LANG} == *"Lua"* ]]; then
+      #         new_project="''${new_project} ''${LUA}"
+      #       fi
+      #     fi
+      #     _PROJECT_LIST="''${PROJECT_LIST/''$project/''$new_project}"
+      #   done
+      # '';
       shellAliases = aliases;
     };
 
