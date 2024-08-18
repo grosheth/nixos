@@ -7,5 +7,6 @@
     gcc
     eslint
 		python3
+    lua
   ];
 }
