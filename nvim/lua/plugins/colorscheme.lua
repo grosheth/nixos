@@ -17,11 +17,11 @@ return {
   -- },
 
   -- Dracula
-  {
-    "mofiqul/dracula.nvim",
-    lazy = false,
-    priority = 1000,
-  },
+  -- {
+  --   "mofiqul/dracula.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  -- },
   {
     "LazyVim/LazyVim",
     opts = {
