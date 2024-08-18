@@ -17,7 +17,7 @@ let
 		blue = "#4eb8ca";
 		blue_alt = "#91b9c7";
 		white = "#f8f8f2";
-		bg = "#1e1f28";
+		bg = "#2b2b2f";
 	};
 in
 {
@@ -32,17 +32,17 @@ in
       line_break = { disabled = false; };
       os = {
         disabled = false;
-        style = "bg:${colors.red} fg:${colors.white}";
-        format = "[$symbol NIXOS]($style)";
+        style = "bg:${colors.red} fg:${colors.bg}";
+        format = "[$symbol NIXOS ]($style)";
       };
 			username = {
 				show_always = true;
-				style_user = "bg:${colors.yellow}";
-				format = "[$user]($style)";
+				style_user = "bg:${colors.yellow} fg:${colors.bg}";
+				format = "[ $user ]($style)";
 			};
       directory = {
 				style = "bg:${colors.green} fg:${colors.bg}";
-        format = "[  $path]($style)";
+        format = "[  $path ]($style)";
         truncation_length = 3;
         truncation_symbol = "~/󰇘/";
       };
@@ -60,23 +60,23 @@ in
 				disabled = false;
 				time_format = "%Y-%m-%d %R:%S";
 				style = "bg:${colors.pink} fg:${colors.bg}";
-				format = "[󰔟 $time]($style)";	
+				format = "[󰔟 $time ]($style)";
 			};
 			python = {
 				symbol = " ";
-				format = "[$symbol$pyenv_prefix($version)(\($virtualenv\))](bg:${colors.blue} fg:${colors.black})";
+				format = "[$symbol$pyenv_prefix($version)(\($virtualenv\)) ](bg:${colors.blue})";
 			};
 			nodejs = {
 				symbol = " ";
-				format = "[$symbol($version)](bg:${colors.blue} fg:${colors.black})";
+				format = "[$symbol($version) ](bg:${colors.blue} fg:${colors.bg})";
 			};
 			lua = {
 				symbol = "󰢱 ";
-				format = "[$symbol($version)](bg:${colors.blue} fg:${colors.black})";
+				format = "[$symbol($version) ](bg:${colors.blue} fg:${colors.bg})";
 			};
       golang = {
 				symbol = " ";
-				format = "[$symbol($version)](bg:${colors.blue})";
+				format = "[$symbol($version) ](bg:${colors.blue} fg:${colors.bg})";
 			};
       os.symbols = {
         Arch = "[ ](fg:bright-color)";
