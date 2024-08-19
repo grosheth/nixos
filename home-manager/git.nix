@@ -4,11 +4,9 @@ let
 in {
   programs.git = {
     enable = true;
-    #TODO
-    # delta = {
-    #   enable = false;
-    # };
-    #TODO
+    delta = {
+      enable = false;
+    };
     extraConfig = {
       color.ui = true;
       core.editor = "nvim";
