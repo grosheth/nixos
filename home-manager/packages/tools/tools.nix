@@ -34,7 +34,6 @@
     onefetch
     nitch
     lynx
-    neovim
     brave
   ]; 
 }

@@ -1,10 +1,10 @@
 return {
 
   -- Imports for Treesitter
-  { import = "lazyvim.plugins.extras.lang.go" },
-  { import = "lazyvim.plugins.extras.lang.json" },
-  { import = "lazyvim.plugins.extras.lang.yaml" },
-  { import = "lazyvim.plugins.extras.lang.python" },
+  -- { import = "lazyvim.plugins.extras.lang.go" },
+  -- { import = "lazyvim.plugins.extras.lang.json" },
+  -- { import = "lazyvim.plugins.extras.lang.yaml" },
+  -- { import = "lazyvim.plugins.extras.lang.python" },
   -- add more treesitter parsers
   {
     "nvim-treesitter/nvim-treesitter",
