@@ -1,23 +1,25 @@
 { ... }:
 let
-  arrow = "";
+  arrow = " ";
+  arrow_no_space = "";
   pad = {
     left = "";
     right = "";
   };
   langs = "$nodejs$python$rust$golang$lua";
 	colors = {
-		black = "#69735";
-		pink = "#fbaed2";
+		black = "#212026";
+		pink = "#cea2ca";
 		red = "#ef6787";
-		green = "#47ba99";
-		purple = "#bd92f8";
-		yellow = "#f5c791";
-		cyan = "#49bdb0";
-		blue = "#4eb8ca";
-		blue_alt = "#91b9c7";
+		green = "#49bdb0";
+		purple = "#9d81ba";
+		yellow = "#eed891";
+		cyan = "#6bd9db";
+		blue = "#41b0f3";
+		blue_alt = "#2a57cc";
 		white = "#f8f8f2";
-		bg = "#2b2b2f";
+		bg = "#212026";
+		fg = "#e6e6e8";
 	};
 in
 {
@@ -25,8 +27,8 @@ in
     enable = true;
     settings = {
       format = ''
-        [${pad.left}](bg:${colors.bg} fg:${colors.red})$os[${arrow}](bg:${colors.yellow} fg:${colors.red})$username[${arrow}](bg:${colors.green} fg:${colors.yellow})$directory[${arrow}](bg:${colors.cyan} fg:${colors.green})$git_branch[${arrow}](bg:${colors.blue} fg:${colors.cyan})${langs}[${arrow}](bg:${colors.pink} fg:${colors.blue})$nix_shell[${arrow}](bg:${colors.pink} fg:${colors.pink})$time[${arrow}](bg:${colors.bg} fg:${colors.pink})
-        ${arrow} 
+        [${pad.left}](bg:${colors.bg} fg:${colors.red})$os[${arrow}](bg:${colors.yellow} fg:${colors.red})$username[${arrow}](bg:${colors.green} fg:${colors.yellow})$directory[${arrow}](bg:${colors.cyan} fg:${colors.green})$git_branch[${arrow}](bg:${colors.blue} fg:${colors.cyan})${langs}[${arrow}](bg:${colors.pink} fg:${colors.blue})$time[${arrow}](bg:${colors.bg} fg:${colors.pink})
+        ${arrow_no_space} 
         '';
       continuation_prompt = "[∙](bright-black) ";
       line_break = { disabled = false; };
@@ -38,11 +40,11 @@ in
 			username = {
 				show_always = true;
 				style_user = "bg:${colors.yellow} fg:${colors.bg}";
-				format = "[ $user ]($style)";
+				format = "[$user ]($style)";
 			};
       directory = {
 				style = "bg:${colors.green} fg:${colors.bg}";
-        format = "[  $path ]($style)";
+        format = "[ $path ]($style)";
         truncation_length = 3;
         truncation_symbol = "~/󰇘/";
       };
@@ -54,7 +56,7 @@ in
       git_branch = {
         symbol = "";
         style = "bg:${colors.cyan} fg:${colors.bg}";
-        format = "[ $symbol $branch ]($style)(:$remote_branch)";
+        format = "[$symbol $branch ]($style)(:$remote_branch)";
       };
 			time = {
 				disabled = false;
