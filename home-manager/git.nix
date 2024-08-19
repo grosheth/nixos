@@ -5,9 +5,9 @@ in {
   programs.git = {
     enable = true;
     #TODO
-    delta = {
-      enable = false;
-    };
+    # delta = {
+    #   enable = false;
+    # };
     #TODO
     extraConfig = {
       color.ui = true;
