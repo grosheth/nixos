@@ -105,7 +105,7 @@ let
     };
 
     home.file."./.config/nvim/" = {
-      source = ../nvim-kickstart;
+      source = ../nvim;
       recursive = true;
     };
   }
