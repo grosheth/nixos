@@ -80,12 +80,11 @@
       #persistencedSha256 = "sha256-11tLSY8uUIl4X/roNnxf5yS2PQvHvoNjnd2CB67e870=";
       # patches = [ rcu_patch ];
   
-  # Enable OpenGL
-  hardware.opengl = {
+  # Enable Graphics
+  hardware.graphics = {
     enable = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
-
 
   services.xserver = {
     enable = true;
