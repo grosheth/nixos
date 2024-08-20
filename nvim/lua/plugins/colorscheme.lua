@@ -1,17 +1,17 @@
 return { 
   
   -- Kaolin
-  -- { dir = "~/work/kaolin.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd([[colorscheme kaolin]])
-  --   end,
-  --   "LazyVim/LazyVim",
-  --   opts = {
-  --     colorscheme = "kaolin",
-  --   },
-  -- },
+  { dir = "~/work/kaolin.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd([[colorscheme kaolin]])
+    end,
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "kaolin",
+    },
+  },
 
   -- Tokyonight
   -- {
@@ -27,19 +27,6 @@ return {
   --   "LazyVim/LazyVim",
   --   opts = {
   --     colorscheme = "tokyonight",
-  --   },
-  -- },
-
-  -- Dracula
-  -- {
-  --   "mofiqul/dracula.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  -- },
-  -- {
-  --   "LazyVim/LazyVim",
-  --   opts = {
-  --     colorscheme = "dracula",
   --   },
   -- },
 
