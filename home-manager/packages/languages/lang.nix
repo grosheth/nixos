@@ -6,7 +6,7 @@
     go
     gcc
     eslint
-		python3
+    python3
     lua
   ];
 }

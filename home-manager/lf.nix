@@ -78,7 +78,7 @@
       cursorpreviewfmt = "";
     };
 
-    #TODO
+    #This created an error while building retry eventually
     # previewer = {
     #   keybinding = "i";
     #   source = "${pkgs.ctpv}/bin/ctpv";
