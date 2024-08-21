@@ -3,7 +3,7 @@
   xsession = {
     enable = true;
     windowManager.bspwm = {
-      enable = true;
+    enable = true;
       settings = {
         border_width = 2;
         window_gap = 15;
@@ -33,7 +33,7 @@
         ];
       };
       extraConfig = ''
-        feh --bg-scale /home/salledelavage/wallpapers/gruvbox_sekiro.png
+        feh --bg-scale /home/salledelavage/wallpapers/gruvbox_disco_elysium.png
         bash /home/salledelavage/.screenlayout/screen_setup.sh
         picom
         xrandr --output HDMI-0 --pos 2560x0

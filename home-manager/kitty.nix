@@ -8,8 +8,9 @@
   programs.kitty = {
     enable = true;
     # theme = "Kaolin Temple";
-    # theme = "Kaolin Dark";
-    theme = "Kaolin Galaxy";
+    theme = "Kaolin Dark";
+    # theme = "Kaolin Aurora";
+    # theme = "Kaolin Galaxy";
     font = {
       name = "JetBrainsMono Nerd Font Mono";
       size = 14; 
