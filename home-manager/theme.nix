@@ -8,6 +8,7 @@ let
     "FantasqueSansMono"
     "FiraCode"
     "Mononoki"
+    "Iosevka"
   ]; });
 
   cursor-theme = "Qogir";
