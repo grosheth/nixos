@@ -39,6 +39,7 @@ vim.keymap.set('n', '<leader>l', ':Lazy<CR>', { desc = 'Open Lazy' })
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
 
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
   -- LSP Plugins
   {

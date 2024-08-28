@@ -11,14 +11,14 @@ let
 		black = "#212026";
 		pink = "#cea2ca";
 		red = "#ef6787";
-		green = "#49bdb0";
+		green = "#6dd797";
 		purple = "#9d81ba";
 		yellow = "#eed891";
-		cyan = "#6bd9db";
-		blue = "#41b0f3";
+		cyan = "#0d9c94";
+		blue = "#0bc9cf";
 		blue_alt = "#2a57cc";
 		white = "#f8f8f2";
-		bg = "#212026";
+		bg = "#18181b";
 		fg = "#e6e6e8";
 	};
 in

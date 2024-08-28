@@ -154,13 +154,12 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     brave
-    vscode
     sassc
     nerdfonts
     brightnessctl
     asusctl
     supergfxctl
-		gcc-unwrapped
+    gcc-unwrapped
     slurp
     wayshot
     libvdpau
@@ -191,16 +190,16 @@
     #nixos
     nh
     age
-
-		# Audio stuff
+    
+    # Audio stuff
     qpwgraph
     audacity
 
     # VPN
     openvpn
 
-		# ZSA Keyboard
-		wally-cli 
+    # ZSA Keyboard
+    wally-cli 
   ];
 
 

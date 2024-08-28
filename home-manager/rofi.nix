@@ -7,7 +7,7 @@
   programs.rofi = {
     enable = true;
     location = "center";
-    theme = "dracula";
+    theme = "kaolin";
     font = "JetBrainsMonoNerdFontMono-Regular";
     extraConfig = {
       show-icons = true;
