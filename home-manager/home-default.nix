@@ -18,6 +18,7 @@ in
     ./starship.nix
     ./sxhkd.nix
     ./theme.nix
+    ./zellij.nix
   ];
   news.display = "show";
 
