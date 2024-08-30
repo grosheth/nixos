@@ -43,10 +43,6 @@ return {
           row = 10,
           col = "50%",
         },
-        -- border = {
-        --   -- style = "none",
-        --   padding = { 2, 3 },
-        -- },
         size = {
           min_width = 60,
           width = "auto",
@@ -67,10 +63,6 @@ return {
           height = "auto",
           max_height = 15,
         },
-        -- border = {
-        --   -- style = "none",
-        --   padding = { 0, 3 },
-        -- },
         win_options = {
           winhighlight = { NormalFloat = "NormalFloat", FloatBorder = "NoiceCmdlinePopupBorder" },
         },
