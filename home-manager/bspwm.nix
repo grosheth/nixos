@@ -33,7 +33,7 @@
         ];
       };
       extraConfig = ''
-        feh --bg-scale /home/salledelavage/wallpapers/gruvbox_disco-elysium.png
+        feh --bg-scale /home/salledelavage/wallpapers/bebop.png
         bash /home/salledelavage/.screenlayout/screen_setup.sh
         picom
         xrandr --output HDMI-0 --pos 2560x0

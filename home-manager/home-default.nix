@@ -15,8 +15,8 @@ in
     # ./polybar.nix
     ./rofi.nix
     ./sh.nix
-    # ./starship.nix
-    ./starship-arrow.nix
+    ./starship.nix
+    # ./starship-arrow.nix
     ./sxhkd.nix
     ./theme.nix
     ./zellij.nix
