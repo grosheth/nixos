@@ -5,7 +5,6 @@
     nodejs
     go
     gcc
-    eslint
     python3
     lua
   ];
