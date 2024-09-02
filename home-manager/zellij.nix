@@ -22,19 +22,19 @@
       themes.kaolin.white = "#e6e6e8";
       themes.kaolin.orange = "#6bd9db";
     };
-    extraConfig = ''
-        {
-            theme "custom"
-            themes {
-                custom {
-                    fg "#e6e6e8"
-                }
-            }
-            plugins {
-                tab-bar location="zellij:tab-bar"
-                status-bar location="zellij:status-bar"
-            }
-        }
-    '';
+    # extraConfig = ''
+    #     {
+    #         theme "custom"
+    #         themes {
+    #             custom {
+    #                 fg "#e6e6e8"
+    #             }
+    #         }
+    #         plugins {
+    #             tab-bar location="zellij:tab-bar"
+    #             status-bar location="zellij:status-bar"
+    #         }
+    #     }
+    # '';
   };
 }

@@ -70,9 +70,5 @@ in
   };
 
   programs.home-manager.enable = true;
-
-  # Testing environment
-  # programs.home-manager.path = "$HOME/work/home-manager";
   home.stateVersion = "21.11";
-
 }
