@@ -5,7 +5,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      # url = "github:nix-community/home-manager";
+      # Testing environment for home-manager
+      url = "github:grosheth/home-manager/zellij-extraConfig";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     more-waita = {

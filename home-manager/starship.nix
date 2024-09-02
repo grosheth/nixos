@@ -26,9 +26,11 @@ in
   programs.starship = {
     enable = true;
     settings = {
-      format =  ''$os$username$directory'';
-      add_newline = false;
-      right_format = ''$all'';
+      format =  ''$os$username$directory$fill $all$time
+$character
+      '';
+      add_newline = true;
+      # right_format = ''$time$all'';
       continuation_prompt = "[∙](bright-black) ";
       line_break = { disabled = true; };
       os = {
@@ -55,7 +57,7 @@ in
       time = {
 	disabled = false;
 	time_format = "%m-%d %R";
-	style = "bg:${colors.bg} fg:${colors.cyan}";
+	style = "bg:${colors.bg} fg:${colors.blue}";
 	format = "[󰔟 $time ]($style)";
       };
       git_branch = {
@@ -69,7 +71,7 @@ in
       };
       python = {
 	symbol = " ";
-	format = "[$symbol$pyenv_prefix($version)(\($virtualenv\)) ](bg:${colors.bg} fg:${colors.blue})";
+	format = "[$symbol$pyenv_prefix($version)(\($virtualenv\)) ](bg:${colors.bg} fg:${colors.cyan})";
       };
       nodejs = {
 	symbol = " ";
@@ -77,7 +79,7 @@ in
       };
       lua = {
 	symbol = "󰢱 ";
-	format = "[$symbol($version) ](bg:${colors.bg} fg:${colors.yellow})";
+	format = "[$symbol($version) ](bg:${colors.bg} fg:${colors.blue_alt})";
       };
       golang = {
 	  symbol = " ";

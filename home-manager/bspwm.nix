@@ -33,7 +33,7 @@
         ];
       };
       extraConfig = ''
-        feh --bg-scale /home/salledelavage/wallpapers/bebop.png
+        feh --bg-scale /home/salledelavage/wallpapers/coffee.jpg
         bash /home/salledelavage/.screenlayout/screen_setup.sh
         picom
         xrandr --output HDMI-0 --pos 2560x0
