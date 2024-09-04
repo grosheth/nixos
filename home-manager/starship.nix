@@ -86,14 +86,14 @@ $character
 	  format = "[$symbol($version) ](bg:${colors.bg} fg:${colors.blue})";
 	};
       os.symbols = {
-        Arch = "[ ](fg:bright-color)";
-        Debian = "[ ](fg:red)";
-        EndeavourOS = "[ ](fg:purple)";
-        Fedora = "[ ](fg:color bg:#246449)";
+        Arch = "[ ](fg:${colors.blue})";
+        Debian = "[ ](fg:${colors.red})";
+        EndeavourOS = "[ ](fg:${colors.purple})";
+        Fedora = "[ ](fg:color bg:${colors.blue})";
         NixOS = "[](fg:${colors.white} bg:${colors.bg})";
-        openSUSE = "[ ](fg:green)";
-        SUSE = "[ ](fg:green)";
-        Ubuntu = "[ ](fg:bright-purple)";
+        openSUSE = "[ ](fg:${colors.green})";
+        SUSE = "[ ](fg:${colors.green})";
+        Ubuntu = "[ ](fg:${colord.purple}";
       };
       container = {
         style = "bg:${colors.black} fg:${colors.bg}";
