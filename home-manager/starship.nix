@@ -26,7 +26,7 @@ in
   programs.starship = {
     enable = true;
     settings = {
-      format =  ''$os$username$directory$fill $all$time
+      format =  ''$os$hostname$username$directory$fill $all$time
 $character
       '';
       add_newline = true;
@@ -36,7 +36,12 @@ $character
       os = {
         disabled = false;
         style = "bg:${colors.bg} fg:${colors.red}";
-        format = "[$symbol NIXOS ]($style)";
+        format = "[$symbol ]($style)";
+      };
+      hostname = {
+        ssh_only = false;
+        style = "fg:${colors.red} bg:${colors.bg}";
+        format = "[$ssh_symbol$hostname ]($style)";
       };
       username = {
 	show_always = true;
@@ -93,7 +98,7 @@ $character
         NixOS = "[](fg:${colors.white} bg:${colors.bg})";
         openSUSE = "[ ](fg:${colors.green})";
         SUSE = "[ ](fg:${colors.green})";
-        Ubuntu = "[ ](fg:${colord.purple}";
+        Ubuntu = "[ ](fg:${colors.purple}";
       };
       container = {
         style = "bg:${colors.black} fg:${colors.bg}";
