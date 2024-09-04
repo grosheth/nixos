@@ -35,5 +35,7 @@
     nitch
     lynx
     brave
+    rpi-imager
+    usbutils
   ]; 
 }

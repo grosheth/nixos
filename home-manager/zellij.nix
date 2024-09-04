@@ -18,9 +18,9 @@
       themes.kaolin.blue = "#0db9d7";
       themes.kaolin.yellow = "#eed891";
       themes.kaolin.magenta = "#cea2ca";
-      themes.kaolin.cyan = "#eed891";
+      themes.kaolin.cyan = "#6bd9db";
       themes.kaolin.white = "#e6e6e8";
-      themes.kaolin.orange = "#6bd9db";
+      themes.kaolin.orange = "#e55c74";
     };
     # extraConfig = ''
     #     {

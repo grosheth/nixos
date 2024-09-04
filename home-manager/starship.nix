@@ -83,7 +83,7 @@ $character
       };
       golang = {
 	  symbol = " ";
-	  format = "[$symbol($version) ](bg:${colors.blue} fg:${colors.bg})";
+	  format = "[$symbol($version) ](bg:${colors.bg} fg:${colors.blue})";
 	};
       os.symbols = {
         Arch = "[ ](fg:bright-color)";
