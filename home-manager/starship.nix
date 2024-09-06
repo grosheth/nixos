@@ -41,7 +41,7 @@ $character
       hostname = {
         ssh_only = false;
         style = "fg:${colors.red} bg:${colors.bg}";
-        format = "[$ssh_symbol$hostname ]($style)";
+        format = "[$hostname ]($style)";
       };
       username = {
 	show_always = true;

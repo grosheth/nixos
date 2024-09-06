@@ -8,8 +8,8 @@
   programs.kitty = {
     enable = true;
     # theme = "Kaolin Temple";
-    theme = "Kaolin Dark";
-    # theme = "Kaolin Aurora";
+    # theme = "Kaolin Dark";
+    theme = "Kaolin Aurora";
     # theme = "Kaolin Galaxy";
     font = {
       name = "JetBrainsMono Nerd Font Mono";
@@ -30,12 +30,14 @@
       "ctrl+right" = "neighboring_window right";
       "ctrl+up" = "neighboring_window up";
       "ctrl+down" = "neighboring_window down";
+
     };
     settings = {
       cursor_shape = "beam";
     };
     extraConfig = ''
       map f1 launch --allow-remote-control kitty +kitten broadcast
+      background #18181b
     '';
   };
 }
