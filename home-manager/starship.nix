@@ -15,8 +15,8 @@ let
     purple = "#9d81ba";
     yellow = "#eed891";
     cyan = "#0d9c94";
-    blue = "#0bc9cf";
-    blue_alt = "#2a57cc";
+    blue = "#4ca6e8";
+    blue_alt = "#0bc9cf";
     white = "#f8f8f2";
     bg = "#18181b";
     fg = "#e6e6e8";
