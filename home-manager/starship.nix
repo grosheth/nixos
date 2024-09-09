@@ -30,7 +30,6 @@ in
 $character
       '';
       add_newline = true;
-      # right_format = ''$time$all'';
       continuation_prompt = "[∙](bright-black) ";
       line_break = { disabled = true; };
       os = {
