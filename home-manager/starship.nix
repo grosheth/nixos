@@ -17,7 +17,7 @@ let
     cyan = "#0d9c94";
     blue = "#4ca6e8";
     blue_alt = "#0bc9cf";
-    white = "#f8f8f2";
+    white = "#f8f8f2"
     bg = "#18181b";
     fg = "#e6e6e8";
 };
