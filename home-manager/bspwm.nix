@@ -39,8 +39,9 @@
         xrandr --output HDMI-0 --pos 2560x0
         xrandr --output HDMI-1 --pos 0x0
         xrandr --output DP-4 --pos 5120x0
-        xset s off
-        xset -dpms
+        # Remove screen sleep
+        # xset s off
+        # xset -dpms
  
         pgrep -x sxhkd > /dev/null || sxhkd & 
       '';

@@ -7,13 +7,11 @@
 
   programs.kitty = {
     enable = true;
-    # theme = "Kaolin Temple";
-    # theme = "Kaolin Dark";
-    theme = "Kaolin Aurora";
-    # theme = "Kaolin Galaxy";
+    # theme = "Kaolin Aurora";
+    theme = "One Half Dark";
     font = {
       name = "JetBrainsMono Nerd Font Mono";
-      size = 14; 
+      size = 12; 
     };
 
     keybindings = {

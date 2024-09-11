@@ -11,15 +11,15 @@ let
     black = "#212026";
     pink = "#cea2ca";
     red = "#ef6787";
-    green = "#6dd797";
-    purple = "#9d81ba";
-    yellow = "#eed891";
-    cyan = "#0d9c94";
-    blue = "#4ca6e8";
+    green = "#98c379";
+    purple = "#c678dd";
+    yellow = "#e5c07b";
+    cyan = "#56b6c2";
+    blue = "#4fa6ed";
     blue_alt = "#0bc9cf";
-    white = "#f8f8f2"
+    white = "#dcdfe4";
     bg = "#18181b";
-    fg = "#e6e6e8";
+    fg = "#dcdfe4";
 };
 in
 {
@@ -55,7 +55,8 @@ $character
       };
       nix_shell = {
         disabled = false;
-        style = "bg:${colors.bg} fg:${colors.purple}";
+        # style = "bg:${colors.bg} fg:${colors.purple}";
+        style = "bg:${colors.bg} fg:${colors.pink}";
         format = "[ NIX SHELL ]($style)";
       };
       time = {
