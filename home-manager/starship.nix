@@ -10,10 +10,10 @@ let
   colors = {
     black = "#212026";
     pink = "#cea2ca";
-    red = "#ef6787";
-    green = "#98c379";
+    red = "#e55c74";
+    green = "#6dd797";
     purple = "#c678dd";
-    yellow = "#e5c07b";
+    yellow = "#eed891";
     cyan = "#56b6c2";
     blue = "#4fa6ed";
     blue_alt = "#0bc9cf";
