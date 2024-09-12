@@ -117,8 +117,8 @@
       };
   };
 
-	# udev rules for ZSA keyboard
-	hardware.keyboard.zsa.enable = true;
+  # udev rules for ZSA keyboard
+  hardware.keyboard.zsa.enable = true;
 
   # # XDG
   xdg.portal.config.common.default = "*";

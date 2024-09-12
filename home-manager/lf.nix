@@ -79,10 +79,10 @@
     };
 
     #This created an error while building retry eventually
-    # previewer = {
-    #   keybinding = "i";
-    #   source = "${pkgs.ctpv}/bin/ctpv";
-    # };
+    previewer = {
+      keybinding = "i";
+      source = "${pkgs.ctpv}/bin/ctpv";
+    };
     #TODO
 
     extraConfig = ''
