@@ -7,6 +7,7 @@
 
   programs.kitty = {
     enable = true;
+    theme = "One Half Dark";
     font = {
       name = "JetBrainsMono Nerd Font Mono";
       size = 12; 

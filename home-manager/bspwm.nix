@@ -33,7 +33,9 @@
         ];
       };
       extraConfig = ''
-        feh --bg-scale /home/salledelavage/wallpapers/torvalds.png
+        # feh --bg-scale /home/salledelavage/wallpapers/torvald.png
+        feh --bg-scale /home/salledelavage/wallpapers/nvim.png
+
         bash /home/salledelavage/.screenlayout/screen_setup.sh
         picom
         xrandr --output HDMI-0 --pos 2560x0
