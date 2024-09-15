@@ -33,8 +33,7 @@
         ];
       };
       extraConfig = ''
-        # feh --bg-scale /home/salledelavage/wallpapers/torvald.png
-        feh --bg-scale /home/salledelavage/wallpapers/nvim.png
+        feh --bg-scale $HOME/nixos/assets/images/nvim.png
 
         bash /home/salledelavage/.screenlayout/screen_setup.sh
         picom
