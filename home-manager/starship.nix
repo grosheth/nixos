@@ -55,7 +55,6 @@ $character
       };
       nix_shell = {
         disabled = false;
-        # style = "bg:${colors.bg} fg:${colors.purple}";
         style = "bg:${colors.bg} fg:${colors.pink}";
         format = "[ NIX SHELL ]($style)";
       };
@@ -69,6 +68,11 @@ $character
         symbol = "";
         style = "bg:${colors.bg} fg:${colors.cyan}";
         format = "[$symbol$branch ](:$remote_branch)($style)";
+      };
+      cmd_duration = {
+        min_time = 0;
+        style = "bg:${colors.bg} fg:${colors.pink}";
+        format = "[$duration ]($style)";
       };
       git_commit = {
 	commit_hash_length = 4;
