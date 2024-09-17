@@ -10,6 +10,7 @@ in
     ./kitty.nix
     ./lf.nix
     ./neovim.nix
+    ./nitch.nix
     ./packages.nix
     ./picom.nix
     # ./polybar.nix

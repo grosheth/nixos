@@ -21,7 +21,7 @@
           "III"
           "IV"
         ];
-        HDMI-1 = [
+       HDMI-1 = [
           "V"
           "VI"
           "VII"
