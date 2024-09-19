@@ -5,33 +5,24 @@ let
     "gs" = "git status";
     "gch" = "git checkout";
     "gc" = "git commit -am";
-		"gp" = "git push";
+    "gp" = "git push";
     "ga" = "git add --all";
-
-    # ssh rapspberry pies
-    # "pi1" = "ssh pi@192.168.10.120";
-    # "pi2" = "ssh pi@192.168.10.121";
     
     # basic commands
     "cls" = "clear";
-    "ll" = "ls -lart";
+    "ll" = "ls -lat";
     "lr" = "ls -lrt";
     "l" = "ls";
 
     # Quick move aliases "work" = "cd ~/work";
     "wrk" = "cd ~/work";
-    "advent" = "cd ~/work/Advent-of-code/";
-    "pool" = "cd ~/work/hockey-pool/ && n";
-    "bot" = "cd ~/work/discord-bot/ && n";
-    "nixcfg" = "cd ~/nixos-configs && n";
-		"termify" = "cd ~/work/termify && n";
 
     # Neovim
-		"nvim" = "neovim";
+    "nvim" = "neovim";
     "n" = "nvim .";
-		"nv" = "nvim";
+    "nv" = "nvim";
     "vim" = "nvim";
-		"neovim" = "nvim";
+    "neovim" = "nvim";
   };
 in
 { 
