@@ -14,7 +14,7 @@ let
     
     # basic commands
     "cls" = "clear";
-    "ll" = "ls -la";
+    "ll" = "ls -lart";
     "lr" = "ls -lrt";
     "l" = "ls";
 
