@@ -35,8 +35,10 @@
     extraConfig = ''
       map f1 launch --allow-remote-control kitty +kitten broadcast
 
-      foreground            #e6e6e8
-      background            #18181b
+      # foreground            #e6e6e8
+      # background            #18181b
+      foreground            #ffffff
+      background            #000000
       selection_foreground  #000000
       selection_background  #FFFACD
       url_color             #4ca6e8
