@@ -8,7 +8,6 @@ let
   };
   langs = "$nodejs$python$rust$golang$lua";
   colors = {
-    # black = "#212026";
     black = "#212026";
     pink = "#cea2ca";
     red = "#e55c74";
@@ -21,7 +20,7 @@ let
     white = "#dcdfe4";
     #darker
     fg = "#ffffff";
-    bg = "#000000";
+    bg = "#111111";
     # bg = "#18181b";
     # fg = "#dcdfe4";
 };

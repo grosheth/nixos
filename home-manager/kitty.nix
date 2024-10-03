@@ -38,7 +38,7 @@
       # foreground            #e6e6e8
       # background            #18181b
       foreground            #ffffff
-      background            #000000
+      background            #111111
       selection_foreground  #000000
       selection_background  #FFFACD
       url_color             #4ca6e8
