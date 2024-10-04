@@ -1,0 +1,79 @@
+add_newline = true
+continuation_prompt = "[∙](bright-black) "
+format = "$os$hostname$username$directory$fill $all$time\n$character\n"
+
+[container]
+format = "[$symbol ](style)"
+style = "bg:#212026 fg:#000000"
+symbol = " 󰏖"
+
+[directory]
+format = "[ $path ]($style)"
+style = "bg:#000000 fg:#6dd797"
+truncation_length = 3
+truncation_symbol = "~/󰇘/"
+
+[git_branch]
+format = "[$symbol$branch ](:$remote_branch)($style)"
+style = "bg:#000000 fg:#0d9c94"
+symbol = ""
+
+[git_commit]
+commit_hash_length = 4
+tag_symbol = "🔖"
+
+[golang]
+format = "[$symbol($version) ](bg:#000000 fg:#0bc9cf)"
+symbol = " "
+
+[hostname]
+format = "[$hostname ]($style)"
+ssh_only = false
+style = "fg:#ef6787 bg:#000000"
+
+[line_break]
+disabled = true
+
+[lua]
+format = "[$symbol($version) ](bg:#000000 fg:#2a57cc)"
+symbol = "󰢱 "
+
+[nix_shell]
+disabled = false
+format = "[ NIX SHELL ]($style)"
+style = "bg:#000000 fg:#9d81ba"
+
+[nodejs]
+format = "[$symbol($version) ](bg:#000000 fg:#eed891)"
+symbol = " "
+
+[os]
+disabled = false
+format = "[$symbol ]($style)"
+style = "bg:#000000 fg:#ef6787"
+
+[os.symbols]
+Arch = "[ ](fg:#0bc9cf)"
+Debian = "[](fg:#ef6787)"
+EndeavourOS = "[ ](fg:#9d81ba)"
+Fedora = "[ ](fg:color bg:#0bc9cf)"
+NixOS = "[](fg:#f8f8f2 bg:#000000)"
+SUSE = "[ ](fg:#6dd797)"
+Ubuntu = "[ ](fg:#9d81ba"
+openSUSE = "[ ](fg:#6dd797)"
+
+[python]
+format = "[$symbol$pyenv_prefix($version)(($virtualenv)) ](bg:#000000 fg:#0d9c94)"
+symbol = " "
+
+[time]
+disabled = false
+format = "[󰔟 $time ]($style)"
+style = "bg:#000000 fg:#0bc9cf"
+time_format = "%m-%d %R"
+
+[username]
+format = "[$user ]($style)"
+show_always = true
+style_user = "bg:#000000 fg:#eed891"
+

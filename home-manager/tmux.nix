@@ -18,5 +18,6 @@
     enable = true;
     mouse = true;
     keyMode = "vi";
+    prefix = "C-a";
   };
 }
