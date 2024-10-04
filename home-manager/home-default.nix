@@ -20,7 +20,8 @@ in
     # ./starship-arrow.nix
     ./sxhkd.nix
     ./theme.nix
-    ./zellij.nix
+    ./tmux.nix
+    # ./zellij.nix
   ];
   news.display = "show";
 

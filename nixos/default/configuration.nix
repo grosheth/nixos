@@ -175,7 +175,6 @@
     libnotify
     swww
     kitty
-    tmux
     networkmanagerapplet
     git
     os-prober
@@ -186,11 +185,11 @@
 
     # Window manager 
     feh
-    
+
     #nixos
     nh
     age
-    
+
     # Audio stuff
     qpwgraph
     audacity
