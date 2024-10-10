@@ -26,7 +26,7 @@
           "VI"
           "VII"
         ];
-        DP-4 = [
+        DP-2 = [
           "VIII"
           "IX"
           "X"
@@ -39,7 +39,7 @@
         picom
         xrandr --output HDMI-0 --pos 2560x0
         xrandr --output HDMI-1 --pos 0x0
-        xrandr --output DP-4 --pos 5120x0
+        xrandr --output DP-2 --pos 5120x0
         # Remove screen sleep
         # xset s off
         # xset -dpms
