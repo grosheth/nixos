@@ -4,6 +4,7 @@
     (writeShellScriptBin "rofi-projects" (builtins.readFile ../../../scripts/rofi-projects.sh))
     (writeShellScriptBin "rofi-vpn" (builtins.readFile ../../../scripts/rofi-vpn.sh))
     vscode
+    caligula
     htop
     bottom
     bottles
