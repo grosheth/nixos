@@ -20,8 +20,8 @@ let
     white = "#dcdfe4";
     #darker
     fg = "#ffffff";
-    bg = "#111111";
-    # bg = "#18181b";
+    # bg = "#111111";
+    bg = "#18181b";
     # fg = "#dcdfe4";
 };
 in
