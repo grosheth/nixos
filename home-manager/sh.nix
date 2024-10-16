@@ -19,6 +19,7 @@ let
     "cfg" = "cd ~/nixos";
     ".cfg" = "cd ~/.config";
 
+    "db" = "distrobox";
     # Neovim
     "nvim" = "neovim";
     "n" = "nvim .";
