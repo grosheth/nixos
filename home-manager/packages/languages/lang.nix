@@ -3,9 +3,9 @@
   home.packages = with pkgs; with nodePackages_latest; with gnome; [
     ansible
     nodejs
-    go
+    # go
     gcc
-    python3
+    # python3
     lua
   ];
 }

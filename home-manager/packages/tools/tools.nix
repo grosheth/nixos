@@ -41,5 +41,4 @@
     rpi-imager
     usbutils
   ]; 
-  devenv.languages.rust.enable = true;
 }
