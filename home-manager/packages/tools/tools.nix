@@ -3,6 +3,7 @@
   home.packages = with pkgs; with nodePackages_latest; with gnome; [ 
     (writeShellScriptBin "rofi-projects" (builtins.readFile ../../../scripts/rofi-projects.sh))
     (writeShellScriptBin "rofi-vpn" (builtins.readFile ../../../scripts/rofi-vpn.sh))
+    devenv
     vscode
     caligula
     htop
@@ -40,4 +41,5 @@
     rpi-imager
     usbutils
   ]; 
+  devenv.languages.rust.enable = true;
 }

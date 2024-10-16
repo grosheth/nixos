@@ -35,7 +35,6 @@ let
       lazygit
       fd
       lua-language-server
-      rust-analyzer-unwrapped
     ];
       home.sessionVariables = {
       EDITOR = "nvim";
