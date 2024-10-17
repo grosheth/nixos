@@ -1,33 +1,6 @@
 { pkgs, ... }:
 let
-  treesitterWithGrammars = (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
-		p.bash
-		p.c
-		p.comment
-		p.css
-		p.dockerfile
-		p.gitattributes
-		p.gitignore
-		p.go
-		p.gomod
-		p.gowork
-		p.hcl
-		p.javascript
-		p.jq
-		p.json5
-		p.json
-		p.lua
-		p.make
-		p.markdown
-		p.nix
-		p.python
-		p.rust
-		p.toml
-		p.typescript
-		p.vue
-		p.vimdoc
-		p.yaml
-  ]));
+  treesitterWithGrammars = (pkgs.vimPlugins.nvim-treesitter.withAllGrammars);
   in
   {
     home.packages = with pkgs; [

@@ -43,7 +43,7 @@ return {
         "python",
         "query",
         "regex",
-        "rust",
+        -- "rust",
         "ron",
         "toml",
         "tsx",
