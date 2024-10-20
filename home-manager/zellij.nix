@@ -22,6 +22,7 @@
       themes.kaolin.cyan = "#56b6c2";
       themes.kaolin.white = "#eef1f8";
       themes.kaolin.orange = "#56b6c2";
+
       # theme = "neovim";
       # themes.neovim.fg = "#e6e6e8";
       # themes.neovim.bg = "#18181b";
