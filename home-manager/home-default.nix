@@ -15,7 +15,6 @@ in
     ./picom.nix
     # ./polybar.nix
     ./rofi.nix
-    ./rust.nix
     ./sh.nix
     ./starship.nix
     # ./starship-arrow.nix
