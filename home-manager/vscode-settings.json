@@ -1,14 +1,12 @@
-# Need to write in nix 
-
 {
   "redhat.telemetry.enabled": false,
     "editor.codeActionsOnSave": {
     },
 
     "files.autoSave": "afterDelay",
-    
+
     "workbench.colorCustomizations": {
-        
+
         "editorCursor.foreground": "#ffffff",
         "terminalCursor.foreground": "#e6e6e8",
         "activityBar.background": "#0d1925",
@@ -35,11 +33,12 @@
     "vim.useSystemClipboard": true,
     "vim.leader": "<Space>",
     "vim.hlsearch": true,
+    "vim.cursorStylePerMode.insert": "line",
     "vim.normalModeKeyBindingsNonRecursive": [
       // NAVIGATION
       { "before": ["<S-h>"], "commands": [":bprevious"] },
       { "before": ["<S-l>"], "commands": [":bnext"] },
-  
+
       {
           "before": ["s"],
           "commands": ["leap.findForward"]
@@ -51,7 +50,7 @@
       // splits
       { "before": ["leader", "v"], "commands": [":vsplit"] },
       { "before": ["leader", "s"], "commands": [":split"] },
-  
+
       // panes
       {
         "before": ["leader", "h"],
@@ -95,12 +94,17 @@
       { "before": ["g", "c", "c"], "commands": ["editor.action.commentLine"] }
     ],
     "vim.visualModeKeyBindings": [
+      // Show command at top
+      { "before": [":"], "commands": ["vim.showQuickpickCmdLine"]},
+
       // Stay in visual mode while indenting
       { "before": ["<"], "commands": ["editor.action.outdentLines"] },
       { "before": [">"], "commands": ["editor.action.indentLines"] },
+
       // Move selected lines while staying in visual mode
       { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
       { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
+
       // toggle comment selection
       { "before": ["g", "c"], "commands": ["editor.action.commentLine"] }
     ],
@@ -108,13 +112,15 @@
     "[typescript]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+
     "[jsonc]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+
     "workbench.activityBar.location": "hidden",
     "editor.fontLigatures": true,
     "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
-    "window.zoomLevel": 1,
-    "workbench.colorTheme": "Atom One Dark"
+    "window.zoomLevel": 0,
+    "workbench.colorTheme": "Atom One Dark",
 
 }
