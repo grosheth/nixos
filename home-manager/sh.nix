@@ -20,6 +20,7 @@ let
     ".cfg" = "cd ~/.config";
 
     "db" = "distrobox";
+    "gg" = "lazygit";
     # Neovim
     "nvim" = "neovim";
     "n" = "nvim .";
