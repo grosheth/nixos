@@ -15,6 +15,7 @@ in
     ./picom.nix
     # ./polybar.nix
     ./rofi.nix
+    # ./rust.nix
     ./sh.nix
     ./starship.nix
     # ./starship-arrow.nix
@@ -34,6 +35,14 @@ in
       warn-dirty = false;
     };
   };
+
+  # For Rust
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    rust-analyzer
+    rustc
+    cargo
+  ];
 
   home = {
     inherit username homeDirectory;
