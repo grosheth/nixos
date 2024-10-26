@@ -36,14 +36,6 @@ in
     };
   };
 
-  # For Rust
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    rust-analyzer
-    rustc
-    cargo
-  ];
-
   home = {
     inherit username homeDirectory;
 

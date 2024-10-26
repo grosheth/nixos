@@ -123,8 +123,17 @@
   # # XDG
   xdg.portal.config.common.default = "*";
 
+  # For Rust
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    rust-analyzer
+    rustc
+    cargo
+    gcc
+  ];
+
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing.enable = false;
 
   # Enable ZSH to set it as main shell
   programs.zsh.enable = true;

@@ -1,126 +1,481 @@
 {
   "redhat.telemetry.enabled": false,
-    "editor.codeActionsOnSave": {
+  "editor.codeActionsOnSave": {},
+  "files.autoSave": "afterDelay",
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#0d1925",
+    "activityBar.foreground": "#ffffff",
+    "activityBarTop.foreground": "#0d1925",
+    "editorCursor.foreground": "#ffffff",
+    "editorLineNumber.activeForeground": "#eed891",
+    "editorGutter.background": "#14161b",
+    "editor.lineHighlightBackground": "#212020",
+    "editor.background": "#14161b",
+    "editorBracketHighlight.foreground1": "#eed891", // Red
+    "editorBracketHighlight.foreground2": "#eed891", // Red
+    "editorBracketHighlight.foreground3": "#eed891", // Red
+    "editorBracketHighlight.foreground4": "#eed891", // Red
+    "editorBracketHighlight.foreground5": "#eed891", // Red
+    "editorBracketHighlight.foreground6": "#eed891", // Red
+    "input.background": "#14161b",
+    "input.foreground": "#ffffff",
+    "input.border": "#4ca6e8",
+    "input.placeholderForeground": "#4ca6e8",
+    "inputOption.activeBorder": "#4ca6e8",
+    "inputValidation.errorBackground": "#e55c74",
+    "inputValidation.errorForeground": "#ffffff",
+    "inputValidation.errorBorder": "#e55c74",
+    "inputValidation.infoBackground": "#4ca6e8",
+    "inputValidation.infoForeground": "#ffffff",
+    "inputValidation.infoBorder": "#4ca6e8",
+    "inputValidation.warningBackground": "#eed891",
+    "inputValidation.warningForeground": "#ffffff",
+    "inputValidation.warningBorder": "#eed891",
+    "button.background": "#4ca6e8",
+    "button.foreground": "#ffffff",
+    "button.hoverBackground": "#4ca6e8",
+    "button.secondaryBackground": "#4ca6e8",
+    "button.secondaryForeground": "#ffffff",
+    "button.secondaryHoverBackground": "#4ca6e8",
+    "checkbox.background": "#14161b",
+    "checkbox.foreground": "#ffffff",
+    "checkbox.border": "#4ca6e8",
+    "badge.background": "#e55c74",
+    "badge.foreground": "#ffffff",
+    "breadcrumb.background": "#14161b",
+    "breadcrumb.foreground": "#ffffff",
+    "breadcrumb.focusForeground": "#4ca6e8",
+    "breadcrumb.activeSelectionForeground": "#4ca6e8",
+    "breadcrumbPicker.background": "#14161b",
+    "debugToolBar.background": "#14161b",
+    "descriptionForeground": "#ffffff",
+    "panel.background": "#14161b",
+    "panelSectionHeader.background": "#14161b",
+    "sideBar.background": "#14161b",
+    "terminal.background": "#14161b",
+    "terminal.foreground": "#ffffff",
+    "terminal.ansiGreen": "#6dd797",
+    "terminal.ansiRed": "#e55c74",
+    "terminal.ansiYellow": "#eed891",
+    "terminal.ansiBlue": "#4ca6e8",
+    "terminal.ansiMagenta": "#bb9af7",
+    "terminal.ansiCyan": "#6bd9db",
+    "terminal.ansiBrightCyan": "#ffffff"
+  },
+  "editor.tokenColorCustomizations": {
+    "comments": "#4b5254",
+    "strings": "#6dd797",
+    "keywords": "#e55c74",
+    "numbers": "#eed891",
+    "types": "#4ca6e8",
+    "functions": "#bb9af7",
+    "variables": "#ffffff",
+    "textMateRules": [
+      {
+        "scope": "meta.structure.dictionary.json string.quoted.double.json",
+        "settings": {
+          "foreground": "#e55c74" // Color for JSON keys
+        }
+      },
+      {
+        "scope": "meta.structure.dictionary.json string.quoted.double.json punctuation.definition.string.json",
+        "settings": {
+          "foreground": "#ffffff" // Color for JSON key quotes
+        }
+      },
+      {
+        "scope": "meta.structure.dictionary.value.json string.quoted.double.json",
+        "settings": {
+          "foreground": "#6dd797" // Color for JSON string values
+        }
+      },
+      {
+        "scope": "meta.structure.dictionary.json string.quoted.double.json punctuation.definition.string.json",
+        "settings": {
+          "foreground": "#4ca6e8" // Color for JSON key quotes
+        }
+      },
+      {
+        "scope": "meta.structure.dictionary.value.json string.quoted.double.json",
+        "settings": {
+          "foreground": "#6dd797" // Color for JSON string values
+        }
+      },
+      {
+        "scope": "meta.structure.dictionary.value.json constant.numeric.json",
+        "settings": {
+          "foreground": "#bb9af7" // Color for JSON numeric values
+        }
+      },
+      {
+        "scope": "meta.structure.dictionary.value.json constant.language.json",
+        "settings": {
+          "foreground": "#4ca6e8" // Color for JSON boolean values (true/false)
+        }
+      },
+      {
+        "scope": "meta.structure.dictionary.value.json constant.language.null.json",
+        "settings": {
+          "foreground": "#4ca6e8" // Color for JSON null values
+        }
+      },
+      {
+        "scope": "punctuation.separator.dictionary.pair.json",
+        "settings": {
+          "foreground": "#ffffff" // Color for JSON colons
+        }
+      },
+      {
+        "scope": "punctuation.separator.array.json",
+        "settings": {
+          "foreground": "#ffffff" // Color for JSON commas
+        }
+      },
+      // rust
+      {
+        "scope": "meta.use.rust",
+        "settings": {
+          "foreground": "#ffffff" // Color for Rust use statements
+        }
+      },
+      {
+        "scope": "keyword.rust",
+        "settings": {
+          "foreground": "#e55c74" // Color for Rust keywords
+        }
+      },
+      {
+        "scope": "entity.name.type.rust",
+        "settings": {
+          "foreground": "#4ca6e8" // Color for Rust types
+        }
+      },
+      {
+        "scope": "entity.function.name.rust",
+        "settings": {
+          "foreground": "#4ca6e8" // Color for Rust function names
+        }
+      },
+      {
+        "scope": "entity.name.function.rust",
+        "settings": {
+          "foreground": "#bb9af7" // Color for Rust functions
+        }
+      },
+      {
+        "scope": "variable.rust",
+        "settings": {
+          "foreground": "#6dd797" // Color for Rust variables
+        }
+      },
+      {
+        "scope": "string.quoted.double.rust",
+        "settings": {
+          "foreground": "#6dd797" // Color for Rust string literals
+        }
+      },
+      {
+        "scope": "constant.numeric.rust",
+        "settings": {
+          "foreground": "#eed891" // Color for Rust numeric literals
+        }
+      },
+      {
+        "scope": "comment.line.double-slash.rust",
+        "settings": {
+          "foreground": "#4b5254" // Color for Rust comments
+        }
+      },
+      {
+        "scope": "keyword.other.rust",
+        "settings": {
+          "foreground": "#6dd797" // Color for Rust other keywords
+        }
+      },
+      {
+        "scope": "support.type.rust",
+        "settings": {
+          "foreground": "#4ca6e8" // Color for Rust types
+        }
+      },
+      {
+        "scope": "support.constant.rust",
+        "settings": {
+          "foreground": "#4ca6e8" // Color for Rust constants
+        }
+      },
+      {
+        "scope": "entity.name.namespace.rust",
+        "settings": {
+          "foreground": "#4ca6e8" // Color for Rust namespaces
+        }
+      },
+      {
+        "scope": "meta.use.rust entity.name.function.rust",
+        "settings": {
+          "foreground": "#bb9af7" // Color for Rust function calls from libraries in use statements
+        }
+      },
+      // Python
+      {
+        "scope": "meta.use.python",
+        "settings": {
+          "foreground": "#ffffff" // Color for Python use statements
+        }
+      },
+      {
+        "scope": "keyword.control.python",
+        "settings": {
+          "foreground": "#e55c74" // Color for Python control keywords
+        }
+      },
+      {
+        "scope": "variable.parameter.function.python",
+        "settings": {
+          "foreground": "#9cdcfe" // Color for Python function parameters
+        }
+      },
+      {
+        "scope": "entity.name.function.python",
+        "settings": {
+          "foreground": "#bb9af7" // Color for Python function names
+        }
+      },
+      {
+        "scope": "string.quoted.double.python",
+        "settings": {
+          "foreground": "#6dd797" // Color for Python string literals
+        }
+      },
+      {
+        "scope": "constant.numeric.python",
+        "settings": {
+          "foreground": "#eed891" // Color for Python numeric literals
+        }
+      },
+      {
+        "scope": "comment.line.number-sign.python",
+        "settings": {
+          "foreground": "#4b5254" // Color for Python comments
+        }
+      },
+      // Go
+      {
+        "scope": "keyword.control.go",
+        "settings": {
+          "foreground": "#e55c74" // Color for Go control keywords
+        }
+      },
+      {
+        "scope": "variable.parameter.function.go",
+        "settings": {
+          "foreground": "#9cdcfe" // Color for Go function parameters
+        }
+      },
+      {
+        "scope": "entity.name.function.go",
+        "settings": {
+          "foreground": "#bb9af7" // Color for Go function names
+        }
+      },
+      {
+        "scope": "string.quoted.double.go",
+        "settings": {
+          "foreground": "#6dd797" // Color for Go string literals
+        }
+      },
+      {
+        "scope": "constant.numeric.go",
+        "settings": {
+          "foreground": "#eed891" // Color for Go numeric literals
+        }
+      },
+      {
+        "scope": "comment.line.double-slash.go",
+        "settings": {
+          "foreground": "#4b5254" // Color for Go comments
+        }
+      },
+      {
+        "scope": "entity.name.tag.yaml",
+        "settings": {
+          "foreground": "#e55c74" // Color for YAML tags
+        }
+      },
+      {
+        "scope": "string.unquoted.plain.out.yaml",
+        "settings": {
+          "foreground": "#6dd797" // Color for YAML plain strings
+        }
+      },
+      {
+        "scope": "constant.numeric.yaml",
+        "settings": {
+          "foreground": "#eed891" // Color for YAML numeric values
+        }
+      },
+      {
+        "scope": "comment.line.number-sign.yaml",
+        "settings": {
+          "foreground": "#4b5254" // Color for YAML comments
+        }
+      },
+      // nix
+      {
+        "scope": "keyword.control.nix",
+        "settings": {
+          "foreground": "#e55c74" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "variable.parameter.function.nix",
+        "settings": {
+          "foreground": "#9cdcfe" // Color for Nix function parameters
+        }
+      },
+      {
+        "scope": "entity.name.function.nix",
+        "settings": {
+          "foreground": "#bb9af7" // Color for Nix function names
+        }
+      },
+      {
+        "scope": "string.quoted.double.nix",
+        "settings": {
+          "foreground": "#6dd797" // Color for Nix string literals
+        }
+      },
+      {
+        "scope": "constant.numeric.nix",
+        "settings": {
+          "foreground": "#eed891" // Color for Nix numeric literals
+        }
+      },
+      {
+        "scope": "comment.line.number-sign.nix",
+        "settings": {
+          "foreground": "#4b5254" // Color for Nix comments
+        }
+      },
+      // shell
+      {
+        "scope": "keyword.control.shell",
+        "settings": {
+          "foreground": "#e55c74" // Color for Bash control keywords
+        }
+      },
+      {
+        "scope": "variable.parameter.shell",
+        "settings": {
+          "foreground": "#9cdcfe" // Color for Bash function parameters
+        }
+      },
+      {
+        "scope": "entity.name.function.shell",
+        "settings": {
+          "foreground": "#bb9af7" // Color for Bash function names
+        }
+      },
+      {
+        "scope": "string.quoted.double.shell",
+        "settings": {
+          "foreground": "#6dd797" // Color for Bash string literals
+        }
+      },
+      {
+        "scope": "constant.numeric.shell",
+        "settings": {
+          "foreground": "#eed891" // Color for Bash numeric literals
+        }
+      },
+      {
+        "scope": "comment.line.number-sign.shell",
+        "settings": {
+          "foreground": "#4b5254" // Color for Bash comments
+        }
+      }
+    ]
+  },
+  "editor.renderWhitespace": "none",
+  "editor.minimap.enabled": false,
+  "breadcrumbs.enabled": false,
+  "workbench.iconTheme": "material-icon-theme",
+  "update.showReleaseNotes": false,
+  "zenMode.hideLineNumbers": false,
+  "editor.lineNumbers": "relative",
+  "vim.useSystemClipboard": true,
+  "vim.leader": "<Space>",
+  "vim.hlsearch": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    // NAVIGATION
+    { "before": ["<S-h>"], "commands": [":bprevious"] },
+    { "before": ["<S-l>"], "commands": [":bnext"] },
+    {
+      "before": ["s"],
+      "commands": ["leap.findForward"]
     },
-
-    "files.autoSave": "afterDelay",
-
-    "workbench.colorCustomizations": {
-
-        "editorCursor.foreground": "#ffffff",
-        "terminalCursor.foreground": "#e6e6e8",
-        "activityBar.background": "#0d1925",
-        "editor.background": "#14161b",
-        "panel.background": "#14161b",
-        "terminal.background": "#14161b",
-        "sideBar.background": "#14161b",
-        "input.background": "#14161b",
-        "editorLineNumber.activeForeground": "#eed891",
-        "editorGutter.background": "#14161b",
-        "editor.lineHighlightBackground": "#212020",
+    {
+      "before": ["S"],
+      "commands": ["leap.findBackward"]
     },
-    "editor.renderWhitespace": "none",
-
-
-    // "workbench.statusBar.visible": false,
-    "editor.minimap.enabled": false,
-    "breadcrumbs.enabled": false,
-    "workbench.iconTheme": "material-icon-theme",
-    "update.showReleaseNotes": false,
-    "zenMode.hideLineNumbers": false,
-    "editor.lineNumbers": "relative",
-
-    "vim.useSystemClipboard": true,
-    "vim.leader": "<Space>",
-    "vim.hlsearch": true,
-    "vim.cursorStylePerMode.insert": "line",
-    "vim.normalModeKeyBindingsNonRecursive": [
-      // NAVIGATION
-      { "before": ["<S-h>"], "commands": [":bprevious"] },
-      { "before": ["<S-l>"], "commands": [":bnext"] },
-
-      {
-          "before": ["s"],
-          "commands": ["leap.findForward"]
-      },
-      {
-          "before": ["S"],
-          "commands": ["leap.findBackward"]
-      },
-      // splits
-      { "before": ["leader", "v"], "commands": [":vsplit"] },
-      { "before": ["leader", "s"], "commands": [":split"] },
-
-      // panes
-      {
-        "before": ["leader", "h"],
-        "commands": ["workbench.action.focusLeftGroup"]
-      },
-      {
-        "before": ["leader", "j"],
-        "commands": ["workbench.action.focusBelowGroup"]
-      },
-      {
-        "before": ["leader", "k"],
-        "commands": ["workbench.action.focusAboveGroup"]
-      },
-      {
-        "before": ["leader", "l"],
-        "commands": ["workbench.action.focusRightGroup"]
-      },
-      // NICE TO HAVE
-      { "before": ["leader", "w"], "commands": [":w!"] },
-      { "before": ["leader", "q"], "commands": [":q!"] },
-      { "before": ["leader", "x"], "commands": [":x!"] },
-      {
-        "before": ["[", "d"],
-        "commands": ["editor.action.marker.prev"]
-      },
-      {
-        "before": ["]", "d"],
-        "commands": ["editor.action.marker.next"]
-      },
-      {
-        "before": ["<leader>", "c", "a"],
-        "commands": ["editor.action.quickFix"]
-      },
-      { "before": ["leader", "f"], "commands": ["workbench.action.quickOpen"] },
-      { "before": ["leader", "p"], "commands": ["editor.action.formatDocument"] },
-      {
-        "before": ["g", "h"],
-        "commands": ["editor.action.showDefinitionPreviewHover"]
-      },
-      // toggle comment selection
-      { "before": ["g", "c", "c"], "commands": ["editor.action.commentLine"] }
-    ],
-    "vim.visualModeKeyBindings": [
-      // Show command at top
-      { "before": [":"], "commands": ["vim.showQuickpickCmdLine"]},
-
-      // Stay in visual mode while indenting
-      { "before": ["<"], "commands": ["editor.action.outdentLines"] },
-      { "before": [">"], "commands": ["editor.action.indentLines"] },
-
-      // Move selected lines while staying in visual mode
-      { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
-      { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
-
-      // toggle comment selection
-      { "before": ["g", "c"], "commands": ["editor.action.commentLine"] }
-    ],
-    "go.toolsManagement.autoUpdate": true,
-    "[typescript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // splits
+    { "before": ["leader", "v"], "commands": [":vsplit"] },
+    { "before": ["leader", "s"], "commands": [":split"] },
+    // panes
+    {
+      "before": ["leader", "h"],
+      "commands": ["workbench.action.focusLeftGroup"]
     },
-
-    "[jsonc]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    {
+      "before": ["leader", "j"],
+      "commands": ["workbench.action.focusBelowGroup"]
     },
-
-    "workbench.activityBar.location": "hidden",
-    "editor.fontLigatures": true,
-    "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
-    "window.zoomLevel": 0,
-    "workbench.colorTheme": "Atom One Dark",
-
+    {
+      "before": ["leader", "k"],
+      "commands": ["workbench.action.focusAboveGroup"]
+    },
+    {
+      "before": ["leader", "l"],
+      "commands": ["workbench.action.focusRightGroup"]
+    },
+    // NICE TO HAVE
+    { "before": ["leader", "w"], "commands": [":w!"] },
+    { "before": ["leader", "q"], "commands": [":q!"] },
+    { "before": ["leader", "x"], "commands": [":x!"] },
+    {
+      "before": ["[", "d"],
+      "commands": ["editor.action.marker.prev"]
+    },
+    {
+      "before": ["]", "d"],
+      "commands": ["editor.action.marker.next"]
+    },
+    {
+      "before": ["<leader>", "c", "a"],
+      "commands": ["editor.action.quickFix"]
+    },
+    { "before": ["leader", "f"], "commands": ["workbench.action.quickOpen"] },
+    { "before": ["leader", "p"], "commands": ["editor.action.formatDocument"] },
+    {
+      "before": ["g", "h"],
+      "commands": ["editor.action.showDefinitionPreviewHover"]
+    },
+    // toggle comment selection
+    { "before": ["g", "c", "c"], "commands": ["editor.action.commentLine"] }
+  ],
+  "vim.visualModeKeyBindings": [
+    // Stay in visual mode while indenting
+    { "before": ["<"], "commands": ["editor.action.outdentLines"] },
+    { "before": [">"], "commands": ["editor.action.indentLines"] },
+    // Move selected lines while staying in visual mode
+    { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
+    { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
+    // toggle comment selection
+    { "before": ["g", "c"], "commands": ["editor.action.commentLine"] }
+  ],
+  "workbench.activityBar.location": "hidden",
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
+  "window.zoomLevel": 1,
+  "debug.disassemblyView.showSourceCode": false
 }
