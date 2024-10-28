@@ -7,5 +7,6 @@
     gcc
     python3
     lua
+    cmake
   ];
 }

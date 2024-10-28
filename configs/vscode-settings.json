@@ -11,12 +11,12 @@
     "editorGutter.background": "#14161b",
     "editor.lineHighlightBackground": "#212020",
     "editor.background": "#14161b",
-    "editorBracketHighlight.foreground1": "#eed891", // Red
-    "editorBracketHighlight.foreground2": "#eed891", // Red
-    "editorBracketHighlight.foreground3": "#eed891", // Red
-    "editorBracketHighlight.foreground4": "#eed891", // Red
-    "editorBracketHighlight.foreground5": "#eed891", // Red
-    "editorBracketHighlight.foreground6": "#eed891", // Red
+    "editorBracketHighlight.foreground1": "#e55c74",
+    "editorBracketHighlight.foreground2": "#e55c74",
+    "editorBracketHighlight.foreground3": "#e55c74",
+    "editorBracketHighlight.foreground4": "#e55c74",
+    "editorBracketHighlight.foreground5": "#e55c74",
+    "editorBracketHighlight.foreground6": "#e55c74",
     "input.background": "#14161b",
     "input.foreground": "#ffffff",
     "input.border": "#4ca6e8",
@@ -51,6 +51,11 @@
     "descriptionForeground": "#ffffff",
     "panel.background": "#14161b",
     "panelSectionHeader.background": "#14161b",
+    "quickInput.background": "#14161b",
+    "quickInput.foreground": "#ffffff",
+    "quickInputTitle.background": "#e55c74",
+    "pickerGroup.foreground": "#ffffff",
+    "pickerGroup.border": "#3a3d41",
     "sideBar.background": "#14161b",
     "terminal.background": "#14161b",
     "terminal.foreground": "#ffffff",
@@ -67,8 +72,8 @@
     "strings": "#6dd797",
     "keywords": "#e55c74",
     "numbers": "#eed891",
-    "types": "#4ca6e8",
-    "functions": "#bb9af7",
+    "types": "#eed891",
+    "functions": "#ffffff",
     "variables": "#ffffff",
     "textMateRules": [
       {
@@ -330,7 +335,7 @@
       {
         "scope": "variable.parameter.function.nix",
         "settings": {
-          "foreground": "#9cdcfe" // Color for Nix function parameters
+          "foreground": "#4ca6e8" // Color for Nix function parameters
         }
       },
       {
@@ -393,7 +398,7 @@
         "settings": {
           "foreground": "#4b5254" // Color for Bash comments
         }
-      }
+      },
     ]
   },
   "editor.renderWhitespace": "none",

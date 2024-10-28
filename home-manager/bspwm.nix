@@ -33,7 +33,7 @@
         ];
       };
       extraConfig = ''
-        feh --bg-scale $HOME/nixos/assets/images/nvim.png
+        feh --bg-scale $HOME/nixos/assets/images/wave.png
 
         bash /home/salledelavage/.screenlayout/screen_setup.sh
         picom
