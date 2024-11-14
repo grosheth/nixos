@@ -40,5 +40,6 @@
     brave
     rpi-imager
     usbutils
+    onedrive
   ]; 
 }
