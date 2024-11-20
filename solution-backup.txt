@@ -1,0 +1,18 @@
+Things to backup
+
+
+
+
+
+
+
+Backup options:
+
+
+Save folder in Onedrive and make sure it is downloaded on 5Tb external hard drive and PC.
+
+
+Check out Veeam client to make the daily backup and analyze best backup strategy
+
+
+Should I use my account for Veeam?

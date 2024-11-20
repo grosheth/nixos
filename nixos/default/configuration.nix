@@ -110,6 +110,7 @@
   };
 
   services = {
+    onedrive.enable = true;
     displayManager = {
         # defaultSession = "none+i3";
         defaultSession = "none+bspwm";

@@ -1,10 +1,9 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; with nodePackages_latest; with gnome; [ 
+  home.packages = with pkgs; with nodePackages_latest; with gnome; [
     (writeShellScriptBin "rofi-projects" (builtins.readFile ../../../scripts/rofi-projects.sh))
     (writeShellScriptBin "rofi-vpn" (builtins.readFile ../../../scripts/rofi-vpn.sh))
     vscode
-    zed-editor
     caligula
     htop
     bottom
@@ -41,5 +40,5 @@
     rpi-imager
     usbutils
     onedrive
-  ]; 
+  ];
 }
