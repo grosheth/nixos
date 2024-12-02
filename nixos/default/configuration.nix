@@ -86,6 +86,7 @@
     enable32Bit = true;
   };
 
+  # X11
   # services.xserver = {
   #   enable = true;
   #   autorun = true;
@@ -106,12 +107,11 @@
   #     };
 
   #   # windowManager.i3.enable = true;
-  #   # windowManager.bspwm.enable = true;
+  #   windowManager.bspwm.enable = true;
   # };
 
-  # wayland
+  # Wayland
   services.xserver.displayManager.gdm.wayland = true;
-  # Wayland environement variables
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   services = {
