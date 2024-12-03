@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    rofi-wayland
-    # rofi
+    # rofi-wayland
+    rofi
   ];
 
   programs.rofi = {

@@ -1,208 +1,245 @@
 {
-  lib,
-  username,
-  host,
-  config,
+  inputs,
+  pkgs,
   ...
-}:
+}: {
+  home.packages = with pkgs; [
+    brightnessctl
+    pulseaudio # pactl
+    playerctl
+    swww
+    wf-recorder
+    slurp
+  ];
 
-let
-  inherit (import ../hosts/${host}/variables.nix)
-    browser
-    terminal
-    extraMonitorSettings
-    keyboardLayout
-    ;
-in
-with lib;
-{
+  xdg.desktopEntries."org.gnome.Settings" = {
+    name = "Settings";
+    comment = "Gnome Control Center";
+    icon = "org.gnome.Settings";
+    exec = "env XDG_CURRENT_DESKTOP=gnome ${pkgs.gnome-control-center}/bin/gnome-control-center";
+    categories = ["X-Preferences"];
+    terminal = false;
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
-    xwayland.enable = true;
-    systemd.enable = true;
-    extraConfig =
-      let
-        modifier = "alt";
-      in
-      concatStrings [
-        ''
-          env = NIXOS_OZONE_WL, 1
-          env = NIXPKGS_ALLOW_UNFREE, 1
-          env = XDG_CURRENT_DESKTOP, Hyprland
-          env = XDG_SESSION_TYPE, wayland
-          env = XDG_SESSION_DESKTOP, Hyprland
-          env = GDK_BACKEND, wayland, x11
-          env = CLUTTER_BACKEND, wayland
-          env = QT_QPA_PLATFORM=wayland;xcb
-          env = QT_WAYLAND_DISABLE_WINDOWDECORATION, 1
-          env = QT_AUTO_SCREEN_SCALE_FACTOR, 1
-          env = SDL_VIDEODRIVER, x11
-          env = MOZ_ENABLE_WAYLAND, 1
-          exec-once = dbus-update-activation-environment --systemd --all
-          exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-          exec-once = killall -q swww;sleep .5 && swww init
-          exec-once = killall -q waybar;sleep .5 && waybar
-          exec-once = killall -q swaync;sleep .5 && swaync
-          exec-once = nm-applet --indicator
-          exec-once = lxqt-policykit-agent
-          exec-once = sleep 1.5 && swww img /home/${username}/Pictures/Wallpapers/beautifulmountainscape.jpg
-          monitor=,preferred,auto,1
-          ${extraMonitorSettings}
-          general {
-            gaps_in = 6
-            gaps_out = 8
-            border_size = 2
-            layout = dwindle
-            resize_on_border = true
-            col.active_border = rgb(${config.stylix.base16Scheme.base08}) rgb(${config.stylix.base16Scheme.base0C}) 45deg
-            col.inactive_border = rgb(${config.stylix.base16Scheme.base01})
-          }
-          input {
-            kb_layout = ${keyboardLayout}
-            kb_options = grp:alt_shift_toggle
-            kb_options = caps:super
-            follow_mouse = 1
-            touchpad {
-              natural_scroll = true
-              disable_while_typing = true
-              scroll_factor = 0.8
-            }
-            sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
-            accel_profile = flat
-          }
-          windowrule = noborder,^(wofi)$
-          windowrule = center,^(wofi)$
-          windowrule = center,^(steam)$
-          windowrule = float, nm-connection-editor|blueman-manager
-          windowrule = float, swayimg|vlc|Viewnior|pavucontrol
-          windowrule = float, nwg-look|qt5ct|mpv
-          windowrule = float, zoom
-          windowrulev2 = stayfocused, title:^()$,class:^(steam)$
-          windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
-          windowrulev2 = opacity 0.9 0.7, class:^(Brave)$
-          windowrulev2 = opacity 0.9 0.7, class:^(thunar)$
-          gestures {
-            workspace_swipe = true
-            workspace_swipe_fingers = 3
-          }
-          misc {
-            initial_workspace_tracking = 0
-            mouse_move_enables_dpms = true
-            key_press_enables_dpms = false
-          }
-          animations {
-            enabled = yes
-            bezier = wind, 0.05, 0.9, 0.1, 1.05
-            bezier = winIn, 0.1, 1.1, 0.1, 1.1
-            bezier = winOut, 0.3, -0.3, 0, 1
-            bezier = liner, 1, 1, 1, 1
-            animation = windows, 1, 6, wind, slide
-            animation = windowsIn, 1, 6, winIn, slide
-            animation = windowsOut, 1, 5, winOut, slide
-            animation = windowsMove, 1, 5, wind, slide
-            animation = border, 1, 1, liner
-            animation = fade, 1, 10, default
-            animation = workspaces, 1, 5, wind
-          }
-          decoration {
-            rounding = 10
-            drop_shadow = true
-            shadow_range = 4
-            shadow_render_power = 3
-            col.shadow = rgba(1a1a1aee)
-            blur {
-                enabled = true
-                size = 5
-                passes = 3
-                new_optimizations = on
-                ignore_opacity = off
-            }
-          }
-          plugin {
-            hyprtrails {
-            }
-          }
-          dwindle {
-            pseudotile = true
-            preserve_split = true
-          }
-          bind = ${modifier},Return,exec,${terminal}
-          bind = ${modifier}SHIFT,Return,exec,rofi-launcher
-          bind = ${modifier}SHIFT,W,exec,web-search
-          bind = ${modifier}ALT,W,exec,wallsetter
-          bind = ${modifier}SHIFT,N,exec,swaync-client -rs
-          bind = ${modifier},W,exec,${browser}
-          bind = ${modifier},E,exec,emopicker9000
-          bind = ${modifier},S,exec,screenshootin
-          bind = ${modifier},D,exec,discord
-          bind = ${modifier},O,exec,obs
-          bind = ${modifier},C,exec,hyprpicker -a
-          bind = ${modifier},G,exec,gimp
-          bind = ${modifier}SHIFT,G,exec,godot4
-          bind = ${modifier},T,exec,thunar
-          bind = ${modifier},M,exec,spotify
-          bind = ${modifier},Q,killactive,
-          bind = ${modifier},P,pseudo,
-          bind = ${modifier}SHIFT,I,togglesplit,
-          bind = ${modifier},F,fullscreen,
-          bind = ${modifier}SHIFT,F,togglefloating,
-          bind = ${modifier}SHIFT,C,exit,
-          bind = ${modifier}SHIFT,left,movewindow,l
-          bind = ${modifier}SHIFT,right,movewindow,r
-          bind = ${modifier}SHIFT,up,movewindow,u
-          bind = ${modifier}SHIFT,down,movewindow,d
-          bind = ${modifier}SHIFT,h,movewindow,l
-          bind = ${modifier}SHIFT,l,movewindow,r
-          bind = ${modifier}SHIFT,k,movewindow,u
-          bind = ${modifier}SHIFT,j,movewindow,d
-          bind = ${modifier},left,movefocus,l
-          bind = ${modifier},right,movefocus,r
-          bind = ${modifier},up,movefocus,u
-          bind = ${modifier},down,movefocus,d
-          bind = ${modifier},h,movefocus,l
-          bind = ${modifier},l,movefocus,r
-          bind = ${modifier},k,movefocus,u
-          bind = ${modifier},j,movefocus,d
-          bind = ${modifier},1,workspace,1
-          bind = ${modifier},2,workspace,2
-          bind = ${modifier},3,workspace,3
-          bind = ${modifier},4,workspace,4
-          bind = ${modifier},5,workspace,5
-          bind = ${modifier},6,workspace,6
-          bind = ${modifier},7,workspace,7
-          bind = ${modifier},8,workspace,8
-          bind = ${modifier},9,workspace,9
-          bind = ${modifier},0,workspace,10
-          bind = ${modifier}SHIFT,SPACE,movetoworkspace,special
-          bind = ${modifier},SPACE,togglespecialworkspace
-          bind = ${modifier}SHIFT,1,movetoworkspace,1
-          bind = ${modifier}SHIFT,2,movetoworkspace,2
-          bind = ${modifier}SHIFT,3,movetoworkspace,3
-          bind = ${modifier}SHIFT,4,movetoworkspace,4
-          bind = ${modifier}SHIFT,5,movetoworkspace,5
-          bind = ${modifier}SHIFT,6,movetoworkspace,6
-          bind = ${modifier}SHIFT,7,movetoworkspace,7
-          bind = ${modifier}SHIFT,8,movetoworkspace,8
-          bind = ${modifier}SHIFT,9,movetoworkspace,9
-          bind = ${modifier}SHIFT,0,movetoworkspace,10
-          bind = ${modifier}CONTROL,right,workspace,e+1
-          bind = ${modifier}CONTROL,left,workspace,e-1
-          bind = ${modifier},mouse_down,workspace, e+1
-          bind = ${modifier},mouse_up,workspace, e-1
-          bindm = ${modifier},mouse:272,movewindow
-          bindm = ${modifier},mouse:273,resizewindow
-          bind = ALT,Tab,cyclenext
-          bind = ALT,Tab,bringactivetotop
-          bind = ,XF86AudioRaiseVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-          bind = ,XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-          binde = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-          bind = ,XF86AudioPlay, exec, playerctl play-pause
-          bind = ,XF86AudioPause, exec, playerctl play-pause
-          bind = ,XF86AudioNext, exec, playerctl next
-          bind = ,XF86AudioPrev, exec, playerctl previous
-          bind = ,XF86MonBrightnessDown,exec,brightnessctl set 5%-
-          bind = ,XF86MonBrightnessUp,exec,brightnessctl set +5%
-        ''
+    package = inputs.hyprland.packages.${pkgs.system}.default;
+
+    plugins = [
+      # inputs.hyprland-hyprspace.packages.${pkgs.system}.default
+      # inputs.hyprgrass.packages.${pkgs.system}.default
+    ];
+
+    settings = {
+      exec-once = [
+        "hyprctl setcursor Qogir 24"
+        "asztal"
+        "swww-daemon"
+        "fragments"
       ];
+
+      monitor = [
+        # "eDP-1, 1920x1080, 0x0, 1"
+        # "HDMI-A-1, 2560x1440, 1920x0, 1"
+        ",preferred,auto,1"
+      ];
+
+      general = {
+        layout = "dwindle";
+        resize_on_border = true;
+      };
+
+      misc = {
+        disable_splash_rendering = true;
+        force_default_wallpaper = 1;
+      };
+
+      input = {
+        kb_layout = "hu,us";
+        follow_mouse = 1;
+        touchpad = {
+          natural_scroll = "yes";
+          disable_while_typing = true;
+          drag_lock = true;
+        };
+        sensitivity = 0;
+        float_switch_override_focus = 2;
+      };
+
+      binds = {
+        allow_workspace_cycles = true;
+      };
+
+      dwindle = {
+        pseudotile = "yes";
+        preserve_split = "yes";
+        # no_gaps_when_only = "yes";
+      };
+
+      gestures = {
+        workspace_swipe = true;
+        workspace_swipe_touch = true;
+        workspace_swipe_use_r = true;
+      };
+
+      windowrule = let
+        f = regex: "float, ^(${regex})$";
+      in [
+        (f "org.gnome.Calculator")
+        (f "org.gnome.Nautilus")
+        (f "pavucontrol")
+        (f "nm-connection-editor")
+        (f "blueberry.py")
+        (f "org.gnome.Settings")
+        (f "org.gnome.design.Palette")
+        (f "Color Picker")
+        (f "xdg-desktop-portal")
+        (f "xdg-desktop-portal-gnome")
+        (f "de.haeckerfelix.Fragments")
+        "workspace 7, title:Spotify"
+      ];
+
+      bind = let
+        binding = mod: cmd: key: arg: "${mod}, ${key}, ${cmd}, ${arg}";
+        mvfocus = binding "ALT" "movefocus";
+        ws = binding "ALT" "workspace";
+        resizeactive = binding "ALT CTRL SHIFT" "resizeactive";
+        mvactive = binding "ALT CTRL" "moveactive";
+        mvtows = binding "ALT SHIFT" "movetoworkspace";
+        arr = [1 2 3 4 5 6 7];
+      in
+        [
+          "CTRL SHIFT, R, exec,         asztal quit; asztal"
+          "ALT, R, exec,              asztal toggle launcher"
+          "ALT, Tab, exec,            asztal eval \"launcher('h')\""
+          ",XF86PowerOff, exec,         asztal toggle powermenu"
+          ",XF86Launch4, exec,          screenrecord"
+          "SHIFT, XF86Launch4, exec,    screenrecord --full"
+          ",Print, exec,                screenshot"
+          "SHIFT, Print, exec,          screenshot --full"
+          "ALT, Return, exec,         xterm" # xterm is a symlink, not actually xterm
+          "ALT, W, exec,              firefox"
+          "ALT, E, exec,              xterm -e lf"
+
+          "ALT, Tab,            focuscurrentorlast"
+          "CTRL ALT, Delete,    exit"
+          "ALT, Q,              killactive"
+          "ALT, F,            togglefloating"
+          "ALT, G,            fullscreen"
+          "ALT, P,            togglesplit"
+
+          (mvfocus "k" "u")
+          (mvfocus "j" "d")
+          (mvfocus "l" "r")
+          (mvfocus "h" "l")
+          (ws "left" "e-1")
+          (ws "right" "e+1")
+          (mvtows "left" "e-1")
+          (mvtows "right" "e+1")
+          (resizeactive "k" "0 -20")
+          (resizeactive "j" "0 20")
+          (resizeactive "l" "20 0")
+          (resizeactive "h" "-20 0")
+          (mvactive "k" "0 -20")
+          (mvactive "j" "0 20")
+          (mvactive "l" "20 0")
+          (mvactive "h" "-20 0")
+        ]
+        ++ (map (i: ws (toString i) (toString i)) arr)
+        ++ (map (i: mvtows (toString i) (toString i)) arr);
+
+      bindle = [
+        ",XF86MonBrightnessUp,   exec, brightnessctl set +5%"
+        ",XF86MonBrightnessDown, exec, brightnessctl set  5%-"
+        ",XF86KbdBrightnessUp,   exec, brightnessctl -d asus::kbd_backlight set +1"
+        ",XF86KbdBrightnessDown, exec, brightnessctl -d asus::kbd_backlight set  1-"
+        ",XF86AudioRaiseVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        ",XF86AudioLowerVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
+      ];
+
+      bindl = [
+        ",XF86AudioPlay,    exec, playerctl play-pause"
+        ",XF86AudioStop,    exec, playerctl pause"
+        ",XF86AudioPause,   exec, playerctl pause"
+        ",XF86AudioPrev,    exec, playerctl previous"
+        ",XF86AudioNext,    exec, playerctl next"
+        ",XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+      ];
+
+      bindm = [
+        "ALT, mouse:273, resizewindow"
+        "ALT, mouse:272, movewindow"
+      ];
+
+      decoration = {
+        shadow = {
+          range = 6;
+          render_power = 2;
+        };
+
+        dim_inactive = false;
+
+        blur = {
+          enabled = true;
+          size = 8;
+          passes = 3;
+          new_optimizations = "on";
+          noise = 0.01;
+          contrast = 0.9;
+          brightness = 0.8;
+          popups = true;
+        };
+      };
+
+      animations = {
+        enabled = "yes";
+        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+        animation = [
+          "windows, 1, 5, myBezier"
+          "windowsOut, 1, 7, default, popin 80%"
+          "border, 1, 10, default"
+          "fade, 1, 7, default"
+          "workspaces, 1, 6, default"
+        ];
+      };
+
+      "plugin:touch_gestures" = {
+        sensitivity = 8.0;
+        workspace_swipe_fingers = 3;
+        long_press_delay = 400;
+        edge_margin = 16;
+        hyprgrass-bind = [
+          ", edge:r:l, workspace, +1"
+          ", edge:l:r, workspace, -1"
+        ];
+      };
+
+      # plugin = {
+      #   overview = {
+      #     centerAligned = true;
+      #     hideTopLayers = true;
+      #     hideOverlayLayers = true;
+      #     showNewWorkspace = true;
+      #     exitOnClick = true;
+      #     exitOnSwitch = true;
+      #     drawActiveWorkspace = true;
+      #     reverseSwipe = true;
+      #   };
+      #
+      #   hyprbars = {
+      #     bar_color = "rgb(2a2a2a)";
+      #     bar_height = 28;
+      #     col_text = "rgba(ffffffdd)";
+      #     bar_text_size = 11;
+      #     bar_text_font = "Ubuntu Nerd Font";
+      #
+      #     buttons = {
+      #       button_size = 0;
+      #       "col.maximize" = "rgba(ffffff11)";
+      #       "col.close" = "rgba(ff111133)";
+      #     };
+      #   };
+      # };
+    };
   };
 }

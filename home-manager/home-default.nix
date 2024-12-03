@@ -4,9 +4,10 @@ let
 in
 {
   imports = [
-    # ./i3.nix
     # ./bspwm.nix
     ./git.nix
+    ./hyprland.nix
+    # ./i3.nix
     ./kitty.nix
     ./lf.nix
     ./neovim.nix
@@ -15,11 +16,9 @@ in
     ./picom.nix
     # ./polybar.nix
     ./rofi.nix
-    ./hyprland.nix
     ./sh.nix
     ./starship.nix
     # ./starship-arrow.nix
-    ./sxhkd.nix
     ./theme.nix
     # ./tmux.nix
     # ./zed-editor.nix
