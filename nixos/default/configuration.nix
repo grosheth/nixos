@@ -5,8 +5,8 @@
     ./hardware-configuration.nix
     ./audio.nix
     ./locale.nix
-    ./modules/x11.nix
-    # ./modules/wayland.nix
+    # ./modules/x11.nix
+    ./modules/wayland.nix
     ./modules/nvidia-drivers.nix
   ];
 

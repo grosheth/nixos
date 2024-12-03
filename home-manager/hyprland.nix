@@ -38,10 +38,10 @@
         "fragments"
       ];
 
-      monitor = [
-        # "eDP-1, 1920x1080, 0x0, 1"
-        # "HDMI-A-1, 2560x1440, 1920x0, 1"
-        ",preferred,auto,1"
+      monitor =[
+       "HDMI-0, 2560x1440, auto, 1"
+       "HDMI-1, 2560x1440, auto, 2"
+       "DP-2, 2560x1440, auto, 3"
       ];
 
       general = {
@@ -55,7 +55,7 @@
       };
 
       input = {
-        kb_layout = "hu,us";
+        kb_layout = "us";
         follow_mouse = 1;
         touchpad = {
           natural_scroll = "yes";
@@ -109,17 +109,13 @@
         arr = [1 2 3 4 5 6 7];
       in
         [
-          "CTRL SHIFT, R, exec,         asztal quit; asztal"
-          "ALT, R, exec,              asztal toggle launcher"
-          "ALT, Tab, exec,            asztal eval \"launcher('h')\""
-          ",XF86PowerOff, exec,         asztal toggle powermenu"
-          ",XF86Launch4, exec,          screenrecord"
-          "SHIFT, XF86Launch4, exec,    screenrecord --full"
           ",Print, exec,                screenshot"
           "SHIFT, Print, exec,          screenshot --full"
-          "ALT, Return, exec,         xterm" # xterm is a symlink, not actually xterm
+          "ALT, Return, exec,         kitty"
           "ALT, W, exec,              firefox"
-          "ALT, E, exec,              xterm -e lf"
+          "ALT, B, exec,              brave-browser"
+          "CTRL, W, exec,             rofi -show window"
+          "CTRL, space, exec,         rofi -show drun"
 
           "ALT, Tab,            focuscurrentorlast"
           "CTRL ALT, Delete,    exit"
@@ -213,33 +209,6 @@
           ", edge:l:r, workspace, -1"
         ];
       };
-
-      # plugin = {
-      #   overview = {
-      #     centerAligned = true;
-      #     hideTopLayers = true;
-      #     hideOverlayLayers = true;
-      #     showNewWorkspace = true;
-      #     exitOnClick = true;
-      #     exitOnSwitch = true;
-      #     drawActiveWorkspace = true;
-      #     reverseSwipe = true;
-      #   };
-      #
-      #   hyprbars = {
-      #     bar_color = "rgb(2a2a2a)";
-      #     bar_height = 28;
-      #     col_text = "rgba(ffffffdd)";
-      #     bar_text_size = 11;
-      #     bar_text_font = "Ubuntu Nerd Font";
-      #
-      #     buttons = {
-      #       button_size = 0;
-      #       "col.maximize" = "rgba(ffffff11)";
-      #       "col.close" = "rgba(ff111133)";
-      #     };
-      #   };
-      # };
     };
   };
 }
