@@ -4,9 +4,9 @@ let
 in
 {
   imports = [
-    # ./bspwm.nix
+    ./bspwm.nix
     ./git.nix
-    ./hyprland.nix
+    # ./hyprland.nix
     # ./i3.nix
     ./kitty.nix
     ./lf.nix

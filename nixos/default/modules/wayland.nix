@@ -4,23 +4,11 @@
   lib,
   ...
 }: {
-# Wayland
-  services.xserver = {
-    enable = true;
-    videoDrivers = ["nvidia"];
-    displayManager = {
-      gdm = {
-        enable = true;
-        wayland = true;
-      };
-    };
-  }
+
   options.hyprland = {
     enable = lib.mkEnableOption "Hyprland";
-  };
-  ;
+  }; 
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
   config = lib.mkIf config.hyprland.enable {
     nix.settings = {
       substituters = ["https://hyprland.cachix.org"];
@@ -29,7 +17,22 @@
       ];
     };
 
-    services.xserver.displayManager.startx.enable = true;
+  # Wayland
+    services.xserver = {
+      enable = true;
+      videoDrivers = ["nvidia"];
+      displayManager = {
+        startx = {
+          enable = true;
+        };
+        gdm = {
+          enable = true;
+          wayland = true;
+        };
+      };
+
+    };
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     programs.hyprland.enable = true;
 

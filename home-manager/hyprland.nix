@@ -25,15 +25,58 @@
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.default;
 
-    plugins = [
-      # inputs.hyprland-hyprspace.packages.${pkgs.system}.default
-      # inputs.hyprgrass.packages.${pkgs.system}.default
-    ];
-
     settings = {
+
+      "$mod" = "ALT";
+      "$terminal" = "kitty";
+
+      decoration = {
+        shadow = {
+          range = 6;
+          render_power = 2;
+        };
+
+        dim_inactive = false;
+
+        blur = {
+          enabled = true;
+          size = 8;
+          passes = 3;
+          new_optimizations = "on";
+          noise = 0.01;
+          contrast = 0.9;
+          brightness = 0.8;
+          popups = true;
+        };
+      };
+
+      bind = [
+        "$mod, w, exec, brave-browser"
+        "$mod, b, exec, brave-browser"
+        "$mod, W, exec, brave-browser"
+        "$mod, B, exec, brave-browser"
+        "$mod, return, exec, kitty"
+        "$mod, 1, workspace, 1"
+        "$mod, 2, workspace, 2"
+        "$mod, 3, workspace, 3"
+        "$mod, 4, workspace, 4"
+        "$mod, 5, workspace, 5"
+        "$mod, 6, workspace, 6"
+        "$mod, 7, workspace, 7"
+        "$mod, 8, workspace, 8"
+        "$mod, 9, workspace, 9"
+        "$mod, 0, workspace, 10"
+      ];
+
+      bindm = [
+        # mouse movements
+        "$mod, mouse:272, movewindow"
+        "$mod, mouse:273, resizewindow"
+        "$mod ALT, mouse:272, resizewindow"
+      ];
+
       exec-once = [
         "hyprctl setcursor Qogir 24"
-        "asztal"
         "swww-daemon"
         "fragments"
       ];
@@ -82,110 +125,45 @@
         workspace_swipe_use_r = true;
       };
 
-      windowrule = let
-        f = regex: "float, ^(${regex})$";
-      in [
-        (f "org.gnome.Calculator")
-        (f "org.gnome.Nautilus")
-        (f "pavucontrol")
-        (f "nm-connection-editor")
-        (f "blueberry.py")
-        (f "org.gnome.Settings")
-        (f "org.gnome.design.Palette")
-        (f "Color Picker")
-        (f "xdg-desktop-portal")
-        (f "xdg-desktop-portal-gnome")
-        (f "de.haeckerfelix.Fragments")
-        "workspace 7, title:Spotify"
-      ];
+      # windowrule = let
+      #   f = regex: "float, ^(${regex})$";
+      # in [
+      #   (f "org.gnome.Calculator")
+      #   (f "org.gnome.Nautilus")
+      #   (f "pavucontrol")
+      #   (f "nm-connection-editor")
+      #   (f "blueberry.py")
+      #   (f "org.gnome.Settings")
+      #   (f "org.gnome.design.Palette")
+      #   (f "Color Picker")
+      #   (f "xdg-desktop-portal")
+      #   (f "xdg-desktop-portal-gnome")
+      #   (f "de.haeckerfelix.Fragments")
+      #   "workspace 7, title:Spotify"
+      # ];
 
-      bind = let
-        binding = mod: cmd: key: arg: "${mod}, ${key}, ${cmd}, ${arg}";
-        mvfocus = binding "ALT" "movefocus";
-        ws = binding "ALT" "workspace";
-        resizeactive = binding "ALT CTRL SHIFT" "resizeactive";
-        mvactive = binding "ALT CTRL" "moveactive";
-        mvtows = binding "ALT SHIFT" "movetoworkspace";
-        arr = [1 2 3 4 5 6 7];
-      in
-        [
-          ",Print, exec,                screenshot"
-          "SHIFT, Print, exec,          screenshot --full"
-          "ALT, Return, exec,         kitty"
-          "ALT, W, exec,              firefox"
-          "ALT, B, exec,              brave-browser"
-          "CTRL, W, exec,             rofi -show window"
-          "CTRL, space, exec,         rofi -show drun"
+      # bindle = [
+      #   ",XF86MonBrightnessUp,   exec, brightnessctl set +5%"
+      #   ",XF86MonBrightnessDown, exec, brightnessctl set  5%-"
+      #   ",XF86KbdBrightnessUp,   exec, brightnessctl -d asus::kbd_backlight set +1"
+      #   ",XF86KbdBrightnessDown, exec, brightnessctl -d asus::kbd_backlight set  1-"
+      #   ",XF86AudioRaiseVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+      #   ",XF86AudioLowerVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
+      # ];
 
-          "ALT, Tab,            focuscurrentorlast"
-          "CTRL ALT, Delete,    exit"
-          "ALT, Q,              killactive"
-          "ALT, F,            togglefloating"
-          "ALT, G,            fullscreen"
-          "ALT, P,            togglesplit"
+      # bindl = [
+      #   ",XF86AudioPlay,    exec, playerctl play-pause"
+      #   ",XF86AudioStop,    exec, playerctl pause"
+      #   ",XF86AudioPause,   exec, playerctl pause"
+      #   ",XF86AudioPrev,    exec, playerctl previous"
+      #   ",XF86AudioNext,    exec, playerctl next"
+      #   ",XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+      # ];
 
-          (mvfocus "k" "u")
-          (mvfocus "j" "d")
-          (mvfocus "l" "r")
-          (mvfocus "h" "l")
-          (ws "left" "e-1")
-          (ws "right" "e+1")
-          (mvtows "left" "e-1")
-          (mvtows "right" "e+1")
-          (resizeactive "k" "0 -20")
-          (resizeactive "j" "0 20")
-          (resizeactive "l" "20 0")
-          (resizeactive "h" "-20 0")
-          (mvactive "k" "0 -20")
-          (mvactive "j" "0 20")
-          (mvactive "l" "20 0")
-          (mvactive "h" "-20 0")
-        ]
-        ++ (map (i: ws (toString i) (toString i)) arr)
-        ++ (map (i: mvtows (toString i) (toString i)) arr);
-
-      bindle = [
-        ",XF86MonBrightnessUp,   exec, brightnessctl set +5%"
-        ",XF86MonBrightnessDown, exec, brightnessctl set  5%-"
-        ",XF86KbdBrightnessUp,   exec, brightnessctl -d asus::kbd_backlight set +1"
-        ",XF86KbdBrightnessDown, exec, brightnessctl -d asus::kbd_backlight set  1-"
-        ",XF86AudioRaiseVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
-        ",XF86AudioLowerVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-      ];
-
-      bindl = [
-        ",XF86AudioPlay,    exec, playerctl play-pause"
-        ",XF86AudioStop,    exec, playerctl pause"
-        ",XF86AudioPause,   exec, playerctl pause"
-        ",XF86AudioPrev,    exec, playerctl previous"
-        ",XF86AudioNext,    exec, playerctl next"
-        ",XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
-      ];
-
-      bindm = [
-        "ALT, mouse:273, resizewindow"
-        "ALT, mouse:272, movewindow"
-      ];
-
-      decoration = {
-        shadow = {
-          range = 6;
-          render_power = 2;
-        };
-
-        dim_inactive = false;
-
-        blur = {
-          enabled = true;
-          size = 8;
-          passes = 3;
-          new_optimizations = "on";
-          noise = 0.01;
-          contrast = 0.9;
-          brightness = 0.8;
-          popups = true;
-        };
-      };
+      # bindm = [
+      #   "ALT, mouse:273, resizewindow"
+      #   "ALT, mouse:272, movewindow"
+      # ];
 
       animations = {
         enabled = "yes";
