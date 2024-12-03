@@ -5,7 +5,7 @@ in
 {
   imports = [
     # ./i3.nix
-    # ./bspwm.nix
+    ./bspwm.nix
     ./git.nix
     ./kitty.nix
     ./lf.nix
@@ -15,11 +15,11 @@ in
     ./picom.nix
     # ./polybar.nix
     ./rofi.nix
-    ./hyprland.nix
+    # ./hyprland.nix
     ./sh.nix
     ./starship.nix
     # ./starship-arrow.nix
-    # ./sxhkd.nix
+    ./sxhkd.nix
     ./theme.nix
     # ./tmux.nix
     # ./zed-editor.nix

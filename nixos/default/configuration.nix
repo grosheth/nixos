@@ -87,34 +87,35 @@
   };
 
   # X11
-  # services.xserver = {
-  #   enable = true;
-  #   autorun = true;
+  services.xserver = {
+    enable = true;
+    autorun = true;
 
-  #   videoDrivers = ["nvidia"];
+    videoDrivers = ["nvidia"];
     
-  #   # Configure keymap in X11
-  #     xkb ={
-  #       layout = "us";
-  #       variant = "";
-  #     };
+    # Configure keymap in X11
+      xkb ={
+        layout = "us";
+        variant = "";
+      };
 
-  #     desktopManager = {
-  #       xterm.enable = false;
-  #       wallpaper = {
-  #           combineScreens = true;
-  #         }; 
-  #     };
+      desktopManager = {
+        xterm.enable = false;
+        wallpaper = {
+            combineScreens = true;
+          }; 
+      };
 
-  #   # windowManager.i3.enable = true;
-  #   windowManager.bspwm.enable = true;
-  # };
+    # windowManager.i3.enable = true;
+    windowManager.bspwm.enable = true;
+  };
 
   # Wayland
   services.xserver.displayManager.gdm.wayland = true;
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   services = {
+    # Onedrive
     onedrive.enable = true;
     displayManager = {
         # defaultSession = "none+i3";
