@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    ./bspwm.nix
+    # ./bspwm.nix
     ./git.nix
     # ./hyprland.nix
     # ./i3.nix
@@ -18,7 +18,6 @@ in
     ./rofi.nix
     ./sh.nix
     ./starship.nix
-    # ./starship-arrow.nix
     ./theme.nix
     # ./tmux.nix
     # ./zed-editor.nix

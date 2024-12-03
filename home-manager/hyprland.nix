@@ -51,11 +51,13 @@
       };
 
       bind = [
-        "$mod, w, exec, brave-browser"
-        "$mod, b, exec, brave-browser"
-        "$mod, W, exec, brave-browser"
-        "$mod, B, exec, brave-browser"
+        "CTRL/CONTROL, W, exec, rofi -show window"
+        "$mod, B, exec, brave"
+        "$mod, C, killactive,"
         "$mod, return, exec, kitty"
+        "$mod, D, exec, dmenu_run"
+        "$mod, space, exec, pkill rofi || rofi -show drun"
+
         "$mod, 1, workspace, 1"
         "$mod, 2, workspace, 2"
         "$mod, 3, workspace, 3"
@@ -82,9 +84,9 @@
       ];
 
       monitor =[
-       "HDMI-0, 2560x1440, auto, 1"
-       "HDMI-1, 2560x1440, auto, 2"
-       "DP-2, 2560x1440, auto, 3"
+       "HDMI-A-1, 2560x1440, 0x0, 1"
+       "DP-2, 2560x1440, 2560x0, 1"
+       "HDMI-A-2, 2560x1440, 5120x0, 1"
       ];
 
       general = {

@@ -10,7 +10,7 @@
     ./modules/nvidia-drivers.nix
   ];
   # hyprland
-  hyprland.enable = true;
+  # hyprland.enable = true;
 
   # nix
   documentation.nixos.enable = false;
@@ -56,16 +56,6 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-  };
-
-  services = {
-    # Onedrive
-    onedrive.enable = true;
-    displayManager = {
-        # defaultSession = "none+i3";
-        defaultSession = "none+bspwm";
-        # sddm.enable = true;
-      };
   };
 
   # udev rules for ZSA keyboard
