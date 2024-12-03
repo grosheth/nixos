@@ -17,7 +17,7 @@
       ];
     };
 
-  # Wayland
+    # Wayland
     services.xserver = {
       enable = true;
       videoDrivers = ["nvidia"];
@@ -117,4 +117,5 @@
       "d '/var/cache/greeter' - greeter greeter - -"
     ];
   };
+  hyprland.enable = true;
 }

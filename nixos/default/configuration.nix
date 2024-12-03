@@ -9,6 +9,8 @@
     # ./modules/wayland.nix
     ./modules/nvidia-drivers.nix
   ];
+  # hyprland
+  hyprland.enable = true;
 
   # nix
   documentation.nixos.enable = false;
