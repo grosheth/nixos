@@ -6,7 +6,7 @@ in
   imports = [
     # ./bspwm.nix
     ./git.nix
-    # ./hyprland.nix
+    ./hyprland.nix
     # ./i3.nix
     ./kitty.nix
     ./lf.nix
