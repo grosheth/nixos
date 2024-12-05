@@ -6,8 +6,9 @@
     ./audio.nix
     ./locale.nix
     # ./modules/x11.nix
-    ./modules/wayland.nix
-    ./modules/nvidia-drivers.nix
+    # ./modules/wayland.nix
+    ./modules/wayland-flake.nix
+    # ./modules/nvidia-drivers.nix
   ];
   # hyprland
   hyprland.enable = true;

@@ -17,8 +17,11 @@
       flake = false;
     };
     hyprland = {
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+      url = "github:hyprwm/Hyprland/";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixpkgs-wayland = {
+      url = "github:nix-community/nixpkgs-wayland";
     };
   };
 
@@ -67,5 +70,7 @@
         modules = [ home-manager/home-laptop.nix ];
         };
       };
+      # Wayland
+      nixpkgs.overlays = [inputs.nixpkgs-wayland.overlay];
     };
 }
