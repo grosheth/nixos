@@ -1,17 +1,15 @@
 { config, pkgs, username, ... }:
-
 {
   imports = [
     ./hardware-configuration.nix
     ./audio.nix
     ./locale.nix
-    # ./modules/x11.nix
+    ./modules/x11.nix
     # ./modules/wayland.nix
-    ./modules/wayland-flake.nix
-    # ./modules/nvidia-drivers.nix
+    ./modules/nvidia-drivers.nix
   ];
   # hyprland
-  hyprland.enable = true;
+  # hyprland.enable = true;
 
   # nix
   documentation.nixos.enable = false;
