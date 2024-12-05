@@ -1,13 +1,20 @@
-{ pkgs, username, ... }:
+{ pkgs, username, lib, ... }:
 let
   homeDirectory = "/home/${username}";
+
+  # WM
+  hyprland = false;
+  bspwm = true;
+  i3 = false;
+
+  # Tools
 in
 {
-  imports = [
-    ./bspwm.nix
+  imports = lib.filter (x: x != null) [
+    (if bspwm then ./bspwm.nix else null)
+    (if hyprland then ./hyprland.nix else null)
+    (if i3 then ./i3.nix else null)
     ./git.nix
-    # ./hyprland.nix
-    # ./i3.nix
     ./kitty.nix
     ./lf.nix
     ./neovim.nix

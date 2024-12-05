@@ -1,15 +1,22 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, username, lib, ... }:
+let
+  # Change these vars to enable or disable further configurations
+  wayland = false;
+  x11 = true;
+in
 {
-  imports = [
+  imports = lib.filter (x: x != null) [
     ./hardware-configuration.nix
     ./audio.nix
     ./locale.nix
-    ./modules/x11.nix
-    # ./modules/wayland.nix
+    (if x11 then ./modules/x11.nix else null)
+    (if wayland then ./modules/wayland.nix else null)
     ./modules/nvidia-drivers.nix
   ];
-  # hyprland
-  # hyprland.enable = true;
+
+  programs.hyprland = if wayland then {
+    enable = true;
+  } else {};
 
   # nix
   documentation.nixos.enable = false;
