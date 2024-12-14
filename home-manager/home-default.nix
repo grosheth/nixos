@@ -6,8 +6,6 @@ let
   hyprland = false;
   bspwm = true;
   i3 = false;
-
-  # Tools
 in
 {
   imports = lib.filter (x: x != null) [
