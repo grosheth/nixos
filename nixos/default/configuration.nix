@@ -58,7 +58,7 @@ in
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
 
-  # Enable Graphics
+  # Enable Graphics (Opengl)
   hardware.graphics = {
     enable = true;
     enable32Bit = true;

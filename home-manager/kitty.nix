@@ -9,8 +9,8 @@
     enable = true;
     themeFile = "OneHalfDark";
     font = {
-      name = "JetBrainsMono Nerd Font Mono";
-      # name = "IosevkaNerdFontMono-Regular";
+      # name = "JetBrainsMono Nerd Font Mono";
+      name = "IosevkaNerdFontMono-Regular";
       size = 14; 
     };
 

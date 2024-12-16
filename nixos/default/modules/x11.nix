@@ -1,7 +1,6 @@
 { config, pkgs, username, ... }:
 
 {
-
   services = {
     # Onedrive
     onedrive.enable = true;
