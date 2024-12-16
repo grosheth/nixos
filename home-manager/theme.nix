@@ -19,7 +19,7 @@ in
     packages = with pkgs; [
       adw-gtk3
       font-awesome
-      nerdfonts
+      nerd-fonts
     ];
     sessionVariables = {
       XCURSOR_THEME = cursor-theme;

@@ -8,13 +8,14 @@ let
     "gp" = "git push";
     "ga" = "git add --all";
 
+
     # basic commands
     "cls" = "clear";
     "ll" = "ls -lat";
     "lr" = "ls -lrt";
     "l" = "ls";
 
-    # Quick move aliases 
+    # Quick move aliases
     "wrk" = "cd ~/work";
     "cfg" = "cd ~/nixos";
     ".cfg" = "cd ~/.config";
@@ -27,11 +28,19 @@ let
     "nv" = "nvim";
     "vim" = "nvim";
     "neovim" = "nvim";
+
+    # ssh-manager alias
+    "s" = "~/work/ssh-manager/target/debug/ssh-manager";
+    "ssh-manager" = "~/work/ssh-manager/target/debug/ssh-manager";
+
+    # Update nix system
+    "update" = "nix flake update";
+
   };
 in
-{ 
+{
   programs = {
-    thefuck.enable = true; 
+    thefuck.enable = true;
 
     zsh = {
       enable = true;
