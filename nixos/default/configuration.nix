@@ -111,7 +111,7 @@ in
   environment.systemPackages = with pkgs; [
     brave
     sassc
-    nerdfonts
+    # nerdfonts
     brightnessctl
     asusctl
     supergfxctl
