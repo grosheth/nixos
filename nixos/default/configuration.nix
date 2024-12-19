@@ -58,12 +58,6 @@ in
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
 
-  # Enable Graphics (Opengl)
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-
   # udev rules for ZSA keyboard
   hardware.keyboard.zsa.enable = true;
 
@@ -126,6 +120,7 @@ in
     gwenview
 
     git
+    glxinfo
     wget
     pkgs.dunst
     libnotify

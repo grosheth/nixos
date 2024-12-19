@@ -33,6 +33,9 @@ let
     "s" = "~/work/ssh-manager/target/debug/ssh-manager";
     "ssh-manager" = "~/work/ssh-manager/target/debug/ssh-manager";
 
+    # kaolin theme creator alias
+    "kaolin" = "~/work/kaolin-theme-creator/target/debug/kaolin-theme-creator";
+
     # Update nix system
     "update" = "nix flake update";
 

@@ -29,4 +29,14 @@
       windowManager.bspwm.enable = true;
     };
   };
+  # Enable Graphics (Opengl)
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      libglvnd
+      mesa
+      xorg.xorgserver
+    ];
+  };
 }

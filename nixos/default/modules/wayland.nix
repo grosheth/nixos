@@ -5,9 +5,15 @@
   ...
 }: {
 
+  # Enable Graphics (Opengl)
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
   options.hyprland = {
     enable = lib.mkEnableOption "Hyprland";
-  }; 
+  };
 
   config = lib.mkIf config.hyprland.enable {
     nix.settings = {

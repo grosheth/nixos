@@ -9,9 +9,8 @@
     enable = true;
     themeFile = "OneHalfDark";
     font = {
-      # name = "JetBrainsMono Nerd Font Mono";
-      name = "IosevkaNerdFontMono-Regular";
-      size = 14; 
+      name = "JetBrainsMono Nerd Font Mono";
+      size = 15;
     };
 
     keybindings = {
