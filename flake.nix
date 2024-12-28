@@ -24,8 +24,8 @@
       url = "github:nix-community/nixpkgs-wayland";
     };
     ghostty = {
-      url = "github:ghostty-org/ghostty"
-    }
+      url = "github:ghostty-org/ghostty";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ghostty, ... } @ inputs:
@@ -37,23 +37,26 @@
     {
       nixosConfigurations = {
         default = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs username system;};
-        modules = [
-            # ./configuration.nix
+          specialArgs = {inherit inputs username system;};
+          modules = [
+            {
+              environment.systemPackages = [
+                ghostty.packages.x86_64-linux.default
+              ];
+            }
             ./nixos/default/configuration.nix
             inputs.home-manager.nixosModules.default
-        ];
+          ];
         };
         laptop = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs username system;};
-        modules = [
-            # ./configuration.nix
+          specialArgs = {inherit inputs username system;};
+          modules = [
             ./nixos/laptop/configuration.nix
             inputs.home-manager.nixosModules.default
-        ];
+          ];
         };
       };
-  
+
       homeConfigurations = {
         default = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {

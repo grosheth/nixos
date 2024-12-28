@@ -58,7 +58,7 @@
   services.sxhkd = {
     enable = true;
     keybindings = {
-      "alt + Return" = "kitty";
+      "alt + Return" = "ghostty";
       "alt + @space" = "rofi -show drun";
       "alt + q" = "rofi -show ssh";
       "alt + v" = "bash rofi-vpn";
