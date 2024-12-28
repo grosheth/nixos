@@ -23,9 +23,12 @@
     nixpkgs-wayland = {
       url = "github:nix-community/nixpkgs-wayland";
     };
+    ghostty = {
+      url = "github:ghostty-org/ghostty"
+    }
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, ghostty, ... } @ inputs:
     let
       username = "salledelavage";
       system = "x86_64-linux";

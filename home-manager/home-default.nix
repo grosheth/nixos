@@ -13,6 +13,7 @@ in
     (if hyprland then ./hyprland.nix else null)
     (if i3 then ./i3.nix else null)
     ./git.nix
+    ./ghostty.nix
     ./kitty.nix
     ./lf.nix
     ./neovim.nix
