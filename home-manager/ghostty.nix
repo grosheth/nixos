@@ -18,6 +18,8 @@ let
     keybind = ctrl+h=previous_tab
     keybind = ctrl+l=next_tab
     keybind = ctrl+q=close_surface
+
+    keybind = ctrl+m=toggle_quick_terminal
   '';
 
   customTheme = ''
