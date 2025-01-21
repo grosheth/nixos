@@ -3,7 +3,7 @@
   imports = [
     ./modules/nitch-module.nix
   ];
-  programs.nitch = {
-    extraConfig = "test"
-  };
+  # programs.nitch = {
+  #   extraConfig = "test"
+  # };
 }
