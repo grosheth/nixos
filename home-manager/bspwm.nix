@@ -33,7 +33,7 @@
         ];
       };
       extraConfig = ''
-        feh --bg-scale $HOME/nixos/assets/images/kaolin_wave.png
+        feh --bg-scale $HOME/nixos/assets/images/kaolin_gruvbox_disco-elysium.png
 
         bash /home/salledelavage/.screenlayout/screen_setup.sh
         picom

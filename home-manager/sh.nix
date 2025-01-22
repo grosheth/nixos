@@ -8,7 +8,6 @@ let
     "gp" = "git push";
     "ga" = "git add --all";
 
-
     # basic commands
     "cls" = "clear";
     "ll" = "ls -lat";
