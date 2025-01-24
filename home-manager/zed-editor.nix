@@ -10,14 +10,27 @@
       {
         context = "Editor";
         bindings = {
-          "ctrl+j" = "workspace::NewTerminal";
+          "ctrl-shift-j" = "workspace::ToggleBottomDock";
         };
       }
-
+      {
+        context = "Editor";
+        bindings = {
+          "ctrl-shift-j" = "terminal_panel::ToggleFocus";
+        };
+      }
+      {
+        context = "Terminal";
+        bindings = {
+          "ctrl-shift-j" = "workspace::ToggleBottomDock";
+        };
+      }
     ];
 
     userSettings = {
       vim_mode = true;
+      ui_font_size = 16;
+      base_keymaps = "VSCode";
       assistant =  {
         default_model = {
           provider = "copilot_chat";
@@ -26,13 +39,13 @@
         version = "2";
       };
       theme = {
-        mode = "system";
+        mode = "dark";
         dark = "One Dark";
         light = "One Light";
       };
       buffer_settings = {
         font_family = "JetBrainsMono Nerd Font Mono";
-        font_size = 14;
+        font_size = 16;
       };
       terminal = {
         font_family = "JetBrainsMono Nerd Font Mono";
@@ -43,5 +56,6 @@
         };
       };
     };
+    extensions = [ "nix" "dockerfile" "lua" ];
   };
 }
