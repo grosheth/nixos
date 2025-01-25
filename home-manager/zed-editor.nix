@@ -25,6 +25,12 @@
           "ctrl-shift-j" = "workspace::ToggleBottomDock";
         };
       }
+      {
+        context = "Workspace";
+        bindings = {
+          "ctrl-shift-i" = "project_panel::TogggleFocus";
+        };
+      }
     ];
 
     userSettings = {
