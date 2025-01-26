@@ -38,6 +38,8 @@ let
     # Update nix system
     "update" = "nix flake update";
 
+    # zed
+    "zed" = "zeditor";
   };
 in
 {
