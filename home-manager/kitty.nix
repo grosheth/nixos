@@ -102,8 +102,8 @@
       color12  #4fa6ed
 
       # magenta
-      color5   #cea2ca
-      color13  #cea2ca
+      color5   #F62262
+      color13  #F62262
 
       # cyan
       color6   #56b6c2

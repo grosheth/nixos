@@ -49,12 +49,8 @@
         dark = "One Dark";
         light = "One Light";
       };
-      buffer_settings = {
-        font_family = "JetBrainsMono Nerd Font Mono";
-        font_size = 16;
-      };
+      buffer_font_family = "JetBrainsMono Nerd Font";
       terminal = {
-        font_family = "JetBrainsMono Nerd Font Mono";
         font_size = 14;
         shell = "system";
         env = {

@@ -18,7 +18,7 @@
       themes.kaolin.green = "#6dd797";
       themes.kaolin.blue = "#4fa6ed";
       themes.kaolin.yellow = "#e55c74";
-      themes.kaolin.magenta = "#cea2ca";
+      themes.kaolin.magenta = "#F62262";
       themes.kaolin.cyan = "#56b6c2";
       themes.kaolin.white = "#eef1f8";
       themes.kaolin.orange = "#56b6c2";

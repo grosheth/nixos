@@ -32,7 +32,7 @@ let
     palette = 2=#6dd797
     palette = 3=#eed891
     palette = 4=#4fa6ed
-    palette = 5=#cea2ca
+    palette = 5=#F62262
     palette = 6=#56b6c2
     palette = 7=#dcdfe4
     palette = 8=#4b5254
@@ -40,7 +40,7 @@ let
     palette = 10=#6dd797
     palette = 11=#eed891
     palette = 12=#4fa6ed
-    palette = 13=#cea2ca
+    palette = 13=#F62262
     palette = 14=#56b6c2
     palette = 15=#dcdfe4
   '';
