@@ -46,12 +46,14 @@
       };
       theme = {
         mode = "dark";
-        dark = "One Dark";
-        light = "One Light";
+        dark = "Kaolin";
+        light = "Kaolin";
       };
       buffer_font_family = "JetBrainsMono Nerd Font";
+      buffer_font_size = 18;
+      buffer_font_weight = 300;
       terminal = {
-        font_size = 14;
+        font_size = 18;
         shell = "system";
         env = {
           TERM = "ghostty";
