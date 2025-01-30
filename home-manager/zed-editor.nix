@@ -738,6 +738,8 @@ in
           "ctrl-shift-i" = "project_panel::TogggleFocus";
         };
       }
+      # Keybind pour aller vers le panel a gauche
+      # Keybind pour ouvrir le panel assistant
     ];
 
     userSettings = {
