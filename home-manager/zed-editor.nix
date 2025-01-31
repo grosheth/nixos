@@ -735,11 +735,15 @@ in
       {
         context = "Workspace";
         bindings = {
-          "ctrl-shift-i" = "project_panel::TogggleFocus";
+          "ctrl-h" = "outline_panel::toggle focus";
         };
       }
-      # Keybind pour aller vers le panel a gauche
-      # Keybind pour ouvrir le panel assistant
+      {
+        context = "Workspace";
+        bindings = {
+          "ctrl-shift-i" = "assistant::ToggleFocus";
+        };
+      }
     ];
 
     userSettings = {
