@@ -735,7 +735,7 @@ in
       {
         context = "Workspace";
         bindings = {
-          "ctrl-h" = "outline_panel::toggle focus";
+          "ctrl-h" = "project_panel::ToggleFocus";
         };
       }
       {
