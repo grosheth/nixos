@@ -10,7 +10,7 @@ let
   colors = {
     # kaolin
     black = "#212026";
-    pink = "#DF215A";
+    pink = "#EE87A9";
     red = "#e55c74";
     green = "#6dd797";
     purple = "#c678dd";

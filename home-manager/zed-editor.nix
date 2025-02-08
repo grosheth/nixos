@@ -97,7 +97,7 @@ let
                     "terminal.ansi.green": "#6dd797",
                     "terminal.ansi.yellow": "#eed891",
                     "terminal.ansi.blue": "#0db9d7",
-                    "terminal.ansi.magenta": "#f5c2e7",
+                    "terminal.ansi.magenta": "#EE87A9",
                     "terminal.ansi.cyan": "#6bd9db",
                     "terminal.ansi.white": "#bac2de",
                     "terminal.ansi.bright_black": "#585b70",
