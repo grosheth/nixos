@@ -1,4 +1,6 @@
 # Nixos
 
-This is my Nixos, Home-manager and Nvim config
+This is my Nixos config.
+
+I also use Home-manager.
 
