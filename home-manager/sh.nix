@@ -34,6 +34,7 @@ let
 
     # kaolin theme creator alias
     "kaolin" = "~/work/kaolin-theme-creator/target/debug/kaolin-theme-creator";
+    "gysmo" = "~/bin/gysmo";
 
     # Update nix system
     "update" = "nix flake update";
