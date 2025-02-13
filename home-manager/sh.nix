@@ -73,7 +73,7 @@ in
                 onefetch
             fi
         }
-        nitch
+        ~/bin/gysmo
       '';
       shellAliases = aliases;
     };
