@@ -735,12 +735,6 @@ in
       {
         context = "Workspace";
         bindings = {
-          "ctrl-h" = "project_panel::ToggleFocus";
-        };
-      }
-      {
-        context = "Workspace";
-        bindings = {
           "ctrl-shift-i" = "assistant::ToggleFocus";
         };
       }

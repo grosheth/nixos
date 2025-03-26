@@ -1,12 +1,13 @@
 { config, pkgs, ... }:
 let
   ghosttyConfig = ''
-    font-family = "JetBrainsMono Nerd Font"
+    font-family = "JetBrains Mono Nerd Font"
     font-size = "15"
 
     cursor-style = bar
     theme = kaolin
     config-file = keybindings
+    window-decoration = false
   '';
 
   keybindingsConfig = ''

@@ -7,6 +7,7 @@ let
     "gc" = "git commit -am";
     "gp" = "git push";
     "ga" = "git add --all";
+    "gt" = "git tag";
 
     # basic commands
     "cls" = "clear";
