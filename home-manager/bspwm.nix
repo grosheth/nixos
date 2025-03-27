@@ -43,8 +43,8 @@
         # Remove screen sleep
         # xset s off
         # xset -dpms
- 
-        pgrep -x sxhkd > /dev/null || sxhkd & 
+
+        pgrep -x sxhkd > /dev/null || sxhkd &
       '';
     };
   };
