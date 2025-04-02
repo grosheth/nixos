@@ -77,6 +77,10 @@ in
     };
   };
 
+  # change home-manager path to use the development one
+  # run to apply `home-manager switch`
   programs.home-manager.enable = true;
+  programs.home-manager.path = "$HOME/work/home-manager";
+
   home.stateVersion = "21.11";
 }

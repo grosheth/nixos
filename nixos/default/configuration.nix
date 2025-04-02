@@ -134,7 +134,7 @@ in
     xorg.xorgserver
     arandr
 
-    # Window manager 
+    # Window manager
     feh
 
     #nixos
@@ -149,9 +149,8 @@ in
     openvpn
 
     # ZSA Keyboard
-    wally-cli 
+    wally-cli
   ];
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
