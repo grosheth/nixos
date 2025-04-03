@@ -1,21 +1,14 @@
-# nixos/home-manager/gysmo.nix
-{ inputs, pkgs, ... }:
+# home-manager/gysmo.nix
+{ inputs, pkgs, getLocalCustomPackage, ... }:
 
 let
-  # Import the local nixpkgs
-  localPkgs = import inputs.local-nixpkgs {
-    inherit (pkgs) system;
-  };
+  localCustomPackage = getLocalCustomPackage { packageName = "path/to/custom/package.nix"; };
 in
 {
-  imports = [
-    ./modules/nitch-module.nix
-  ];
-
   # Use the custom package from the local nixpkgs
   programs.gysmo = {
     enable = true;
-    package = localPkgs.customPackage;
+    package = localCustomPackage;
     extraConfig = "test";
   };
 }

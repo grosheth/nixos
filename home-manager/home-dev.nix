@@ -12,7 +12,6 @@ in
     (if bspwm then ./bspwm.nix else null)
     (if hyprland then ./hyprland.nix else null)
     (if i3 then ./i3.nix else null)
-    # ./gysmo.nix
     ./git.nix
     ./ghostty.nix
     ./kitty.nix
@@ -27,7 +26,11 @@ in
     ./theme.nix
     # ./tmux.nix
     ./zed-editor.nix
-    # ./zellij.nix
+    # ./zellij.nixo
+
+    ## dev ##
+    ./gysmo.nix
+    ## dev ##
   ];
   news.display = "show";
 

@@ -34,6 +34,11 @@
     let
       username = "salledelavage";
       system = "x86_64-linux";
+
+      # Define a function to import the specific package from local nixpkgs
+      getLocalCustomPackage = { packageName }: import "${inputs.local-nixpkgs}/pkgs/${packageName}" {
+        inherit (nixpkgs) system;
+      };
     in
     {
       nixosConfigurations = {
@@ -64,8 +69,8 @@
             inherit system;
             config.allowUnfree = true;
           };
-          extraSpecialArgs = { inherit inputs username; };
-          modules = [ ./home-manager/gysmo.nix ];
+          extraSpecialArgs = { inherit inputs username getLocalCustomPackage; };
+          modules = [ ./home-manager/home-dev.nix ];
         };
 
         default = inputs.home-manager.lib.homeManagerConfiguration {
@@ -73,7 +78,7 @@
             inherit system;
             config.allowUnfree = true;
           };
-          extraSpecialArgs = { inherit inputs username; };
+          extraSpecialArgs = { inherit inputs username getLocalCustomPackage; };
           modules = [ ./home-manager/home-default.nix ];
         };
 
@@ -82,7 +87,7 @@
             inherit system;
             config.allowUnfree = true;
           };
-          extraSpecialArgs = { inherit inputs username; };
+          extraSpecialArgs = { inherit inputs username getLocalCustomPackage; };
           modules = [ ./home-manager/home-laptop.nix ];
         };
       };
