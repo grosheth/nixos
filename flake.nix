@@ -4,6 +4,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    local-nixpkgs.url = "path:/home/salledelavage/work/nixpkgs";
+    local-home-manager.url = "path:/home/salledelavage/work/home-manager";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,16 +30,15 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ghostty, ... } @ inputs:
+  outputs = { self, nixpkgs, local-nixpkgs, home-manager, local-home-manager, ghostty, ... } @ inputs:
     let
       username = "salledelavage";
       system = "x86_64-linux";
-      # pkgs = nixpkgs.legacyPackages.${system};
     in
     {
       nixosConfigurations = {
-        default = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs username system;};
+        default = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs username system; };
           modules = [
             {
               environment.systemPackages = [
@@ -48,8 +49,8 @@
             inputs.home-manager.nixosModules.default
           ];
         };
-        laptop = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs username system;};
+        laptop = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs username system; };
           modules = [
             ./nixos/laptop/configuration.nix
             inputs.home-manager.nixosModules.default
@@ -58,34 +59,31 @@
       };
 
       homeConfigurations = {
-        dev = let
-          localHomeManager = import ~/work/home-manager;
-        in home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-              inherit system;
-              config.allowUnfree = true;
+        dev = inputs.local-home-manager.lib.homeManagerConfiguration {
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
           };
           extraSpecialArgs = { inherit inputs username; };
-          modules = [ localHomeManager.home-manager/home-default.nix ];
+          modules = [ ./home-manager/gysmo.nix ];
         };
 
-
-        default = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-              inherit system;
-              config.allowUnfree = true;
+        default = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
           };
-        extraSpecialArgs = { inherit inputs username; };
-        modules = [ home-manager/home-default.nix ];
+          extraSpecialArgs = { inherit inputs username; };
+          modules = [ ./home-manager/home-default.nix ];
         };
 
-        laptop = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-              inherit system;
-              config.allowUnfree = true;
+        laptop = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
           };
-        extraSpecialArgs = { inherit inputs username; };
-        modules = [ home-manager/home-laptop.nix ];
+          extraSpecialArgs = { inherit inputs username; };
+          modules = [ ./home-manager/home-laptop.nix ];
         };
       };
       nixpkgs.overlays = [inputs.nixpkgs-wayland.overlay];
