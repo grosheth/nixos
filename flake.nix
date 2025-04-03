@@ -58,6 +58,18 @@
       };
 
       homeConfigurations = {
+        dev = let
+          localHomeManager = import ~/work/home-manager;
+        in home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+          };
+          extraSpecialArgs = { inherit inputs username; };
+          modules = [ localHomeManager.home-manager/home-default.nix ];
+        };
+
+
         default = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
               inherit system;
