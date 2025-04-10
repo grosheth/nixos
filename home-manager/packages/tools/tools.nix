@@ -22,7 +22,6 @@
     xclip
     xdotool
     maim
-    okular
     gimp
     spotify
     discord

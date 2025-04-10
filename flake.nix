@@ -1,4 +1,3 @@
-# flake.nix
 {
   description = "Salledelavage Nixos config flake";
 
@@ -65,7 +64,7 @@
 
       homeConfigurations = {
         dev = inputs.local-home-manager.lib.homeManagerConfiguration {
-          pkgs = import inputs.nixpkgs {
+          pkgs = import inputs.local-nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
@@ -73,8 +72,8 @@
           modules = [ ./home-manager/home-dev.nix ];
         };
 
-        default = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = import inputs.nixpkgs {
+        default = inputs.local-home-manager.lib.homeManagerConfiguration {
+          pkgs = import inputs.local-nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
@@ -82,8 +81,8 @@
           modules = [ ./home-manager/home-default.nix ];
         };
 
-        laptop = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = import inputs.nixpkgs {
+        laptop = inputs.local-home-manager.lib.homeManagerConfiguration {
+          pkgs = import inputs.local-nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };

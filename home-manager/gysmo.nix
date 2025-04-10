@@ -1,12 +1,17 @@
-# home-manager/gysmo.nix
-{ inputs, pkgs, getLocalCustomPackage, ... }:
-  let
-    localCustomPackage = getLocalCustomPackage { packageName = "path/to/custom/package.nix"; };
-  in
+{ config, pkgs, ... }:
+
+let
+  homeModules = import ../work/home-manager/modules;
+in
 {
   imports = [
     homeModules.programs.gysmo
   ];
+
+  home.packages = [
+    pkgs.gysmo
+  ];
+
 
   programs.gysmo = {
     enable = true;
