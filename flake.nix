@@ -3,12 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    local-nixpkgs.url = "path:/home/salledelavage/work/nixpkgs";
-    local-home-manager.url = "path:/home/salledelavage/work/home-manager";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "path:/home/salledelavage/work/home-manager";
+    # home-manager = {
+    #   url = "github:nix-community/home-manager";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     more-waita = {
       url = "github:somepaulo/MoreWaita";
       flake = false;
@@ -29,7 +28,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, local-nixpkgs, home-manager, local-home-manager, ghostty, ... } @ inputs:
+  outputs = { self, nixpkgs, local-nixpkgs, home-manager, ghostty, ... } @ inputs:
     let
       username = "salledelavage";
       system = "x86_64-linux";
@@ -63,7 +62,7 @@
       };
 
       homeConfigurations = {
-        dev = inputs.local-home-manager.lib.homeManagerConfiguration {
+        dev = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = import inputs.local-nixpkgs {
             inherit system;
             config.allowUnfree = true;
@@ -73,7 +72,7 @@
         };
 
         default = inputs.local-home-manager.lib.homeManagerConfiguration {
-          pkgs = import inputs.local-nixpkgs {
+          pkgs = import inputs.nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
@@ -82,7 +81,7 @@
         };
 
         laptop = inputs.local-home-manager.lib.homeManagerConfiguration {
-          pkgs = import inputs.local-nixpkgs {
+          pkgs = import inputs.nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
