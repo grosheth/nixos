@@ -3,11 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "path:/home/salledelavage/work/home-manager";
-    # home-manager = {
-    #   url = "github:nix-community/home-manager";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     more-waita = {
       url = "github:somepaulo/MoreWaita";
       flake = false;
@@ -28,15 +27,10 @@
     };
   };
 
-  outputs = { self, nixpkgs, local-nixpkgs, home-manager, ghostty, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, ghostty, ... } @ inputs:
     let
       username = "salledelavage";
       system = "x86_64-linux";
-
-      # Define a function to import the specific package from local nixpkgs
-      getLocalCustomPackage = { packageName }: import "${inputs.local-nixpkgs}/pkgs/${packageName}" {
-        inherit (nixpkgs) system;
-      };
     in
     {
       nixosConfigurations = {
@@ -63,29 +57,29 @@
 
       homeConfigurations = {
         dev = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = import inputs.local-nixpkgs {
+          pkgs = import inputs.nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
-          extraSpecialArgs = { inherit inputs username getLocalCustomPackage; };
+          extraSpecialArgs = { inherit inputs username; };
           modules = [ ./home-manager/home-dev.nix ];
         };
 
-        default = inputs.local-home-manager.lib.homeManagerConfiguration {
+        default = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = import inputs.nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
-          extraSpecialArgs = { inherit inputs username getLocalCustomPackage; };
+          extraSpecialArgs = { inherit inputs username; };
           modules = [ ./home-manager/home-default.nix ];
         };
 
-        laptop = inputs.local-home-manager.lib.homeManagerConfiguration {
+        laptop = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = import inputs.nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
-          extraSpecialArgs = { inherit inputs username getLocalCustomPackage; };
+          extraSpecialArgs = { inherit inputs username; };
           modules = [ ./home-manager/home-laptop.nix ];
         };
       };

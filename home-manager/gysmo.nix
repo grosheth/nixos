@@ -1,129 +1,53 @@
 { config, pkgs, ... }:
-
-let
-  homeModules = import ../work/home-manager/modules;
-in
 {
-  imports = [
-    homeModules.programs.gysmo
-  ];
-
-  home.packages = [
-    pkgs.gysmo
-  ];
-
-
   programs.gysmo = {
     enable = true;
+    package = pkgs.gysmo;
     config = {
       items = [
         {
-          text = "User";
-          keyword = "user";
-          icon = "";
-          value_color = "red";
-          text_color = "";
-          icon_color = "red";
-        }
+          text = "Item 1";
+          keyword = "kw1";
+          icon = "icon1";
+          value_color = "#ff0000";
+          text_color = "#00ff00";
+          icon_color = "#0000ff";
+        },
         {
-          text = "Kernel";
-          keyword = "kernel";
-          icon = "󰌽";
-          value_color = "";
-          text_color = "";
-          icon_color = "";
-        }
-        {
-          text = "WM";
-          keyword = "wm";
-          icon = "󱂬";
-          value_color = "yellow";
-          text_color = "";
-          icon_color = "yellow";
-        }
-        {
-          text = "GPU";
-          keyword = "gpu";
-          icon = "";
-          value_color = "green";
-          text_color = "";
-          icon_color = "green";
-        }
-        {
-          text = "Term";
-          keyword = "term";
-          icon = "";
-          value_color = "blue";
-          text_color = "";
-          icon_color = "blue";
-        }
-        {
-          text = "CPU";
-          value = "Intel(R) Core(TM) i7-10700K";
-          icon = "";
-          value_color = "red";
-          text_color = "";
-          icon_color = "red";
-        }
-        {
-          text = "OS";
-          value = "NixOs";
-          icon = "";
-          value_color = "";
-          text_color = "";
-          icon_color = "";
-        }
-        {
-          text = "RAM";
-          keyword = "ram";
-          icon = "";
-          value_color = "yellow";
-          text_color = "";
-          icon_color = "yellow";
-        }
-        {
-          text = "Shell";
-          value = "zsh";
-          icon = "";
-          value_color = "green";
-          text_color = "";
-          icon_color = "green";
-        }
-        {
-          text = "Uptime";
-          keyword = "uptime";
-          icon = "󱑆";
-          value_color = "blue";
-          text_color = "";
-          icon_color = "blue";
+          text = "Item 2";
+          value = "val2";
+          icon = "icon2";
+          value_color = "#ff00ff";
+          text_color = "#00ffff";
+          icon_color = "#ffff00";
         }
       ];
       ascii = {
-        path = "ascii/nixos";
-        colors = "";
+        path = "/path/to/ascii";
+        colors = "#ffffff";
         enabled = true;
         horizontal_padding = 2;
-        vertical_padding = 0;
-        position = "top";
+        vertical_padding = 2;
+        position = "center";
       };
       header = {
-        enabled = false;
-        text = "NixOS";
-        text_color = "purple";
-        line = true;
-        line_color = "";
+        enabled = true;
+        line = "Header Line";
+        text = true;
+        text_color = "#ff00ff";
+        line_color = "#00ffff";
       };
       footer = {
-        enabled = false;
-        text = "gysmo";
-        text_color = "blue";
-        line = true;
-        line_color = "";
+        enabled = true;
+        line = "Footer Line";
+        text = true;
+        text_color = "#ffff00";
+        line_color = "#ff00ff";
       };
       general = {
         menu_type = "box";
-        columns = false;
-        menu_padding = 2;
+        columns = true;
+        menu_padding = 5;
       };
     };
   };
