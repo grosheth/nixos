@@ -12,7 +12,7 @@
           value_color = "#ff0000";
           text_color = "#00ff00";
           icon_color = "#0000ff";
-        },
+        }
         {
           text = "Item 2";
           value = "val2";
