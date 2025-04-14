@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 {
+
   programs.gysmo = {
     enable = true;
     package = pkgs.gysmo;
