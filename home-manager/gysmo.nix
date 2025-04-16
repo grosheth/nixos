@@ -1,9 +1,11 @@
 { config, pkgs, ... }:
+let
+    gysmo = pkgs.callPackage /home/salledelavage/work/nixpkgs/pkgs/by-name/gy/gysmo/package.nix {};
+in
 {
-
   programs.gysmo = {
     enable = true;
-    package = pkgs.gysmo;
+    package = gysmo;
     config = {
       items = [
         {
