@@ -15,31 +15,28 @@
         focused_border_color = "#ffffff";
       };
       monitors = {
-        HDMI-0 = [
-          "I"
-          "II"
-          "III"
-        ];
-       HDMI-1 = [
-          "IV"
-          "V"
+        DP-2 = [
           "VI"
           "VII"
         ];
-        DP-2 = [
+        DP-4 = [
+          "I"
+          "II"
+          "III"
+          "IV"
+          "V"
+         ];
+        HDMI-0 = [
           "VIII"
           "IX"
           "X"
         ];
       };
       extraConfig = ''
-        feh --bg-scale $HOME/nixos/assets/images/kaolin_gruvbox_disco-elysium.png
+        feh --bg-center $HOME/nixos/assets/images/kaolin_wave.png
 
-        bash /home/salledelavage/.screenlayout/screen_setup.sh
         picom
-        xrandr --output HDMI-0 --pos 2560x0
-        xrandr --output HDMI-1 --pos 0x0
-        xrandr --output DP-2 --pos 5120x0
+        bash /home/salledelavage/.screenlayout/screen_setup.sh
         # Remove screen sleep
         # xset s off
         # xset -dpms
