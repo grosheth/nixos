@@ -116,8 +116,6 @@ in
     imagemagick
     pavucontrol
     home-manager
-    dolphin
-    gwenview
 
     git
     glxinfo

@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # home-manager = {
+    #   url = "path:/home/salledelavage/work/home-manager";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     more-waita = {
       url = "github:somepaulo/MoreWaita";
       flake = false;
@@ -57,9 +61,9 @@
 
       homeConfigurations = {
         dev = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = import inputs.nixpkgs {
+          pkgs = import nixpkgs {
             inherit system;
-            config.allowUnfree = true;
+            overlays = [ (import ./overlays/gysmo-overlay.nix) ];
           };
           extraSpecialArgs = { inherit inputs username; };
           modules = [ ./home-manager/home-dev.nix ];

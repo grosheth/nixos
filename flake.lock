@@ -168,17 +168,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1744360457,
-        "narHash": "sha256-Rcd9KYFRYPkMfOsz6vzWosEfggJMGjb1/j9mnxC7q9s=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "da624eaad0fefd4dac002e1f09d300d150c20483",
-        "type": "github"
+        "lastModified": 1745205381,
+        "narHash": "sha256-jxXr2bNIqe8McH8a8e/xwbgCp5ToWQZV0PxuN5KguOc=",
+        "path": "/home/salledelavage/work/home-manager",
+        "type": "path"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
+        "path": "/home/salledelavage/work/home-manager",
+        "type": "path"
       }
     },
     "hyprcursor": {
