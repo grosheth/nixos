@@ -29,7 +29,6 @@
         HDMI-0 = [
           "VIII"
           "IX"
-          "X"
         ];
       };
       extraConfig = ''
