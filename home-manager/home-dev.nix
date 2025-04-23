@@ -33,7 +33,6 @@ in
     ## dev ##
   ];
   news.display = "show";
-
   targets.genericLinux.enable = true;
 
   nix = {
