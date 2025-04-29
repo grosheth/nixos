@@ -119,7 +119,7 @@
         };
       }
       {
-        name = "config2";
+        name = "config";
         config = {
           items = [
             {
