@@ -41,5 +41,6 @@
     onedrive
     code-cursor
     minikube
+    terraform
   ];
 }
