@@ -17,13 +17,13 @@ in
     ./kitty.nix
     ./lf.nix
     ./neovim.nix
-    ./packages.nix
     ./picom.nix
     # ./polybar.nix
     ./rofi.nix
     ./sh.nix
     ./starship.nix
     ./theme.nix
+    ./tools.nix
     # ./tmux.nix
     ./zed-editor.nix
     # ./zellij.nixo

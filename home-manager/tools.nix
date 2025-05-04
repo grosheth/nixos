@@ -42,5 +42,12 @@
     code-cursor
     minikube
     terraform
+
+    nodejs
+    go
+    gcc
+    python3
+    lua
+    cmake
   ];
 }

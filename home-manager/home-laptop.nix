@@ -9,11 +9,11 @@ in
     ./i3.nix
     ./lf.nix
     ./neovim.nix
-    ./packages.nix
     # ./picom.nix
     ./sh.nix
     ./starship.nix
     ./theme.nix
+    ./tools.nix
   ];
 
   news.display = "show";

@@ -18,13 +18,13 @@ in
     ./lf.nix
     ./neovim.nix
     # ./nitch.nix
-    ./packages.nix
     ./picom.nix
     # ./polybar.nix
     ./rofi.nix
     ./sh.nix
     ./starship.nix
     ./theme.nix
+    ./tools.nix
     # ./tmux.nix
     ./zed-editor.nix
     # ./zellij.nix
