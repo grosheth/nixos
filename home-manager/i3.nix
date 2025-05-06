@@ -5,7 +5,8 @@ let
 in
 {
   xsession.windowManager.i3 = {
-    enable = true;
+    enable = false;
+    # enable = true;
 
     config = {
       modifier = mod;
@@ -18,11 +19,9 @@ in
 
       startup =
       [
-        { command = "feh --bg-scale /home/salledelavage/wallpapers/gruvbox_disco-elysium.png"; notification = false; }
+        { command = "feh --bg-scale /home/salledelavage/nixos/assets/images/kaolin_gruvbox_disco-elysium.png"; notification = false; }
         { command = "picom"; notification = false; }
-        { command = "xrandr --output HDMI-1 --pos 0x0"; notification = false; }
-        { command = "xrandr --output HDMI-2 --pos 2560x0"; notification = false; }
-        { command = "xrandr --output DP-2 --pos 5120x0"; notification = false; }
+        { command = "/home/salledelavage/.screenlayout/screen_setup.sh"; notification = false; } # Add your script here
         { command = "xset s off"; }
         { command = "xset -dpms"; }
       ];
@@ -61,7 +60,7 @@ in
       keybindings = lib.mkOptionDefault {
         "${mod}+p" = "exec ${pkgs.dmenu}/bin/dmenu_run";
 
-        "${mod}+Return" = "exec kitty";
+        "${mod}+Return" = "exec ghostty";
         # Focus
         "${mod}+Left" = "focus left";
         "${mod}+Down" = "focus down";

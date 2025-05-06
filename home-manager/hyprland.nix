@@ -23,12 +23,13 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.default;
-
+    xwayland.enable = true;
+    # package = inputs.hyprland.packages.${pkgs.system}.default;
+    package = pkgs.hyprland;
     settings = {
 
       "$mod" = "ALT";
-      "$terminal" = "kitty";
+      "$terminal" = "ghostty";
 
       decoration = {
         shadow = {
@@ -54,7 +55,7 @@
         "CTRL/CONTROL, W, exec, rofi -show window"
         "$mod, B, exec, brave"
         "$mod, C, killactive,"
-        "$mod, return, exec, kitty"
+        "$mod, return, exec, $terminal"
         "$mod, D, exec, dmenu_run"
         "$mod, space, exec, pkill rofi || rofi -show drun"
 
@@ -81,13 +82,15 @@
         "hyprctl setcursor Qogir 24"
         "swww-daemon"
         "fragments"
+        # Set screens
+        "/home/salledelavage/.screenlayout/screen_setup.sh"
       ];
 
-      monitor =[
-       "HDMI-A-1, 2560x1440, 2560x0, 1"
-       "DP-2, 2560x1440, 0x0, 1"
-       "HDMI-A-2, 2560x1440, 5120x0, 1"
-      ];
+      # monitor =[
+      #  "HDMI-A-1, 2560x1440, 2560x0, 1"
+      #  "DP-2, 2560x1440, 0x0, 1"
+      #  "HDMI-A-2, 2560x1440, 5120x0, 1"
+      # ];
 
       general = {
         layout = "dwindle";

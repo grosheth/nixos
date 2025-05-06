@@ -19,10 +19,10 @@
       url = "github:gokcehan/lf";
       flake = false;
     };
-    hyprland = {
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # hyprland = {
+    #   url = "git+https://github.com/hyprwm/Hyprland";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     nixpkgs-wayland = {
       url = "github:nix-community/nixpkgs-wayland";
     };

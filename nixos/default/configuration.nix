@@ -1,8 +1,9 @@
 { config, pkgs, username, lib, ... }:
 let
   # Change these vars to enable or disable further configurations
-  wayland = false;
-  x11 = true;
+  hyprland = true;
+  sway = false;
+  x11 = false;
 in
 {
   imports = lib.filter (x: x != null) [
@@ -10,13 +11,19 @@ in
     ./audio.nix
     ./locale.nix
     (if x11 then ./modules/x11.nix else null)
-    (if wayland then ./modules/wayland.nix else null)
+    (if hyprland then ./modules/hyprland.nix else null)
+    (if sway then ./modules/sway.nix else null)
     ./modules/nvidia-drivers.nix
   ];
 
-  programs.hyprland = if wayland then {
+  programs.hyprland = if hyprland then {
     enable = true;
   } else {};
+
+  programs.sway = if sway then {
+    enable = true;
+  } else {};
+
 
   # nix
   documentation.nixos.enable = false;
