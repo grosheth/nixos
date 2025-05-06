@@ -4,9 +4,9 @@ let
 
   # WM
   hyprland = false;
-  bspwm = false;
+  bspwm = true;
   i3 = false;
-  sway = true;
+  sway = false;
 in
 {
   imports = lib.filter (x: x != null) [

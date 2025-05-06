@@ -39,4 +39,9 @@
       xorg.xorgserver
     ];
   };
+
+  # Add betterlockscreen to system packages
+  environment.systemPackages = with pkgs; [
+    betterlockscreen
+  ];
 }

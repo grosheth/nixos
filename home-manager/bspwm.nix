@@ -31,18 +31,17 @@
           "IX"
         ];
       };
-      extraConfig = ''
-        feh --bg-center $HOME/nixos/assets/images/kaolin_wave.png
+    extraConfig = ''
+      bash /home/salledelavage/.screenlayout/screen_setup.sh
+      xwallpaper --zoom $HOME/nixos/assets/images/kaolin_nasa.png
+      picom
+      betterlockscreen -u $HOME/nixos/assets/images/kaolin_nasa.png
 
-        picom
-        /home/salledelavage/.screenlayout/screen_setup.sh
-
-        # Remove screen sleep
-        # xset s off
-        # xset -dpms
-
-        pgrep -x sxhkd > /dev/null || sxhkd &
-      '';
+      # Remove screen sleep
+      # xset s off
+      # xset -dpms
+      pgrep -x sxhkd > /dev/null || sxhkd &
+    '';
     };
   };
 
@@ -67,7 +66,14 @@
     bspwm
     dmenu
     sxhkd
+    xwallpaper
+    betterlockscreen
   ];
+
+  services.betterlockscreen = {
+    enable = true;
+    arguments = [ "blur" ];
+  };
 
   services.sxhkd = {
     enable = true;

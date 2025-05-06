@@ -139,9 +139,6 @@ in
     xorg.xorgserver
     arandr
 
-    # Window manager
-    feh
-
     #nixos
     nh
     age
