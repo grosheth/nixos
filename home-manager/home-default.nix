@@ -3,8 +3,8 @@ let
   homeDirectory = "/home/${username}";
 
   # WM
-  hyprland = true;
-  bspwm = false;
+  hyprland = false;
+  bspwm = true;
   i3 = false;
   sway = false;
 in

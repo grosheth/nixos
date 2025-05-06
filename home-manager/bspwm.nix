@@ -15,11 +15,11 @@
         focused_border_color = "#ffffff";
       };
       monitors = {
-        DP-2 = [
+        DP-0 = [
           "VI"
           "VII"
         ];
-        DP-4 = [
+        DP-2 = [
           "I"
           "II"
           "III"
@@ -35,7 +35,8 @@
         feh --bg-center $HOME/nixos/assets/images/kaolin_wave.png
 
         picom
-        bash /home/salledelavage/.screenlayout/screen_setup.sh
+        /home/salledelavage/.screenlayout/screen_setup.sh
+
         # Remove screen sleep
         # xset s off
         # xset -dpms
@@ -43,6 +44,23 @@
         pgrep -x sxhkd > /dev/null || sxhkd &
       '';
     };
+  };
+
+  home.file.".config/bspwm/zen_mode.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+
+      # Define the monitors
+      ULTRAWIDE_MONITOR="DP-0"
+      SECONDARY_MONITOR_1="DP-2"
+      SECONDARY_MONITOR_2="HDMI-0"
+
+      # Enable Zen mode
+      xrandr --output "$ULTRAWIDE_MONITOR" --auto \
+             --output "$SECONDARY_MONITOR_1" --off \
+             --output "$SECONDARY_MONITOR_2" --off
+    '';
+    executable = true;
   };
 
   home.packages = with pkgs; [
@@ -68,6 +86,10 @@
       "alt + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";
       "alt + ctrl + {h,j,k,l}" = "bspc node -p {west,south,north,east}";
       "alt + {Left,Down,Up,Right}" = "bspc node -v {-20 0,0 20,0 -20,20 0}";
+
+      # Zen mode
+      "alt + z" = "~/.screenlayout/screen_setup.sh";
+      "alt + shift + z" = "~/.config/bspwm/zen_mode.sh";
 
       "ctrl + w" = "rofi -show window";
       "ctrl + Escape" = "pkill -USR1 -x sxhkd";

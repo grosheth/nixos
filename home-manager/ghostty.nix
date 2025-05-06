@@ -2,7 +2,7 @@
 let
   ghosttyConfig = ''
     font-family = "JetBrains Mono Nerd Font"
-    font-size = "15"
+    font-size = "12"
 
     cursor-style = bar
     theme = kaolin

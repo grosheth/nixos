@@ -1,9 +1,9 @@
 { config, pkgs, username, lib, ... }:
 let
   # Change these vars to enable or disable further configurations
-  hyprland = true;
+  hyprland = false;
   sway = false;
-  x11 = false;
+  x11 = true;
 in
 {
   imports = lib.filter (x: x != null) [

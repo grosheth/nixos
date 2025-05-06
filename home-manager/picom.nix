@@ -3,20 +3,28 @@
   home.packages = with pkgs; [
     picom
   ];
+
   services.picom = {
     enable = true;
-    inactiveOpacity = 0.99;
-    fadeDelta = 100;
+    inactiveOpacity = 0.9; # Slight transparency for inactive windows
+    fadeDelta = 10; # Smooth fading
     fade = true;
-    fadeSteps = [0.4 0.4];
+    fadeSteps = [0.03 0.03]; # Fine-grained fade steps
     settings = {
-      corner-radius = 4;
+      corner-radius = 10; # Rounded corners
+      shadow = true; # Enable shadows
+      shadow-radius = 12; # Shadow size
+      shadow-opacity = 0.5; # Shadow transparency
+      shadow-offset-x = -7; # Shadow offset (horizontal)
+      shadow-offset-y = -7; # Shadow offset (vertical)
+      blur-method = "dual_kawase"; # Enable blur
+      blur-strength = 7; # Blur intensity
+      backend = "glx"; # Use OpenGL for better performance
+      vsync = true; # Prevent screen tearing
     };
-    # opacityRules =  [
-    #                   "99:class_g *?= 'brave'"
-    #                   "99:class_g *?= 'kitty'"
-    #                   "99:class_g *?= 'spotify'" 
-    #                   "99:class_g *?= 'discord'" 
-    #                 ];
+    opacityRules = [
+      "90:class_g = 'Bspwm'" # Transparency for BSPWM windows
+      "80:class_g = 'dmenu'" # Transparency for dmenu
+    ];
   };
 }
