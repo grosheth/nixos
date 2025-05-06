@@ -1,8 +1,8 @@
 { lib, pkgs, ... }:
 
-let 
+let
   mod = "Mod1";
-in 
+in
 {
   xsession.windowManager.i3 = {
     enable = true;

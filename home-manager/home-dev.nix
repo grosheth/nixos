@@ -6,12 +6,14 @@ let
   hyprland = false;
   bspwm = true;
   i3 = false;
+  sway = false;
 in
 {
   imports = lib.filter (x: x != null) [
     (if bspwm then ./bspwm.nix else null)
     (if hyprland then ./hyprland.nix else null)
     (if i3 then ./i3.nix else null)
+    (if sway then ./sway.nix else null)
     ./git.nix
     ./ghostty.nix
     ./kitty.nix
