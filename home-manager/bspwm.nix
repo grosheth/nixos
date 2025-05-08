@@ -37,12 +37,29 @@
       picom
       betterlockscreen -u $HOME/nixos/assets/images/kaolin_nasa.png
 
-      # Remove screen sleep
-      # xset s off
-      # xset -dpms
+      # pgrep -x xss-lock > /dev/null || xss-lock -- betterlockscreen -l &
+
+      xset -dpms
       pgrep -x sxhkd > /dev/null || sxhkd &
     '';
     };
+  };
+
+  home.file.".config/bspwm/work_mode.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+
+      # Define the monitors
+      ULTRAWIDE_MONITOR="DP-0"
+      SECONDARY_MONITOR_1="DP-2"
+      SECONDARY_MONITOR_2="HDMI-0"
+
+      # Enable Work mode
+      xrandr --output "$ULTRAWIDE_MONITOR" --off \
+             --output "$SECONDARY_MONITOR_1" --auto \
+             --output "$SECONDARY_MONITOR_2" --off
+    '';
+    executable = true;
   };
 
   home.file.".config/bspwm/zen_mode.sh" = {
@@ -68,6 +85,7 @@
     sxhkd
     xwallpaper
     betterlockscreen
+    xss-lock
   ];
 
   services.betterlockscreen = {
@@ -96,6 +114,7 @@
       # Zen mode
       "alt + z" = "~/.screenlayout/screen_setup.sh";
       "alt + shift + z" = "~/.config/bspwm/zen_mode.sh";
+      "alt + shift + w" = "~/.config/bspwm/work_mode.sh";
 
       "ctrl + w" = "rofi -show window";
       "ctrl + Escape" = "pkill -USR1 -x sxhkd";

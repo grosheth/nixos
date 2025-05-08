@@ -3,6 +3,9 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-fmt = {
+      url = "github:nix-community/nixpkgs-fmt";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,8 +33,7 @@
       url = "github:ghostty-org/ghostty";
     };
   };
-
-  outputs = { self, nixpkgs, home-manager, ghostty, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, ghostty, nixpkgs-fmt, ... } @ inputs:
     let
       username = "salledelavage";
       system = "x86_64-linux";
@@ -87,6 +89,8 @@
           modules = [ ./home-manager/home-laptop.nix ];
         };
       };
+
+      formatter.x86_64-linux = nixpkgs-fmt.defaultPackage.x86_64-linux;
       nixpkgs.overlays = [inputs.nixpkgs-wayland.overlay];
     };
 }
