@@ -34,8 +34,8 @@ in
     };
   };
 
-  qt = {
-    enable = true;
-    platformTheme.name = "kde";
-  };
+  # qt = {
+  #   enable = true;
+  #   platformTheme.name = "kde";
+  # };
 }

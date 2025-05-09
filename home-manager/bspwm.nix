@@ -31,17 +31,22 @@
           "IX"
         ];
       };
-    extraConfig = ''
-      bash /home/salledelavage/.screenlayout/screen_setup.sh
-      xwallpaper --zoom $HOME/nixos/assets/images/kaolin_nasa.png
-      picom
-      betterlockscreen -u $HOME/nixos/assets/images/kaolin_nasa.png
+      extraConfig = ''
+        bash /home/salledelavage/.screenlayout/screen_setup.sh
+        xwallpaper --zoom $HOME/nixos/assets/images/kaolin_nasa.png
+        picom
+        betterlockscreen -u $HOME/nixos/assets/images/kaolin_nasa.png
 
-      # pgrep -x xss-lock > /dev/null || xss-lock -- betterlockscreen -l &
+        # Remove xss-lock to disable automatic locking
+        pgrep -x xss-lock > /dev/null || xss-lock -- betterlockscreen -l &
 
-      xset -dpms
-      pgrep -x sxhkd > /dev/null || sxhkd &
-    '';
+        xset dpms 3600 3600 3600
+        xset -dpms
+        xset s off
+        xset s noblank
+
+        pgrep -x sxhkd > /dev/null || sxhkd &
+      '';
     };
   };
 
@@ -85,7 +90,6 @@
     sxhkd
     xwallpaper
     betterlockscreen
-    xss-lock
   ];
 
   services.betterlockscreen = {
