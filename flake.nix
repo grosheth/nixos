@@ -10,10 +10,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # home-manager = {
-    #   url = "path:/home/salledelavage/work/home-manager";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
     more-waita = {
       url = "github:somepaulo/MoreWaita";
       flake = false;
@@ -22,10 +18,6 @@
       url = "github:gokcehan/lf";
       flake = false;
     };
-    # hyprland = {
-    #   url = "git+https://github.com/hyprwm/Hyprland";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
     nixpkgs-wayland = {
       url = "github:nix-community/nixpkgs-wayland";
     };
@@ -89,8 +81,8 @@
           modules = [ ./home-manager/home-laptop.nix ];
         };
       };
-
+      # formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
       formatter.x86_64-linux = nixpkgs-fmt.defaultPackage.x86_64-linux;
-      nixpkgs.overlays = [inputs.nixpkgs-wayland.overlay];
+      nixpkgs.overlays = [ inputs.nixpkgs-wayland.overlay ];
     };
 }

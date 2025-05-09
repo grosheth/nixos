@@ -55,8 +55,8 @@
       SECONDARY_MONITOR_2="HDMI-0"
 
       # Enable Work mode
-      xrandr --output "$ULTRAWIDE_MONITOR" --off \
-             --output "$SECONDARY_MONITOR_1" --auto \
+      xrandr --output "$SECONDARY_MONITOR_1" --auto \
+             --output "$ULTRAWIDE_MONITOR" --off \
              --output "$SECONDARY_MONITOR_2" --off
     '';
     executable = true;
