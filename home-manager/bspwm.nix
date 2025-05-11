@@ -46,6 +46,7 @@
         xset s noblank
 
         pgrep -x sxhkd > /dev/null || sxhkd &
+
       '';
     };
   };
@@ -54,14 +55,32 @@
     text = ''
       #!/usr/bin/env bash
 
-      # Define the monitors
       ULTRAWIDE_MONITOR="DP-0"
       SECONDARY_MONITOR_1="DP-2"
       SECONDARY_MONITOR_2="HDMI-0"
 
-      # Enable Work mode
       xrandr --output "$SECONDARY_MONITOR_1" --auto \
              --output "$ULTRAWIDE_MONITOR" --off \
+             --output "$SECONDARY_MONITOR_2" --off
+      sleep 2
+      notify-send -u low "Work mode"
+    '';
+    executable = true;
+  };
+
+  home.file.".config/bspwm/sleep_mode.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+
+      notify-send -t 5000 -u critical "Going into sleep mode"
+      sleep 3
+
+      ULTRAWIDE_MONITOR="DP-0"
+      SECONDARY_MONITOR_1="DP-2"
+      SECONDARY_MONITOR_2="HDMI-0"
+
+      xrandr --output "$ULTRAWIDE_MONITOR" --off \
+             --output "$SECONDARY_MONITOR_1" --off \
              --output "$SECONDARY_MONITOR_2" --off
     '';
     executable = true;
@@ -71,15 +90,15 @@
     text = ''
       #!/usr/bin/env bash
 
-      # Define the monitors
       ULTRAWIDE_MONITOR="DP-0"
       SECONDARY_MONITOR_1="DP-2"
       SECONDARY_MONITOR_2="HDMI-0"
 
-      # Enable Zen mode
       xrandr --output "$ULTRAWIDE_MONITOR" --auto \
              --output "$SECONDARY_MONITOR_1" --off \
              --output "$SECONDARY_MONITOR_2" --off
+      sleep 2
+      notify-send -u normal "Zen mode"
     '';
     executable = true;
   };
@@ -115,10 +134,13 @@
       "alt + ctrl + {h,j,k,l}" = "bspc node -p {west,south,north,east}";
       "alt + {Left,Down,Up,Right}" = "bspc node -v {-20 0,0 20,0 -20,20 0}";
 
-      # Zen mode
+      "alt + n" = "xdotool search --class scratchpad windowunmap || ghostty --class scratchpad";
+
+      # Screen modes
       "alt + z" = "~/.screenlayout/screen_setup.sh";
       "alt + shift + z" = "~/.config/bspwm/zen_mode.sh";
       "alt + shift + w" = "~/.config/bspwm/work_mode.sh";
+      "alt + shift + y" = "~/.config/bspwm/sleep_mode.sh";
 
       "ctrl + w" = "rofi -show window";
       "ctrl + Escape" = "pkill -USR1 -x sxhkd";

@@ -17,8 +17,9 @@
       shadow-opacity = 0.5; # Shadow transparency
       shadow-offset-x = -7; # Shadow offset (horizontal)
       shadow-offset-y = -7; # Shadow offset (vertical)
-      blur-method = "dual_kawase"; # Enable blur
-      blur-strength = 7; # Blur intensity
+      blur-method = "dual_kawase";
+      blur-strength = 7;
+      blur-background-fixed = false;
       backend = "glx"; # Use OpenGL for better performance
       vsync = true; # Prevent screen tearing
     };
