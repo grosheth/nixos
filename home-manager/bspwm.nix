@@ -40,6 +40,8 @@
         # Remove xss-lock to disable automatic locking
         pgrep -x xss-lock > /dev/null || xss-lock -- betterlockscreen -l &
 
+        bspc rule -a Yad state=floating center=on
+
         xset dpms 3600 3600 3600
         xset -dpms
         xset s off
@@ -63,25 +65,7 @@
              --output "$ULTRAWIDE_MONITOR" --off \
              --output "$SECONDARY_MONITOR_2" --off
       sleep 2
-      notify-send -u low "Work mode"
-    '';
-    executable = true;
-  };
-
-  home.file.".config/bspwm/sleep_mode.sh" = {
-    text = ''
-      #!/usr/bin/env bash
-
-      notify-send -t 5000 -u critical "Going into sleep mode"
-      sleep 3
-
-      ULTRAWIDE_MONITOR="DP-0"
-      SECONDARY_MONITOR_1="DP-2"
-      SECONDARY_MONITOR_2="HDMI-0"
-
-      xrandr --output "$ULTRAWIDE_MONITOR" --off \
-             --output "$SECONDARY_MONITOR_1" --off \
-             --output "$SECONDARY_MONITOR_2" --off
+      notify-send -u low "💼 Work mode"
     '';
     executable = true;
   };
@@ -98,10 +82,26 @@
              --output "$SECONDARY_MONITOR_1" --off \
              --output "$SECONDARY_MONITOR_2" --off
       sleep 2
-      notify-send -u normal "Zen mode"
+      notify-send -u low "☯️ Zen mode"
     '';
     executable = true;
   };
+
+  home.file.".config/bspwm/sleep_mode.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+
+      notify-send -t 5000 -u critical "🌙 Going into sleep mode" "Screen will turn off in 5 seconds"
+
+      answer=$(yad --title="Sleep Mode" --text="Do you want to shutdown the computer?" --button="Yes:0" --button="No:1")
+
+      if [[ $? -eq 0 ]]; then
+        shutdown now
+      fi
+    '';
+    executable = true;
+  };
+
 
   home.packages = with pkgs; [
     bspwm
@@ -133,8 +133,6 @@
       "alt + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";
       "alt + ctrl + {h,j,k,l}" = "bspc node -p {west,south,north,east}";
       "alt + {Left,Down,Up,Right}" = "bspc node -v {-20 0,0 20,0 -20,20 0}";
-
-      "alt + n" = "xdotool search --class scratchpad windowunmap || ghostty --class scratchpad";
 
       # Screen modes
       "alt + z" = "~/.screenlayout/screen_setup.sh";

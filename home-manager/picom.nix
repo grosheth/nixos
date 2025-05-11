@@ -21,6 +21,7 @@
       blur-strength = 7;
       blur-background-fixed = false;
       backend = "glx"; # Use OpenGL for better performance
+      refresh-rate = 120; # Refresh rate
       vsync = true; # Prevent screen tearing
     };
     opacityRules = [
