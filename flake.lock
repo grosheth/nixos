@@ -339,7 +339,8 @@
         "more-waita": "more-waita",
         "nixpkgs": "nixpkgs",
         "nixpkgs-fmt": "nixpkgs-fmt",
-        "nixpkgs-wayland": "nixpkgs-wayland"
+        "nixpkgs-wayland": "nixpkgs-wayland",
+        "zen-browser": "zen-browser"
       }
     },
     "rust-analyzer-src": {
@@ -386,6 +387,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1746763614,
+        "narHash": "sha256-tfBsztz6aUcfIFK8Sewn44mkMXZs8rRQfmHBjVhkUBM=",
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
+        "rev": "154aa27229783bca87c3ea3ac4ef32ab9b99cdb6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     },

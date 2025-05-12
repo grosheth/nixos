@@ -24,6 +24,13 @@
     ghostty = {
       url = "github:ghostty-org/ghostty";
     };
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+    };
+    # optional, but recommended if you closely follow NixOS unstable so it shares
+    # system libraries, and improves startup time
+    # NOTE: if you experience a build failure with Zen, the first thing to check is to remove this line!
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = { self, nixpkgs, home-manager, ghostty, nixpkgs-fmt, ... } @ inputs:
     let
@@ -37,7 +44,8 @@
           modules = [
             {
               environment.systemPackages = [
-                ghostty.packages.x86_64-linux.default
+                ghostty.packages.${system}.default
+                inputs.zen-browser.packages.${system}.default
               ];
             }
             ./nixos/default/configuration.nix
