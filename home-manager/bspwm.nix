@@ -35,17 +35,17 @@
         bash /home/salledelavage/.screenlayout/screen_setup.sh
         xwallpaper --zoom $HOME/nixos/assets/images/kaolin_nasa.png
         picom
-        betterlockscreen -u $HOME/nixos/assets/images/kaolin_nasa.png
+        # betterlockscreen -u $HOME/nixos/assets/images/kaolin_nasa.png
 
         # Remove xss-lock to disable automatic locking
         pgrep -x xss-lock > /dev/null || xss-lock -- betterlockscreen -l &
 
         bspc rule -a Yad state=floating center=on
 
-        xset dpms 3600 3600 3600
         xset -dpms
         xset s off
         xset s noblank
+        xset s off -dpms
 
         pgrep -x sxhkd > /dev/null || sxhkd &
 
