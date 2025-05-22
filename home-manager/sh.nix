@@ -39,8 +39,10 @@ let
     # Update nix system
     "update" = "nix flake update";
 
-    # zed
-    "zed" = "zeditor";
+    # zed close terminal
+    "zed" = "zeditor && exit";
+    # zed keep terminal
+    "zedk" = "zeditor";
   };
 in
 {
