@@ -40,7 +40,7 @@ let
     "update" = "nix flake update";
 
     # zed close terminal
-    "zed" = "zeditor && exit";
+    "zed" = "zeditor . && exit";
     # zed keep terminal
     "zedk" = "zeditor";
   };
