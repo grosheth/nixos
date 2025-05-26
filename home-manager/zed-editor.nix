@@ -742,7 +742,7 @@ in
 
     userSettings = {
       vim_mode = true;
-      ui_font_size = 12;
+      ui_font_size = 14;
       base_keymaps = "VSCode";
       assistant =  {
         default_model = {
@@ -757,10 +757,10 @@ in
         light = "Kaolin";
       };
       buffer_font_family = "JetBrainsMono Nerd Font";
-      buffer_font_size = 18;
+      buffer_font_size = 14;
       buffer_font_weight = 300;
       terminal = {
-        font_size = 18;
+        font_size = 14;
         shell = "system";
         env = {
           TERM = "ghostty";
