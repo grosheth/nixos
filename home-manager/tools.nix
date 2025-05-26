@@ -44,6 +44,7 @@
     terraform
 
     nodejs
+    elixir
     go
     gcc
     python3
