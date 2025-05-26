@@ -742,7 +742,7 @@ in
 
     userSettings = {
       vim_mode = true;
-      ui_font_size = 16;
+      ui_font_size = 12;
       base_keymaps = "VSCode";
       assistant =  {
         default_model = {
