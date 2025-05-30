@@ -757,10 +757,10 @@ in
         light = "Kaolin";
       };
       buffer_font_family = "JetBrainsMono Nerd Font";
-      buffer_font_size = 14;
+      buffer_font_size = 15;
       buffer_font_weight = 300;
       terminal = {
-        font_size = 14;
+        font_size = 15;
         shell = "system";
         env = {
           TERM = "ghostty";
