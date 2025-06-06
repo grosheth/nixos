@@ -1,52 +1,53 @@
 {
   "redhat.telemetry.enabled": false,
   "editor.codeActionsOnSave": {},
-  "files.autoSave": "afterDelay",
+  "editor.fastScrollSensitivity": 5,
+  "editor.smoothScrolling": true,
   "workbench.colorCustomizations": {
     "activityBar.background": "#0d1925",
     "activityBar.foreground": "#ffffff",
     "activityBarTop.foreground": "#0d1925",
     "editorCursor.foreground": "#ffffff",
-    "editorLineNumber.activeForeground": "#eed891",
+    "editorLineNumber.activeForeground": "#ffffff",
     "editorGutter.background": "#14161b",
-    "editor.selectionBackground": "#000000",
-    "editor.lineHighlightBackground": "#000000",
+    "editor.selectionBackground": "#585b7080",
+    "editor.lineHighlightBackground": "#585b7080",
     "editor.background": "#14161b",
-    "editorBracketHighlight.foreground1": "#e55c74",
-    "editorBracketHighlight.foreground2": "#e55c74",
-    "editorBracketHighlight.foreground3": "#e55c74",
-    "editorBracketHighlight.foreground4": "#e55c74",
-    "editorBracketHighlight.foreground5": "#e55c74",
-    "editorBracketHighlight.foreground6": "#e55c74",
+    "editorBracketHighlight.foreground1": "#9399b2",
+    "editorBracketHighlight.foreground2": "#9399b2",
+    "editorBracketHighlight.foreground3": "#9399b2",
+    "editorBracketHighlight.foreground4": "#9399b2",
+    "editorBracketHighlight.foreground5": "#9399b2",
+    "editorBracketHighlight.foreground6": "#9399b2",
     "input.background": "#14161b",
     "input.foreground": "#ffffff",
-    "input.border": "#4ca6e8",
-    "input.placeholderForeground": "#4ca6e8",
-    "inputOption.activeBorder": "#4ca6e8",
+    "input.border": "#0db9d7",
+    "input.placeholderForeground": "#0db9d7",
+    "inputOption.activeBorder": "#0db9d7",
     "inputValidation.errorBackground": "#e55c74",
     "inputValidation.errorForeground": "#ffffff",
     "inputValidation.errorBorder": "#e55c74",
-    "inputValidation.infoBackground": "#4ca6e8",
+    "inputValidation.infoBackground": "#0db9d7",
     "inputValidation.infoForeground": "#ffffff",
-    "inputValidation.infoBorder": "#4ca6e8",
+    "inputValidation.infoBorder": "#0db9d7",
     "inputValidation.warningBackground": "#eed891",
     "inputValidation.warningForeground": "#ffffff",
     "inputValidation.warningBorder": "#eed891",
-    "button.background": "#4ca6e8",
+    "button.background": "#0db9d7",
     "button.foreground": "#ffffff",
-    "button.hoverBackground": "#4ca6e8",
-    "button.secondaryBackground": "#4ca6e8",
+    "button.hoverBackground": "#0db9d7",
+    "button.secondaryBackground": "#0db9d7",
     "button.secondaryForeground": "#ffffff",
-    "button.secondaryHoverBackground": "#4ca6e8",
+    "button.secondaryHoverBackground": "#0db9d7",
     "checkbox.background": "#14161b",
     "checkbox.foreground": "#ffffff",
-    "checkbox.border": "#4ca6e8",
+    "checkbox.border": "#0db9d7",
     "badge.background": "#e55c74",
     "badge.foreground": "#ffffff",
     "breadcrumb.background": "#14161b",
     "breadcrumb.foreground": "#ffffff",
-    "breadcrumb.focusForeground": "#4ca6e8",
-    "breadcrumb.activeSelectionForeground": "#4ca6e8",
+    "breadcrumb.focusForeground": "#0db9d7",
+    "breadcrumb.activeSelectionForeground": "#0db9d7",
     "breadcrumbPicker.background": "#14161b",
     "debugToolBar.background": "#14161b",
     "descriptionForeground": "#ffffff",
@@ -63,13 +64,14 @@
     "terminal.ansiGreen": "#6dd797",
     "terminal.ansiRed": "#e55c74",
     "terminal.ansiYellow": "#eed891",
-    "terminal.ansiBlue": "#4ca6e8",
+    "terminal.ansiBlue": "#0db9d7",
     "terminal.ansiMagenta": "#bb9af7",
     "terminal.ansiCyan": "#6bd9db",
     "terminal.ansiBrightCyan": "#ffffff"
   },
   "editor.tokenColorCustomizations": {
-    "comments": "#4b5254",
+    // "comments": "#4b5254",
+    "comments": "#818181",
     "strings": "#6dd797",
     "keywords": "#e55c74",
     "numbers": "#eed891",
@@ -98,7 +100,7 @@
       {
         "scope": "meta.structure.dictionary.json string.quoted.double.json punctuation.definition.string.json",
         "settings": {
-          "foreground": "#4ca6e8" // Color for JSON key quotes
+          "foreground": "#0db9d7" // Color for JSON key quotes
         }
       },
       {
@@ -116,13 +118,13 @@
       {
         "scope": "meta.structure.dictionary.value.json constant.language.json",
         "settings": {
-          "foreground": "#4ca6e8" // Color for JSON boolean values (true/false)
+          "foreground": "#0db9d7" // Color for JSON boolean values (true/false)
         }
       },
       {
         "scope": "meta.structure.dictionary.value.json constant.language.null.json",
         "settings": {
-          "foreground": "#4ca6e8" // Color for JSON null values
+          "foreground": "#0db9d7" // Color for JSON null values
         }
       },
       {
@@ -153,13 +155,13 @@
       {
         "scope": "entity.name.type.rust",
         "settings": {
-          "foreground": "#4ca6e8" // Color for Rust types
+          "foreground": "#0db9d7" // Color for Rust types
         }
       },
       {
         "scope": "entity.function.name.rust",
         "settings": {
-          "foreground": "#4ca6e8" // Color for Rust function names
+          "foreground": "#0db9d7" // Color for Rust function names
         }
       },
       {
@@ -189,7 +191,7 @@
       {
         "scope": "comment.line.double-slash.rust",
         "settings": {
-          "foreground": "#4b5254" // Color for Rust comments
+          "foreground": "#818181" // Color for Rust comments
         }
       },
       {
@@ -201,19 +203,19 @@
       {
         "scope": "support.type.rust",
         "settings": {
-          "foreground": "#4ca6e8" // Color for Rust types
+          "foreground": "#0db9d7" // Color for Rust types
         }
       },
       {
         "scope": "support.constant.rust",
         "settings": {
-          "foreground": "#4ca6e8" // Color for Rust constants
+          "foreground": "#0db9d7" // Color for Rust constants
         }
       },
       {
         "scope": "entity.name.namespace.rust",
         "settings": {
-          "foreground": "#4ca6e8" // Color for Rust namespaces
+          "foreground": "#0db9d7" // Color for Rust namespaces
         }
       },
       {
@@ -262,81 +264,166 @@
       {
         "scope": "comment.line.number-sign.python",
         "settings": {
-          "foreground": "#4b5254" // Color for Python comments
+          "foreground": "#818181" // Color for Python comments
         }
       },
       // Go
       {
-        "scope": "keyword.control.go",
+        "scope": "storage.type.error.go",
         "settings": {
-          "foreground": "#e55c74" // Color for Go control keywords
+          "foreground": "#eed891" // Color for Nix control keywords
         }
       },
       {
-        "scope": "variable.parameter.function.go",
+        "scope": "constant.other.placeholder.go",
         "settings": {
-          "foreground": "#9cdcfe" // Color for Go function parameters
+          "foreground": "#6dd797" // Color for Nix control keywords
         }
       },
       {
         "scope": "entity.name.function.go",
         "settings": {
-          "foreground": "#bb9af7" // Color for Go function names
+          "foreground": "#0db9d7" // Color for Nix control keywords
         }
       },
       {
-        "scope": "string.quoted.double.go",
+        "scope": "storage.type.boolean.go",
         "settings": {
-          "foreground": "#6dd797" // Color for Go string literals
+          "foreground": "#eed891" // Color for Nix control keywords
         }
       },
       {
-        "scope": "constant.numeric.go",
+        "scope": "storage.type.numeric.go",
         "settings": {
-          "foreground": "#eed891" // Color for Go numeric literals
+          "foreground": "#eed891" // Color for Nix control keywords
         }
       },
       {
-        "scope": "comment.line.double-slash.go",
+        "scope": "storage.type.string.go",
         "settings": {
-          "foreground": "#4b5254" // Color for Go comments
+          "foreground": "#eed891" // Color for Nix control keywords
         }
       },
       {
-        "scope": "entity.name.tag.yaml",
-        "settings": {
-          "foreground": "#e55c74" // Color for YAML tags
-        }
-      },
-      {
-        "scope": "string.unquoted.plain.out.yaml",
-        "settings": {
-          "foreground": "#6dd797" // Color for YAML plain strings
-        }
-      },
-      {
-        "scope": "constant.numeric.yaml",
-        "settings": {
-          "foreground": "#eed891" // Color for YAML numeric values
-        }
-      },
-      {
-        "scope": "comment.line.number-sign.yaml",
-        "settings": {
-          "foreground": "#4b5254" // Color for YAML comments
-        }
-      },
-      // nix
-      {
-        "scope": "keyword.control.nix",
+        "scope": "keyword.struct.go",
         "settings": {
           "foreground": "#e55c74" // Color for Nix control keywords
         }
       },
       {
+        "scope": "keyword.type.go",
+        "settings": {
+          "foreground": "#e55c74" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "keyword.function.go",
+        "settings": {
+          "foreground": "#e55c74" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "keyword.var.go",
+        "settings": {
+          "foreground": "#e55c74" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "constant.language.boolean.go",
+        "settings": {
+          "foreground": "#eed891" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "variable.other.constant.go",
+        "settings": {
+          "foreground": "#fab387" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "constant.language.null.go",
+        "settings": {
+          "foreground": "#fab387" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "entity.name.function.support.go",
+        "settings": {
+          "foreground": "#0db9d7" // Color for Nix control keywords
+        }
+      },
+      // nix
+      {
+        "scope": "keyword.other.nix",
+        "settings": {
+          "foreground": "#e55c74" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "punctuation.section.embedded.begin.nix",
+        "settings": {
+          "foreground": "#e55c74" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "punctuation.section.embedded.end.nix",
+        "settings": {
+          "foreground": "#e55c74" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "keyword.operator.nix",
+        "settings": {
+          "foreground": "#eba0ac" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "variable.parameter.function.4.nix",
+        "settings": {
+          "foreground": "#eba0ac" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "variable.parameter.function.1.nix",
+        "settings": {
+          "foreground": "#eba0ac" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "support.function",
+        "settings": {
+          "foreground": "#bb9af7" // Color for Nix control keywords
+        }
+      },
+      {
+        "scope": "keyword.other.inherit.nix",
+        "settings": {
+          "foreground": "#e55c74" // Color for Nix string literals
+        }
+      },
+      {
+        "scope": "constant.language.nix",
+        "settings": {
+          "foreground": "#eed891" // Color for Nix string literals
+        }
+      },
+      {
+        "scope": "entity.other.attribute-name",
+        "settings": {
+          "foreground": "#ffffff" // Color for Nix string literals
+        }
+      },
+      {
+        "scope": "entity.other.attribute-name",
+        "settings": {
+          "foreground": "#ffffff" // Color for Nix string literals
+        }
+      },
+      {
         "scope": "variable.parameter.function.nix",
         "settings": {
-          "foreground": "#4ca6e8" // Color for Nix function parameters
+          "foreground": "#0db9d7" // Color for Nix function parameters
+          // "foreground": "#ffffff" // Color for Nix string literals
         }
       },
       {
@@ -348,7 +435,7 @@
       {
         "scope": "string.quoted.double.nix",
         "settings": {
-          "foreground": "#6dd797" // Color for Nix string literals
+          "foreground": "#6dd797" // Color for YAML plain strings
         }
       },
       {
@@ -360,7 +447,7 @@
       {
         "scope": "comment.line.number-sign.nix",
         "settings": {
-          "foreground": "#4b5254" // Color for Nix comments
+          "foreground": "#818181" // Color for Nix comments
         }
       },
       // shell
@@ -397,11 +484,14 @@
       {
         "scope": "comment.line.number-sign.shell",
         "settings": {
-          "foreground": "#4b5254" // Color for Bash comments
+          "foreground": "#818181" // Color for Bash comments
         }
       },
     ]
   },
+  "editor.lineHeight": 0,
+  "editor.letterSpacing": -0.4,
+  "editor.fontWeight": "normal",
   "editor.renderWhitespace": "none",
   "editor.minimap.enabled": false,
   "breadcrumbs.enabled": false,
@@ -482,6 +572,7 @@
   "workbench.activityBar.location": "hidden",
   "editor.fontLigatures": true,
   "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
-  "window.zoomLevel": 1,
-  "debug.disassemblyView.showSourceCode": false
+  "window.zoomLevel": 0.2,
+  "debug.disassemblyView.showSourceCode": false,
+  "files.autoSave": "afterDelay"
 }
