@@ -43,6 +43,11 @@ let
     "zed" = "zeditor . && exit";
     # zed keep terminal
     "zedk" = "zeditor";
+
+    # zed close terminal
+    "code" = "code . && exit";
+    # zed keep terminal
+    "codek" = "code";
   };
 in
 {

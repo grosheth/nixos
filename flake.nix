@@ -24,6 +24,9 @@
     ghostty = {
       url = "github:ghostty-org/ghostty";
     };
+    # gysmo = {
+    #   url = "github:grosheth/gysmo";
+    # };
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
     };
@@ -45,6 +48,7 @@
             {
               environment.systemPackages = [
                 ghostty.packages.${system}.default
+                # gysmo.packages.${system}.default
                 inputs.zen-browser.packages.${system}.default
               ];
             }
@@ -65,7 +69,6 @@
         dev = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ (import ./overlays/gysmo-overlay.nix) ];
           };
           extraSpecialArgs = { inherit inputs username; };
           modules = [ ./home-manager/home-dev.nix ];
