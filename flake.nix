@@ -24,9 +24,9 @@
     ghostty = {
       url = "github:ghostty-org/ghostty";
     };
-    # gysmo = {
-    #   url = "github:grosheth/gysmo";
-    # };
+    gysmo = {
+      url = "github:grosheth/gysmo";
+    };
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
     };
@@ -35,7 +35,7 @@
     # NOTE: if you experience a build failure with Zen, the first thing to check is to remove this line!
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, home-manager, ghostty, nixpkgs-fmt, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, ghostty, gysmo, nixpkgs-fmt, ... } @ inputs:
     let
       username = "salledelavage";
       system = "x86_64-linux";
@@ -48,7 +48,7 @@
             {
               environment.systemPackages = [
                 ghostty.packages.${system}.default
-                # gysmo.packages.${system}.default
+                gysmo.packages.${system}.default
                 inputs.zen-browser.packages.${system}.default
               ];
             }

@@ -38,7 +38,12 @@ in
   # virtualisation
   programs.virt-manager.enable = true;
   virtualisation = {
-    podman.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      # required for podman compose
+      defaultNetwork.settings.dns_enabled = true;
+    };
     libvirtd.enable = true;
   };
 
@@ -138,6 +143,12 @@ in
     xorg.libxcb
     xorg.xorgserver
     arandr
+
+    # Podman
+    dive
+    podman-tui
+    docker-compose
+    podman-compose
 
     #nixos
     nh
