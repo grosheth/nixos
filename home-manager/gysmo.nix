@@ -1,41 +1,152 @@
 { config, pkgs, ... }:
 let
   gysmoConfig = ''
-    font-family = "JetBrains Mono Nerd Font"
-    font-size = "12"
-
-    cursor-style = bar
-    theme = kaolin
-    config-file = keybindings
-    window-decoration = false
+    {
+      "items": [
+        {
+          "text": "User",
+          "keyword": "user",
+          "icon": "",
+          "value_color": "red",
+          "text_color": "",
+          "icon_color": "red"
+        },
+        {
+          "text": "Kernel",
+          "keyword": "kernel",
+          "icon": "󰌽",
+          "value_color": "",
+          "text_color": "",
+          "icon_color": ""
+        },
+        {
+          "text": "WM",
+          "keyword": "wm",
+          "icon": "󱂬",
+          "value_color": "yellow",
+          "text_color": "",
+          "icon_color": "yellow"
+        },
+        {
+          "text": "GPU",
+          "keyword": "gpu",
+          "icon": "",
+          "value_color": "green",
+          "text_color": "",
+          "icon_color": "green"
+        },
+        {
+          "text": "Term",
+          "keyword": "term",
+          "icon": "",
+          "value_color": "blue",
+          "text_color": "",
+          "icon_color": "blue"
+        },
+        {
+          "text": "CPU",
+          "value": "Intel(R) Core(TM) i7-10700K",
+          "icon": "",
+          "value_color": "red",
+          "text_color": "",
+          "icon_color": "red"
+        },
+        {
+          "text": "OS",
+          "value": "NixOs",
+          "icon": "",
+          "value_color": "",
+          "text_color": "",
+          "icon_color": ""
+        },
+        {
+          "text": "RAM",
+          "keyword": "ram",
+          "icon": "",
+          "value_color": "yellow",
+          "text_color": "",
+          "icon_color": "yellow"
+        },
+        {
+          "text": "Shell",
+          "value": "zsh",
+          "icon": "",
+          "value_color": "green",
+          "text_color": "",
+          "icon_color": "green"
+        },
+        {
+          "text": "Uptime",
+          "keyword": "uptime",
+          "icon": "󱑆",
+          "value_color": "blue",
+          "text_color": "",
+          "icon_color": "blue"
+        }
+      ],
+      "ascii": {
+        "path": "salledelavage",
+        "colors": "",
+        "enabled": true,
+        "horizontal_padding": 2,
+        "vertical_padding": 0,
+        "position": "top"
+      },
+      "header": {
+        "enabled": false,
+        "text": "NixOS",
+        "text_color": "purple",
+        "line": true,
+        "line_color": ""
+      },
+      "footer": {
+        "enabled": false,
+        "text": "gysmo",
+        "text_color": "blue",
+        "line": true,
+        "line_color": ""
+      },
+      "general": {
+        "menu_type": "box",
+        "columns": false,
+        "menu_padding": 2
+      }
+    }
   '';
 
-  customTheme = ''
-    background = #14161b
-    foreground = #e6e6e8
-    selection-foreground = #44475a
-    cursor-color = #ffffff
-    palette = 0=#14161b
-    palette = 1=#e55c74
-    palette = 2=#6dd797
-    palette = 3=#eed891
-    palette = 4=#4fa6ed
-    palette = 5=#EE87A9
-    palette = 6=#56b6c2
-    palette = 7=#dcdfe4
-    palette = 8=#4b5254
-    palette = 9=#e55c74
-    palette = 10=#6dd797
-    palette = 11=#eed891
-    palette = 12=#4fa6ed
-    palette = 13=#EE87A9
-    palette = 14=#56b6c2
-    palette = 15=#dcdfe4
+  asciiConfig2 = ''
+ ______   ________   __       __       ______                    
+/_____/\ /_______/\ /_/\     /_/\     /_____/\                   
+\::::_\/_\::: _  \ \\:\ \    \:\ \    \::::_\/_                  
+ \:\/___/\\::(_)  \ \\:\ \    \:\ \    \:\/___/\                 
+  \_::._\:\\:: __  \ \\:\ \____\:\ \____\::___\/_                
+    /____\:\\:.\ \  \ \\:\/___/\\:\/___/\\:\____/\               
+    \_____\/ \__\/\__\/ \_____\/ \_____\/ \_____\/               
+               /_____/\ /_____/\                                 
+               \:::_ \ \\::::_\/_                                
+                \:\ \ \ \\:\/___/\                               
+                 \:\ \ \ \\::___\/_                              
+                  \:\/.:| |\:\____/\                             
+ __       ________ \____/_/_\_____\/___   _______    ______      
+/_/\     /_______/\ /_/\ /_/\ /_______/\ /______/\  /_____/\     
+\:\ \    \::: _  \ \\:\ \\ \ \\::: _  \ \\::::__\/__\::::_\/_    
+ \:\ \    \::(_)  \ \\:\ \\ \ \\::(_)  \ \\:\ /____/\\:\/___/\   
+  \:\ \____\:: __  \ \\:\_/.:\ \\:: __  \ \\:\\_  _\/ \::___\/_  
+   \:\/___/\\:.\ \  \ \\ ..::/ / \:.\ \  \ \\:\_\ \ \  \:\____/\ 
+    \_____\/ \__\/\__\/ \___/_(   \__\/\__\/ \_____\/   \_____\/
   '';
-  customThemeName = "kaolin";
+  asciiConfig = ''
+   ___       ___       ___       ___       ___   
+  /\  \     /\__\     /\  \     /\__\     /\  \  
+ /::\  \   |::L__L   /::\  \   /::L_L_   /::\  \ 
+/:/\:\__\  |:::\__\ /\:\:\__\ /:/L:\__\ /:/\:\__\
+\:\:\/__/  /:;;/__/ \:\:\/__/ \/_/:/  / \:\/:/  /
+ \::/  /   \/__/     \::/  /    /:/  /   \::/  / 
+  \/__/               \/__/     \/__/     \/__/ 
+  '';
 in
 {
-  home.file.".config/ghostty/config".text = ghosttyConfig;
-  home.file.".config/ghostty/keybindings".text = keybindingsConfig;
-  home.file.".config/ghostty/themes/${customThemeName}".text = customTheme;
+  home.file.".config/gysmo/config/config.json".text = gysmoConfig;
+  home.file.".config/gysmo/ascii/gysmo".text = asciiConfig;
+  home.file.".config/gysmo/ascii/salledelavage".text = asciiConfig2;
 }
