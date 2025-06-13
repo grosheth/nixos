@@ -44,10 +44,8 @@ let
     # zed keep terminal
     "zedk" = "zeditor";
 
-    # zed close terminal
-    "code" = "code . && exit";
-    # zed keep terminal
-    "codek" = "code";
+    "code" = "cursor . &";
+    "codek" = "cursor";
   };
 in
 {
