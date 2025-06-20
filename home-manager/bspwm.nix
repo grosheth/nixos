@@ -45,10 +45,6 @@
 
         pgrep -x sxhkd > /dev/null || sxhkd &
 
-        # Set screen to sleep after 5 minutes (300 seconds)
-        xset s off
-        xset -dpms
-
       '';
     };
   };
