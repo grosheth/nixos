@@ -45,6 +45,10 @@
 
         pgrep -x sxhkd > /dev/null || sxhkd &
 
+        # Set screen to sleep after 5 minutes (300 seconds)
+        xset s off
+        xset -dpms
+
       '';
     };
   };
@@ -62,6 +66,10 @@
              --output "$SECONDARY_MONITOR_2" --off
       sleep 2
       notify-send -u low "💼 Work mode"
+
+      # Set screen to sleep after 5 minutes
+      xset s 300 300
+      xset dpms 300 300 300
     '';
     executable = true;
   };
@@ -79,6 +87,10 @@
              --output "$SECONDARY_MONITOR_2" --off
       sleep 2
       notify-send -u low "☯️ Zen mode"
+
+      # Disable screen sleep
+      xset s off
+      xset -dpms
     '';
     executable = true;
   };
@@ -111,6 +123,10 @@
              --output "$SECONDARY_MONITOR_2" --auto
       sleep 2
       notify-send -u low "☯️ Zen mode"
+
+      # Disable screen sleep
+      xset s off
+      xset -dpms
     '';
     executable = true;
   };
