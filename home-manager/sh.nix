@@ -50,7 +50,7 @@ let
 in
 {
   programs = {
-    thefuck.enable = true;
+    # thefuck.enable = true;
 
     zsh = {
       enable = true;

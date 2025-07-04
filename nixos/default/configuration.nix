@@ -159,6 +159,7 @@ in
     audacity
 
     # VPN
+    wireguard-tools
     openvpn
 
     # ZSA Keyboard

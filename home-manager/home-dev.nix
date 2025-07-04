@@ -27,7 +27,7 @@ in
     ./theme.nix
     ./tools.nix
     # ./tmux.nix
-    ./zed-editor.nix
+    # ./zed-editor.nix
     # ./zellij.nixo
 
     ## dev ##

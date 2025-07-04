@@ -38,7 +38,6 @@
     brave
     rpi-imager
     usbutils
-    onedrive
     code-cursor
     minikube
     terraform
