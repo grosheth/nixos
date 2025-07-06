@@ -10,7 +10,7 @@
     themeFile = "OneHalfDark";
     font = {
       name = "JetBrainsMono Nerd Font Mono";
-      size = 15;
+      size = 12;
     };
 
     keybindings = {
