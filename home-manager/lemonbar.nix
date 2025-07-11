@@ -6,11 +6,11 @@
 
   systemd.user.services.vpnbar = {
     Unit = {
-      Description = "VPN Lemonbar Status Bar";
+      Description = "lemonbar status bar";
       After = [ "graphical-session.target" ];
     };
     Service = {
-      ExecStart = "vpnbar";
+      ExecStart = "bar";
       Restart = "on-failure";
       Environment = "DISPLAY=:0";
     };

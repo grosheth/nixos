@@ -3,7 +3,7 @@
   home.packages = with pkgs; with nodePackages_latest; with gnome; [
     (writeShellScriptBin "rofi-projects" (builtins.readFile ../scripts/rofi-projects.sh))
     (writeShellScriptBin "rofi-vpn" (builtins.readFile ../scripts/rofi-vpn.sh))
-    (writeShellScriptBin "lemonbar" (builtins.readFile ../scripts/lemonbar.sh))
+    (writeShellScriptBin "bar" (builtins.readFile ../scripts/bar.sh))
     (writeShellScriptBin "vpn-toggler" (builtins.readFile ../scripts/vpn-toggler.sh))
     vscode
     caligula
