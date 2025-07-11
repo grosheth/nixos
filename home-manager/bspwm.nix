@@ -133,13 +133,7 @@
     dmenu
     sxhkd
     xwallpaper
-    # betterlockscreen
   ];
-
-  # services.betterlockscreen = {
-  #   enable = true;
-  #   arguments = [ "blur" ];
-  # };
 
   services.sxhkd = {
     enable = true;
@@ -166,8 +160,12 @@
       "alt + shift + v" = "~/.config/bspwm/vertical_mode.sh";
       # "alt + shift + " = "~/.config/bspwm/sleep_mode.sh";
 
+      # Rofi
       "ctrl + w" = "rofi -show window";
       "ctrl + Escape" = "pkill -USR1 -x sxhkd";
+
+      # Toggle bar
+      "alt + b" = "vpnbar";
     };
   };
 }
