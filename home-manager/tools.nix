@@ -50,6 +50,6 @@
     python3
     lua
     cmake
-    lemonbar
+    lemonbar-xft
   ];
 }

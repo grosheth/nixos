@@ -161,7 +161,7 @@ in
     # VPN
     wireguard-tools
     openvpn
-
+    
     # ZSA Keyboard
     wally-cli
   ];
