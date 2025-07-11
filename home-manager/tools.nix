@@ -41,7 +41,6 @@
     code-cursor
     minikube
     terraform
-
     nodejs
     elixir
     go
@@ -49,5 +48,6 @@
     python3
     lua
     cmake
+    lemonbar
   ];
 }
