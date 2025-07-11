@@ -92,7 +92,6 @@ generate_rofi_menu() {
 }
 
 open_project() {
-	# command="[ -f ${PROJECTS_PATH}/${PICKED_ENTRY}/dev.sh ] && bash ${PROJECTS_PATH}/${PICKED_ENTRY}/dev.sh || nvim ${PROJECTS_PATH}/${PICKED_ENTRY}"
 	kitty --detach nvim "${PROJECTS_PATH}"/"${PICKED_ENTRY}"
 	return 0
 }

@@ -165,7 +165,7 @@
       "ctrl + Escape" = "pkill -USR1 -x sxhkd";
 
       # Toggle bar
-      "alt + b" = "vpnbar";
+      "alt + b" = "bar";
     };
   };
 }
