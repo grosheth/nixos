@@ -141,7 +141,6 @@
       "alt + Return" = "kitty";
       "alt + @space" = "rofi -show drun";
       "alt + q" = "rofi -show ssh";
-      "alt + v" = "bash rofi-vpn";
       "alt + p" = "bash rofi-projects";
       "alt + d" = "dmenu_run";
       "alt + c" = "bspc node -c";
@@ -165,7 +164,8 @@
       "ctrl + Escape" = "pkill -USR1 -x sxhkd";
 
       # Toggle bar
-      "alt + b" = "bar";
+      "alt + b" = "bash bar";
+      "alt + v" = "bash vpn";
     };
   };
 }
