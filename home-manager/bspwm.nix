@@ -164,7 +164,8 @@
       "ctrl + Escape" = "pkill -USR1 -x sxhkd";
 
       # Toggle bar
-      "alt + b" = "bash bar";
+      "alt + n" = "bash bar";
+      "alt + m" = "bash bar restart 1";
       "alt + v" = "bash vpn";
     };
   };
