@@ -2,9 +2,33 @@
 VPN_NAME="wg-enp5s0"
 PID_FILE="/tmp/vpnbar.pid"
 
-# Get main monitor geometry
-MONITOR_INFO=$(xrandr | awk '/ connected primary/ {print $0}')
-RESOLUTION=$(echo $MONITOR_INFO | grep -oP '\d+x\d+\+\d+\+\d+')
+# Monitor selection (0 = primary, 1 = secondary, etc.)
+MONITOR_INDEX=1
+
+# Get monitor geometry based on index
+get_monitor_geometry() {
+    local index=$1
+    local monitor_info
+    
+    if [ $index -eq 0 ]; then
+        # Primary monitor
+        monitor_info=$(xrandr | awk '/ connected primary/ {print $0}')
+    else
+        # Secondary monitor (index + 1 to skip primary)
+        monitor_info=$(xrandr | awk '/ connected/ && !/primary/ {count++; if(count=='$index') print $0}')
+    fi
+    
+    if [ -z "$monitor_info" ]; then
+        echo "Monitor $index not found, using primary monitor"
+        monitor_info=$(xrandr | awk '/ connected primary/ {print $0}')
+    fi
+    
+    local resolution=$(echo $monitor_info | grep -oP '\d+x\d+\+\d+\+\d+')
+    echo $resolution
+}
+
+# Get monitor geometry
+RESOLUTION=$(get_monitor_geometry $MONITOR_INDEX)
 WIDTH=$(echo $RESOLUTION | cut -d'x' -f1)
 HEIGHT=$(echo $RESOLUTION | cut -d'x' -f2 | cut -d'+' -f1)
 X=$(echo $RESOLUTION | cut -d'+' -f2)
@@ -126,49 +150,48 @@ start_bar() {
             local bar_content=""
             
             # Left side - System info
-            bar_content+="%{F#dcdfe4}  󰻠 $CPU%%  󰍛 $MEM%%  󰋊 $DISK%%"
+            bar_content+="%{F#0db9d7}  CPU: $CPU%%%{F-}  %{F#56b6c2}MEM: $MEM%%%{F-}  %{F#eed891}DISK: $DISK%%%{F-}"
             
             # Network speed
             if [ $time_diff -gt 0 ]; then
-                bar_content+="  󰇚 ${rx_speed}K↓ ${tx_speed}K↑"
+                bar_content+="  %{F#c678dd}NET: ${rx_speed}K↓ ${tx_speed}K↑%{F-}"
             fi
             
             # Temperature
             if [ "$TEMP" != "N/A" ]; then
-                bar_content+="  󰔄 ${TEMP}°C"
+                bar_content+="  %{F#e55c74}TEMP: ${TEMP}°C%{F-}"
             fi
             
             # Center - VPN status
             bar_content+="%{c}"
             if [ "$STATUS" = "ON" ]; then
-                bar_content+="%{A1:kitty -e /home/salledelavage/nixos/scripts/vpn.sh:}%{F#6dd797}  󰒃 VPN: ON%{F-}%{A}"
+                bar_content+="%{A1:kitty -e /home/salledelavage/nixos/scripts/vpn.sh:}%{F#6dd797}  VPN: ON%{F-}%{A}"
             else
-                bar_content+="%{A1:kitty -e /home/salledelavage/nixos/scripts/vpn.sh:}%{F#e55c74}  󰒃 VPN: OFF%{F-}%{A}"
+                bar_content+="%{A1:kitty -e /home/salledelavage/nixos/scripts/vpn.sh:}%{F#e55c74}  VPN: OFF%{F-}%{A}"
             fi
             
             # Right side - Time, date, and other info
             bar_content+="%{r}"
-            bar_content+="%{F#dcdfe4}"
              
             # Volume
             if [ "$VOLUME" != "N/A" ]; then
-                bar_content+="  󰕾 $VOLUME%%"
+                bar_content+="  %{F#EE87A9}VOL: $VOLUME%%%{F-}"
             fi
              
             # IP address
             if [ -n "$IP" ]; then
-                bar_content+="  󰖩 $IP"
+                bar_content+="  %{F#0bc9cf}IP: $IP%{F-}"
             fi
             
             # Uptime
-            bar_content+="  󰔟 $UPTIME"
+            bar_content+="  %{F#6dd797}UP: $UPTIME%{F-}"
             
             # Date and time
-            bar_content+="  󰸗 $DATE  󰅐 $TIME"
+            bar_content+="  %{F#dcdfe4}$DATE%{F-}  %{F#dcdfe4}$TIME%{F-}  "
             
             echo "$bar_content"
             sleep 2
-        done | lemonbar-xft -p -g "$GEOM" -B "#18181b" -F "#dcdfe4" -a 20 -n bar -f "JetBrainsMono Nerd Font:size=12"
+        done | lemonbar -p -g "$GEOM" -B "#18181b" -F "#dcdfe4" -a 20 -n bar -f "JetBrainsMonoNL Nerd Font:size=10"
     ) &
     
     echo $! > "$PID_FILE"

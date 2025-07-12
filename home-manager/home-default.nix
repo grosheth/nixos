@@ -22,7 +22,6 @@ in
     ./neovim.nix
     # ./nitch.nix
     ./picom.nix
-    # ./polybar.nix
     ./rofi.nix
     ./sh.nix
     ./starship.nix

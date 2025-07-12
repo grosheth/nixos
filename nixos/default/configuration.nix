@@ -162,6 +162,9 @@ in
     wireguard-tools
     openvpn
     
+    # Bar
+    lemonbar-xft
+    
     # ZSA Keyboard
     wally-cli
   ];
