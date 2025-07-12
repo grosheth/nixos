@@ -253,15 +253,10 @@ start_bar() {
             local disk_formatted=$(printf "%1s" "$DISK%")
             bar_content+="%{F#0db9d7}  %{F-} ${cpu_formatted} $cpu_particles  %{F#6dd797}%{F-} ${mem_formatted} $mem_particles  %{F#eed891}%{F-} ${disk_formatted} $disk_particles"
              
-            # Temperature and SSH connections
             if [ "$TEMP" != "N/A" ]; then
                 bar_content+="  %{F#e55c74}%{F-} ${TEMP}°C"
             fi
             
-            # SSH connections
-            if [ "$SSH_CONN" != "0" ]; then
-                bar_content+="  %{F#ff6b6b}%{F-} ${SSH_CONN}"
-            fi
             
             # Center - VPN status, network speed, and IP address
             bar_content+="%{c}"
@@ -273,7 +268,9 @@ start_bar() {
              
             # IP address in center
             bar_content+="  %{F#0db9d7}%{F-} $IP"
-
+            if [ "$SSH_CONN" != "0" ]; then
+                bar_content+="  %{F#ff6b6b}%{F-} ${SSH_CONN}"
+            fi
             if [ $time_diff -gt 0 ]; then
                 # Format with fixed width to prevent layout shifts
                 local rx_formatted=$(printf "%6s" "${rx_speed}K↓")
