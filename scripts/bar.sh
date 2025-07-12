@@ -236,8 +236,11 @@ start_bar() {
             # Build the bar content
             local bar_content=""
             
-            # Left side - System info with particles
-            bar_content+="%{F#0db9d7}  %{F-} $CPU% $cpu_particles  %{F#6dd797}%{F-} $MEM% $mem_particles  %{F#eed891}%{F-} $DISK% $disk_particles"
+            # Left side - System info with particles (fixed width percentages)
+            local cpu_formatted=$(printf "%5s" "$CPU%")
+            local mem_formatted=$(printf "%5s" "$MEM%")
+            local disk_formatted=$(printf "%1s" "$DISK%")
+            bar_content+="%{F#0db9d7}  %{F-} ${cpu_formatted} $cpu_particles  %{F#6dd797}%{F-} ${mem_formatted} $mem_particles  %{F#eed891}%{F-} ${disk_formatted} $disk_particles"
              
             # Temperature
             if [ "$TEMP" != "N/A" ]; then
