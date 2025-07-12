@@ -165,7 +165,7 @@
 
       # Toggle bar
       "alt + b" = "bash bar";
-      "alt + v" = "bash vpn-toggler";
+      "alt + v" = "bash vpn";
     };
   };
 }

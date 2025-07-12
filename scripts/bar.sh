@@ -3,13 +3,27 @@ VPN_NAME="wg-enp5s0"
 PID_FILE="/tmp/vpnbar.pid"
 
 # Monitor selection (0 = primary, 1 = secondary, etc.)
-MONITOR_INDEX=1
+# pass $2 to select another monitor
+if [ -z $2 ]; then
+    MONITOR_INDEX=0
+else
+    MONITOR_INDEX=$2
+fi
 
-# Get monitor geometry based on index
+# Particle system configuration
+PARTICLE_COUNT=5
+CPU_PARTICLES=("●" "●" "●" "●" "●")
+MEM_PARTICLES=("●" "●" "●" "●" "●")
+DISK_PARTICLES=("●" "●" "●" "●" "●")
+CPU_COLOR="#0db9d7"
+MEM_COLOR="#6dd797"
+DISK_COLOR="#eed891"
+USAGE_THRESHOLDS=(10 25 50 75 100)
+
 get_monitor_geometry() {
     local index=$1
     local monitor_info
-    
+
     if [ $index -eq 0 ]; then
         # Primary monitor
         monitor_info=$(xrandr | awk '/ connected primary/ {print $0}')
@@ -17,17 +31,16 @@ get_monitor_geometry() {
         # Secondary monitor (index + 1 to skip primary)
         monitor_info=$(xrandr | awk '/ connected/ && !/primary/ {count++; if(count=='$index') print $0}')
     fi
-    
+
     if [ -z "$monitor_info" ]; then
         echo "Monitor $index not found, using primary monitor"
         monitor_info=$(xrandr | awk '/ connected primary/ {print $0}')
     fi
-    
+
     local resolution=$(echo $monitor_info | grep -oP '\d+x\d+\+\d+\+\d+')
     echo $resolution
 }
 
-# Get monitor geometry
 RESOLUTION=$(get_monitor_geometry $MONITOR_INDEX)
 WIDTH=$(echo $RESOLUTION | cut -d'x' -f1)
 HEIGHT=$(echo $RESOLUTION | cut -d'x' -f2 | cut -d'+' -f1)
@@ -103,13 +116,83 @@ get_current_date() {
     date '+%Y-%m-%d'
 }
 
+# Particle system functions
+generate_cpu_particles() {
+    local cpu_usage=$1
+    local timestamp=$2
+    
+    # Convert decimal usage to integer
+    local cpu_usage_int=$(printf "%.0f" "$cpu_usage")
+    
+    local particles="%{F$CPU_COLOR}"
+    for ((i=0; i<PARTICLE_COUNT; i++)); do
+        local threshold=${USAGE_THRESHOLDS[$i]}
+        if [ $cpu_usage_int -ge $threshold ]; then
+            # Active particle (stable position)
+            particles+=" ${CPU_PARTICLES[$i]}"
+        else
+            # Inactive particle (dimmed, stable position)
+            particles+=" %{F#666666}${CPU_PARTICLES[$i]}%{F$CPU_COLOR}"
+        fi
+    done
+    particles+="%{F-}"
+    
+    echo "$particles"
+}
+
+generate_mem_particles() {
+    local mem_usage=$1
+    local timestamp=$2
+    
+    # Convert decimal usage to integer
+    local mem_usage_int=$(printf "%.0f" "$mem_usage")
+    
+    local particles="%{F$MEM_COLOR}"
+    for ((i=0; i<PARTICLE_COUNT; i++)); do
+        local threshold=${USAGE_THRESHOLDS[$i]}
+        if [ $mem_usage_int -ge $threshold ]; then
+            # Active particle (stable position)
+            particles+=" ${MEM_PARTICLES[$i]}"
+        else
+            # Inactive particle (dimmed, stable position)
+            particles+=" %{F#666666}${MEM_PARTICLES[$i]}%{F$MEM_COLOR}"
+        fi
+    done
+    particles+="%{F-}"
+    
+    echo "$particles"
+}
+
+generate_disk_particles() {
+    local disk_usage=$1
+    local timestamp=$2
+    
+    # Convert decimal usage to integer
+    local disk_usage_int=$(printf "%.0f" "$disk_usage")
+    
+    local particles="%{F$DISK_COLOR}"
+    for ((i=0; i<PARTICLE_COUNT; i++)); do
+        local threshold=${USAGE_THRESHOLDS[$i]}
+        if [ $disk_usage_int -ge $threshold ]; then
+            # Active particle (stable position)
+            particles+=" ${DISK_PARTICLES[$i]}"
+        else
+            # Inactive particle (dimmed, stable position)
+            particles+=" %{F#666666}${DISK_PARTICLES[$i]}%{F$DISK_COLOR}"
+        fi
+    done
+    particles+="%{F-}"
+    
+    echo "$particles"
+}
+
 # Might do a simple process manager to follow some services and stop/start them
 start_bar() {
     if [ -f "$PID_FILE" ]; then
         echo "VPN bar is already running (PID: $(cat $PID_FILE))"
         exit 1
     fi
-    
+
     echo "Starting VPN bar..."
     
     # Start the bar in background and save PID
@@ -118,9 +201,9 @@ start_bar() {
         local last_rx=0
         local last_tx=0
         local last_time=$(date +%s)
+        local animation_frame=0
         
         while :; do
-            # Get all system information
             STATUS=$(get_status)
             CPU=$(get_cpu_usage)
             MEM=$(get_memory_usage)
@@ -132,7 +215,6 @@ start_bar() {
             TIME=$(get_current_time)
             DATE=$(get_current_date)
             
-            # Calculate network speed
             local current_time=$(date +%s)
             local time_diff=$((current_time - last_time))
             if [ $time_diff -gt 0 ]; then
@@ -146,51 +228,51 @@ start_bar() {
                 last_time=$current_time
             fi
             
+            # Generate particles based on CPU, memory, and disk usage
+            local cpu_particles=$(generate_cpu_particles $CPU $animation_frame)
+            local mem_particles=$(generate_mem_particles $MEM $animation_frame)
+            local disk_particles=$(generate_disk_particles $DISK $animation_frame)
+            
             # Build the bar content
             local bar_content=""
             
-            # Left side - System info
-            bar_content+="%{F#0db9d7}  CPU: $CPU%%%{F-}  %{F#56b6c2}MEM: $MEM%%%{F-}  %{F#eed891}DISK: $DISK%%%{F-}"
-            
-            # Network speed
-            if [ $time_diff -gt 0 ]; then
-                bar_content+="  %{F#c678dd}NET: ${rx_speed}K↓ ${tx_speed}K↑%{F-}"
-            fi
-            
+            # Left side - System info with particles
+            bar_content+="%{F#0db9d7}  %{F-} $CPU% $cpu_particles  %{F#6dd797}%{F-} $MEM% $mem_particles  %{F#eed891}%{F-} $DISK% $disk_particles"
+             
             # Temperature
             if [ "$TEMP" != "N/A" ]; then
-                bar_content+="  %{F#e55c74}TEMP: ${TEMP}°C%{F-}"
+                bar_content+="  %{F#e55c74}%{F-} ${TEMP}°C"
             fi
             
-            # Center - VPN status
+            # Center - VPN status, network speed, and IP address
             bar_content+="%{c}"
             if [ "$STATUS" = "ON" ]; then
-                bar_content+="%{A1:kitty -e /home/salledelavage/nixos/scripts/vpn.sh:}%{F#6dd797}  VPN: ON%{F-}%{A}"
+                bar_content+="%{F#6dd797}   ON%{F-}"
             else
-                bar_content+="%{A1:kitty -e /home/salledelavage/nixos/scripts/vpn.sh:}%{F#e55c74}  VPN: OFF%{F-}%{A}"
+                bar_content+="%{F#e55c74}   OFF%{F-}"
+            fi
+             
+            # IP address in center
+            bar_content+="  %{F#0db9d7}%{F-} $IP"
+
+            if [ $time_diff -gt 0 ]; then
+                # Format with fixed width to prevent layout shifts
+                local rx_formatted=$(printf "%6s" "${rx_speed}K↓")
+                local tx_formatted=$(printf "%6s" "${tx_speed}K↑")
+                bar_content+="  %{F#EE87A9}%{F-} ${rx_formatted} ${tx_formatted}"
+            else
+                # Show placeholder when no network data
+                bar_content+="  %{F#EE87A9}%{F-}     0K↓      0K↑"
             fi
             
             # Right side - Time, date, and other info
-            bar_content+="%{r}"
-             
-            # Volume
-            if [ "$VOLUME" != "N/A" ]; then
-                bar_content+="  %{F#EE87A9}VOL: $VOLUME%%%{F-}"
-            fi
-             
-            # IP address
-            if [ -n "$IP" ]; then
-                bar_content+="  %{F#0bc9cf}IP: $IP%{F-}"
-            fi
-            
-            # Uptime
-            bar_content+="  %{F#6dd797}UP: $UPTIME%{F-}"
-            
-            # Date and time
-            bar_content+="  %{F#dcdfe4}$DATE%{F-}  %{F#dcdfe4}$TIME%{F-}  "
+            bar_content+="%{r}%{F#6dd797}%{F-} $UPTIME  %{F#EE87A9}%{F-} $DATE %{F#eed891}%{F-} $TIME  "
             
             echo "$bar_content"
-            sleep 2
+            
+            # Increment animation frame for particle movement
+            animation_frame=$((animation_frame + 1))
+            sleep 1
         done | lemonbar -p -g "$GEOM" -B "#18181b" -F "#dcdfe4" -a 20 -n bar -f "JetBrainsMonoNL Nerd Font:size=10"
     ) &
     
@@ -263,12 +345,6 @@ case "${1:-toggle}" in
         toggle_bar
         ;;
     *)
-        echo "Usage: $0 {start|stop|restart|status|toggle}"
-        echo "  start   - Start the VPN bar"
-        echo "  stop    - Stop the VPN bar"
-        echo "  restart - Restart the VPN bar"
-        echo "  status  - Show VPN bar status"
-        echo "  toggle  - Toggle VPN bar on/off (default)"
-        exit 1
+        toggle_bar
         ;;
 esac 
