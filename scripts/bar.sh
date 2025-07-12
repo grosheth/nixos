@@ -116,6 +116,16 @@ get_current_date() {
     date '+%Y-%m-%d'
 }
 
+get_ssh_connections() {
+    # Count active SSH connections
+    local ssh_count=$(ss -tn state established | grep -c ":22 ")
+    if [ $ssh_count -gt 0 ]; then
+        echo "$ssh_count"
+    else
+        echo "0"
+    fi
+}
+
 # Particle system functions
 generate_cpu_particles() {
     local cpu_usage=$1
@@ -211,6 +221,7 @@ start_bar() {
             VOLUME=$(get_volume)
             TEMP=$(get_temperature)
             IP=$(get_ip_address)
+            SSH_CONN=$(get_ssh_connections)
             UPTIME=$(get_uptime)
             TIME=$(get_current_time)
             DATE=$(get_current_date)
@@ -242,9 +253,14 @@ start_bar() {
             local disk_formatted=$(printf "%1s" "$DISK%")
             bar_content+="%{F#0db9d7}  %{F-} ${cpu_formatted} $cpu_particles  %{F#6dd797}%{F-} ${mem_formatted} $mem_particles  %{F#eed891}%{F-} ${disk_formatted} $disk_particles"
              
-            # Temperature
+            # Temperature and SSH connections
             if [ "$TEMP" != "N/A" ]; then
                 bar_content+="  %{F#e55c74}%{F-} ${TEMP}°C"
+            fi
+            
+            # SSH connections
+            if [ "$SSH_CONN" != "0" ]; then
+                bar_content+="  %{F#ff6b6b}%{F-} ${SSH_CONN}"
             fi
             
             # Center - VPN status, network speed, and IP address
