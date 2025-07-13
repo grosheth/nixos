@@ -2,13 +2,6 @@
 
 {
   services = {
-    # Onedrive
-    onedrive.enable = true;
-    displayManager = {
-        # defaultSession = "none+i3";
-        defaultSession = "none+bspwm";
-        # sddm.enable = true;
-      };
   # X11
     xserver = {
       enable = true;

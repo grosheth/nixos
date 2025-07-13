@@ -252,10 +252,6 @@ start_bar() {
             local mem_formatted=$(printf "%5s" "$MEM%")
             local disk_formatted=$(printf "%1s" "$DISK%")
             bar_content+="%{F#0db9d7}  %{F-} ${cpu_formatted} $cpu_particles  %{F#6dd797}%{F-} ${mem_formatted} $mem_particles  %{F#eed891}%{F-} ${disk_formatted} $disk_particles"
-             
-            if [ "$TEMP" != "N/A" ]; then
-                bar_content+="  %{F#e55c74}%{F-} ${TEMP}°C"
-            fi
             
             
             # Center - VPN status, network speed, and IP address
@@ -282,7 +278,7 @@ start_bar() {
             fi
             
             # Right side - Time, date, and other info
-            bar_content+="%{r}%{F#6dd797}%{F-} $UPTIME  %{F#EE87A9}%{F-} $DATE %{F#eed891}%{F-} $TIME  "
+            bar_content+="%{r} %{F#e55c74}%{F-} ${TEMP}°C %{F#6dd797}%{F-} $UPTIME  %{F#EE87A9}%{F-} $DATE %{F#eed891}%{F-} $TIME  "
             
             echo "$bar_content"
             
