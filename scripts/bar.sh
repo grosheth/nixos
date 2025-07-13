@@ -93,11 +93,63 @@ get_volume() {
 }
 
 get_temperature() {
-    if [ -f /sys/class/thermal/thermal_zone0/temp ]; then
-        echo $(( $(cat /sys/class/thermal/thermal_zone0/temp) / 1000 ))
-    else
-        echo "N/A"
+    # Find the most reliable CPU temperature sensor
+    local temp="N/A"
+    
+    # Try to find CPU temperature from hwmon sensors
+    for hwmon_dir in /sys/class/hwmon/hwmon*; do
+        if [ -d "$hwmon_dir" ]; then
+            # Check if this is a CPU sensor by looking at the name
+            local hwmon_name=""
+            if [ -f "$hwmon_dir/name" ]; then
+                hwmon_name=$(cat "$hwmon_dir/name")
+            fi
+            
+            # Look for CPU-related sensors
+            if [[ "$hwmon_name" =~ (coretemp|k10temp|zenpower|cpu|amd) ]]; then
+                for temp_file in "$hwmon_dir"/temp*_input; do
+                    if [ -f "$temp_file" ]; then
+                        local hwmon_temp=$(( $(cat "$temp_file") / 1000 ))
+                        # Only use reasonable temperatures (between 30-100°C)
+                        if [ $hwmon_temp -ge 30 ] && [ $hwmon_temp -le 100 ]; then
+                            temp=$hwmon_temp
+                            break 2
+                        fi
+                    fi
+                done
+            fi
+        fi
+    done
+    
+    # If no CPU sensor found, try any sensor that's not ambient/motherboard
+    if [ "$temp" = "N/A" ]; then
+        for hwmon_dir in /sys/class/hwmon/hwmon*; do
+            if [ -d "$hwmon_dir" ]; then
+                local hwmon_name=""
+                if [ -f "$hwmon_dir/name" ]; then
+                    hwmon_name=$(cat "$hwmon_dir/name")
+                fi
+                
+                # Skip ambient/motherboard sensors
+                if [[ "$hwmon_name" =~ (acpitz|thermal|ambient) ]]; then
+                    continue
+                fi
+                
+                for temp_file in "$hwmon_dir"/temp*_input; do
+                    if [ -f "$temp_file" ]; then
+                        local hwmon_temp=$(( $(cat "$temp_file") / 1000 ))
+                        # Only use reasonable temperatures (between 30-100°C)
+                        if [ $hwmon_temp -ge 30 ] && [ $hwmon_temp -le 100 ]; then
+                            temp=$hwmon_temp
+                            break 2
+                        fi
+                    fi
+                done
+            fi
+        done
     fi
+    
+    echo "$temp"
 }
 
 get_ip_address() {
