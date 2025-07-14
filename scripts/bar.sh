@@ -20,6 +20,12 @@ MEM_COLOR="#6dd797"
 DISK_COLOR="#eed891"
 USAGE_THRESHOLDS=(10 25 50 75 100)
 
+# Critical thresholds for color changes
+CPU_CRITICAL=90
+MEM_CRITICAL=85
+DISK_CRITICAL=90
+TEMP_CRITICAL=80
+
 get_monitor_geometry() {
     local index=$1
     local monitor_info
@@ -93,35 +99,61 @@ get_volume() {
 }
 
 get_temperature() {
-    # Find the most reliable CPU temperature sensor
+    # Use lm-sensors for accurate CPU temperature
     local temp="N/A"
     
-    # Try to find CPU temperature from hwmon sensors
-    for hwmon_dir in /sys/class/hwmon/hwmon*; do
-        if [ -d "$hwmon_dir" ]; then
-            # Check if this is a CPU sensor by looking at the name
-            local hwmon_name=""
-            if [ -f "$hwmon_dir/name" ]; then
-                hwmon_name=$(cat "$hwmon_dir/name")
-            fi
-            
-            # Look for CPU-related sensors
-            if [[ "$hwmon_name" =~ (coretemp|k10temp|zenpower|cpu|amd) ]]; then
-                for temp_file in "$hwmon_dir"/temp*_input; do
-                    if [ -f "$temp_file" ]; then
-                        local hwmon_temp=$(( $(cat "$temp_file") / 1000 ))
-                        # Only use reasonable temperatures (between 30-100°C)
-                        if [ $hwmon_temp -ge 30 ] && [ $hwmon_temp -le 100 ]; then
-                            temp=$hwmon_temp
-                            break 2
-                        fi
-                    fi
-                done
-            fi
+    # Method 1: Try lm-sensors (most accurate for CPU)
+    if command -v sensors >/dev/null 2>&1; then
+        # Try to get CPU temperature from sensors output
+        local cpu_temp=$(sensors | grep -i "core\|cpu\|package\|temp1" | head -1 | grep -oP '\d+\.?\d*' | head -1)
+        if [ -n "$cpu_temp" ] && [ "$cpu_temp" != "0" ] && [ "$cpu_temp" != "N/A" ] && [ "$cpu_temp" -gt 10 ]; then
+            # Convert to integer
+            temp=$(printf "%.0f" "$cpu_temp")
         fi
-    done
+    fi
     
-    # If no CPU sensor found, try any sensor that's not ambient/motherboard
+    # Method 2: Fallback to hwmon if lm-sensors fails
+    if [ "$temp" = "N/A" ]; then
+        for hwmon_dir in /sys/class/hwmon/hwmon*; do
+            if [ -d "$hwmon_dir" ]; then
+                # Check if this is a CPU sensor by looking at the name
+                local hwmon_name=""
+                if [ -f "$hwmon_dir/name" ]; then
+                    hwmon_name=$(cat "$hwmon_dir/name")
+                fi
+                
+                # Look for CPU-related sensors
+                if [[ "$hwmon_name" =~ (coretemp|k10temp|zenpower|cpu|amd) ]]; then
+                    for temp_file in "$hwmon_dir"/temp*_input; do
+                        if [ -f "$temp_file" ]; then
+                            local hwmon_temp=$(( $(cat "$temp_file") / 1000 ))
+                            # Only use reasonable temperatures (between 30-100°C for CPU)
+                            if [ $hwmon_temp -ge 30 ] && [ $hwmon_temp -le 100 ]; then
+                                temp=$hwmon_temp
+                                break 2
+                            fi
+                        fi
+                    done
+                fi
+            fi
+        done
+    fi
+    
+    # Method 3: Try any thermal zone as last resort
+    if [ "$temp" = "N/A" ]; then
+        for zone in /sys/class/thermal/thermal_zone*/temp; do
+            if [ -f "$zone" ]; then
+                local zone_temp=$(( $(cat "$zone") / 1000 ))
+                # Only use reasonable temperatures (between 30-100°C)
+                if [ $zone_temp -ge 30 ] && [ $zone_temp -le 100 ]; then
+                    temp=$zone_temp
+                    break
+                fi
+            fi
+        done
+    fi
+    
+    # Method 4: Try any hwmon sensor as absolute last resort (but be more strict)
     if [ "$temp" = "N/A" ]; then
         for hwmon_dir in /sys/class/hwmon/hwmon*; do
             if [ -d "$hwmon_dir" ]; then
@@ -130,16 +162,16 @@ get_temperature() {
                     hwmon_name=$(cat "$hwmon_dir/name")
                 fi
                 
-                # Skip ambient/motherboard sensors
-                if [[ "$hwmon_name" =~ (acpitz|thermal|ambient) ]]; then
+                # Skip known ambient/motherboard sensors
+                if [[ "$hwmon_name" =~ (acpitz|thermal|ambient|motherboard) ]]; then
                     continue
                 fi
                 
                 for temp_file in "$hwmon_dir"/temp*_input; do
                     if [ -f "$temp_file" ]; then
                         local hwmon_temp=$(( $(cat "$temp_file") / 1000 ))
-                        # Only use reasonable temperatures (between 30-100°C)
-                        if [ $hwmon_temp -ge 30 ] && [ $hwmon_temp -le 100 ]; then
+                        # Accept any reasonable temperature above 25°C
+                        if [ $hwmon_temp -ge 25 ] && [ $hwmon_temp -le 100 ]; then
                             temp=$hwmon_temp
                             break 2
                         fi
@@ -168,6 +200,46 @@ get_current_date() {
     date '+%Y-%m-%d'
 }
 
+# Color functions for critical values
+get_cpu_color() {
+    local cpu_usage=$1
+    local cpu_usage_int=$(printf "%.0f" "$cpu_usage")
+    if [ $cpu_usage_int -ge $CPU_CRITICAL ]; then
+        echo "#e55c74"  # Red for critical
+    else
+        echo "$CPU_COLOR"
+    fi
+}
+
+get_mem_color() {
+    local mem_usage=$1
+    local mem_usage_int=$(printf "%.0f" "$mem_usage")
+    if [ $mem_usage_int -ge $MEM_CRITICAL ]; then
+        echo "#e55c74"  # Red for critical
+    else
+        echo "$MEM_COLOR"
+    fi
+}
+
+get_disk_color() {
+    local disk_usage=$1
+    local disk_usage_int=$(printf "%.0f" "$disk_usage")
+    if [ $disk_usage_int -ge $DISK_CRITICAL ]; then
+        echo "#e55c74"  # Red for critical
+    else
+        echo "$DISK_COLOR"
+    fi
+}
+
+get_temp_color() {
+    local temp=$1
+    if [ "$temp" != "N/A" ] && [ $temp -ge $TEMP_CRITICAL ]; then
+        echo "#ff4444"  # Bright red for critical
+    else
+        echo "#e55c74"  # Normal red for temperature
+    fi
+}
+
 get_ssh_connections() {
     # Count active SSH connections
     local ssh_count=$(ss -tn state established | grep -c ":22 ")
@@ -185,8 +257,9 @@ generate_cpu_particles() {
     
     # Convert decimal usage to integer
     local cpu_usage_int=$(printf "%.0f" "$cpu_usage")
+    local cpu_color=$(get_cpu_color $cpu_usage)
     
-    local particles="%{F$CPU_COLOR}"
+    local particles="%{F$cpu_color}"
     for ((i=0; i<PARTICLE_COUNT; i++)); do
         local threshold=${USAGE_THRESHOLDS[$i]}
         if [ $cpu_usage_int -ge $threshold ]; then
@@ -194,7 +267,7 @@ generate_cpu_particles() {
             particles+=" ${CPU_PARTICLES[$i]}"
         else
             # Inactive particle (dimmed, stable position)
-            particles+=" %{F#666666}${CPU_PARTICLES[$i]}%{F$CPU_COLOR}"
+            particles+=" %{F#666666}${CPU_PARTICLES[$i]}%{F$cpu_color}"
         fi
     done
     particles+="%{F-}"
@@ -208,8 +281,9 @@ generate_mem_particles() {
     
     # Convert decimal usage to integer
     local mem_usage_int=$(printf "%.0f" "$mem_usage")
+    local mem_color=$(get_mem_color $mem_usage)
     
-    local particles="%{F$MEM_COLOR}"
+    local particles="%{F$mem_color}"
     for ((i=0; i<PARTICLE_COUNT; i++)); do
         local threshold=${USAGE_THRESHOLDS[$i]}
         if [ $mem_usage_int -ge $threshold ]; then
@@ -217,7 +291,7 @@ generate_mem_particles() {
             particles+=" ${MEM_PARTICLES[$i]}"
         else
             # Inactive particle (dimmed, stable position)
-            particles+=" %{F#666666}${MEM_PARTICLES[$i]}%{F$MEM_COLOR}"
+            particles+=" %{F#666666}${MEM_PARTICLES[$i]}%{F$mem_color}"
         fi
     done
     particles+="%{F-}"
@@ -231,8 +305,9 @@ generate_disk_particles() {
     
     # Convert decimal usage to integer
     local disk_usage_int=$(printf "%.0f" "$disk_usage")
+    local disk_color=$(get_disk_color $disk_usage)
     
-    local particles="%{F$DISK_COLOR}"
+    local particles="%{F$disk_color}"
     for ((i=0; i<PARTICLE_COUNT; i++)); do
         local threshold=${USAGE_THRESHOLDS[$i]}
         if [ $disk_usage_int -ge $threshold ]; then
@@ -240,7 +315,7 @@ generate_disk_particles() {
             particles+=" ${DISK_PARTICLES[$i]}"
         else
             # Inactive particle (dimmed, stable position)
-            particles+=" %{F#666666}${DISK_PARTICLES[$i]}%{F$DISK_COLOR}"
+            particles+=" %{F#666666}${DISK_PARTICLES[$i]}%{F$disk_color}"
         fi
     done
     particles+="%{F-}"
@@ -303,7 +378,10 @@ start_bar() {
             local cpu_formatted=$(printf "%5s" "$CPU%")
             local mem_formatted=$(printf "%5s" "$MEM%")
             local disk_formatted=$(printf "%1s" "$DISK%")
-            bar_content+="%{F#0db9d7}  %{F-} ${cpu_formatted} $cpu_particles  %{F#6dd797}%{F-} ${mem_formatted} $mem_particles  %{F#eed891}%{F-} ${disk_formatted} $disk_particles"
+            local cpu_color=$(get_cpu_color $CPU)
+            local mem_color=$(get_mem_color $MEM)
+            local disk_color=$(get_disk_color $DISK)
+            bar_content+="%{F$cpu_color}  %{F-} ${cpu_formatted} $cpu_particles  %{F$mem_color}%{F-} ${mem_formatted} $mem_particles  %{F$disk_color}%{F-} ${disk_formatted} $disk_particles"
             
             
             # Center - VPN status, network speed, and IP address
@@ -330,7 +408,8 @@ start_bar() {
             fi
             
             # Right side - Time, date, and other info
-            bar_content+="%{r} %{F#e55c74}%{F-} ${TEMP}°C %{F#6dd797}%{F-} $UPTIME  %{F#EE87A9}%{F-} $DATE %{F#eed891}%{F-} $TIME  "
+            local temp_color=$(get_temp_color $TEMP)
+            bar_content+="%{r} %{F$temp_color}%{F-} ${TEMP}°C %{F#6dd797}%{F-} $UPTIME  %{F#EE87A9}%{F-} $DATE %{F#eed891}%{F-} $TIME  "
             
             echo "$bar_content"
             
@@ -404,6 +483,25 @@ case "${1:-toggle}" in
         ;;
     status)
         show_status
+        ;;
+    temp)
+        echo "Testing temperature detection..."
+        echo "lm-sensors output:"
+        sensors 2>/dev/null || echo "sensors command not found"
+        echo ""
+        echo "hwmon sensors:"
+        for dir in /sys/class/hwmon/hwmon*; do
+            if [ -d "$dir" ]; then
+                echo "=== $(basename $dir) ==="
+                cat "$dir/name" 2>/dev/null || echo "No name file"
+                ls "$dir"/temp*_input 2>/dev/null || echo "No temp files"
+            fi
+        done
+        echo ""
+        echo "thermal zones:"
+        ls /sys/class/thermal/thermal_zone*/temp 2>/dev/null || echo "No thermal zones"
+        echo ""
+        echo "Current temperature: $(get_temperature)"
         ;;
     toggle)
         toggle_bar
