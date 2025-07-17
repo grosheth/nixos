@@ -88,6 +88,9 @@ in
   # Enable CUPS to print documents.
   services.printing.enable = false;
 
+  # Bios updates
+  services.fwupd.enable = true;
+
   # Enable ZSH to set it as main shell
   programs.zsh.enable = true;
   users.users.${username} = {
@@ -181,7 +184,6 @@ in
       ];
     }
   ];
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

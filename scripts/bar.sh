@@ -323,7 +323,6 @@ generate_disk_particles() {
     echo "$particles"
 }
 
-# Might do a simple process manager to follow some services and stop/start them
 start_bar() {
     if [ -f "$PID_FILE" ]; then
         echo "VPN bar is already running (PID: $(cat $PID_FILE))"
