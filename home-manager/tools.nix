@@ -51,5 +51,6 @@
     lua
     cmake
     lemonbar-xft
+    playerctl
   ];
 }

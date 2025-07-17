@@ -193,11 +193,11 @@ get_uptime() {
 }
 
 get_current_time() {
-    date '+%H:%M:%S'
+    date '+%H:%M'
 }
 
 get_current_date() {
-    date '+%Y-%m-%d'
+    date '+%m-%d'
 }
 
 # Color functions for critical values
@@ -233,10 +233,16 @@ get_disk_color() {
 
 get_temp_color() {
     local temp=$1
-    if [ "$temp" != "N/A" ] && [ $temp -ge $TEMP_CRITICAL ]; then
-        echo "#ff4444"  # Bright red for critical
+    if [ "$temp" = "N/A" ]; then
+        echo "#e55c74"  # Default/fallback color
+    elif [ $temp -ge 80 ]; then
+        echo "#ff4444"  # Red for critical (80+)
+    elif [ $temp -ge 70 ]; then
+        echo "#eed891"  # Yellow for 70-79
+    elif [ $temp -ge 50 ]; then
+        echo "#eed891"  # Yellow for 50-69
     else
-        echo "#e55c74"  # Normal red for temperature
+        echo "#0db9d7"  # Blue for 0-49
     fi
 }
 
@@ -323,6 +329,31 @@ generate_disk_particles() {
     echo "$particles"
 }
 
+get_spotify_song() {
+    if command -v playerctl >/dev/null 2>&1; then
+        local song=$(playerctl metadata --format '{{artist}} - {{title}}' 2>/dev/null)
+        if [ -n "$song" ]; then
+            echo "$song"
+        else
+            echo ""
+        fi
+    else
+        echo ""
+    fi
+}
+
+truncate_string() {
+    local str="$1"
+    local maxlen="$2"
+    local ellipsis="…"
+    local len=${#str}
+    if [ "$len" -gt "$maxlen" ]; then
+        echo "${str:0:maxlen-1}$ellipsis"
+    else
+        echo "$str"
+    fi
+}
+
 start_bar() {
     if [ -f "$PID_FILE" ]; then
         echo "VPN bar is already running (PID: $(cat $PID_FILE))"
@@ -351,6 +382,8 @@ start_bar() {
             UPTIME=$(get_uptime)
             TIME=$(get_current_time)
             DATE=$(get_current_date)
+            SONG=$(get_spotify_song)
+            SONG=$(truncate_string "$SONG" 40)  # Change 40 to your preferred max length
             
             local current_time=$(date +%s)
             local time_diff=$((current_time - last_time))
@@ -380,19 +413,15 @@ start_bar() {
             local cpu_color=$(get_cpu_color $CPU)
             local mem_color=$(get_mem_color $MEM)
             local disk_color=$(get_disk_color $DISK)
-            bar_content+="%{F$cpu_color}  %{F-} ${cpu_formatted} $cpu_particles  %{F$mem_color}%{F-} ${mem_formatted} $mem_particles  %{F$disk_color}%{F-} ${disk_formatted} $disk_particles"
-            
-            
-            # Center - VPN status, network speed, and IP address
-            bar_content+="%{c}"
+
+
+            bar_content+="  %{F#0db9d7}%{F-} $IP"
             if [ "$STATUS" = "ON" ]; then
                 bar_content+="%{F#6dd797}   ON%{F-}"
             else
                 bar_content+="%{F#e55c74}   OFF%{F-}"
             fi
              
-            # IP address in center
-            bar_content+="  %{F#0db9d7}%{F-} $IP"
             if [ "$SSH_CONN" != "0" ]; then
                 bar_content+="  %{F#ff6b6b}%{F-} ${SSH_CONN}"
             fi
@@ -406,9 +435,23 @@ start_bar() {
                 bar_content+="  %{F#EE87A9}%{F-}     0K↓      0K↑"
             fi
             
+            
+            # Center - VPN status, network speed, IP, and Spotify song
+            bar_content+="%{c}"
+            bar_content+="%{F$temp_color}%{F-} ${TEMP}°C"
+            bar_content+="%{F$cpu_color} %{F-} ${cpu_formatted} $cpu_particles " 
+            bar_content+="%{F$mem_color}%{F-} ${mem_formatted} $mem_particles  "
+            bar_content+="%{F$disk_color}%{F-} ${disk_formatted} $disk_particles"
+            
             # Right side - Time, date, and other info
             local temp_color=$(get_temp_color $TEMP)
-            bar_content+="%{r} %{F$temp_color}%{F-} ${TEMP}°C %{F#6dd797}%{F-} $UPTIME  %{F#EE87A9}%{F-} $DATE %{F#eed891}%{F-} $TIME  "
+            bar_content+="%{r}"
+            if [ -n "$SONG" ]; then
+                bar_content+="  %{F#1DB954}%{F-} $SONG "
+            fi
+            bar_content+="%{F#6dd797}%{F-} $UPTIME  "
+            bar_content+="%{F#EE87A9}%{F-} $DATE  "
+            bar_content+="%{F#eed891}%{F-} $TIME  "
             
             echo "$bar_content"
             
