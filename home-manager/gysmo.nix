@@ -37,7 +37,7 @@ let
         },
         {
           "text": "Term",
-          "keyword": "term",
+          "value": "kitty",
           "icon": "",
           "value_color": "blue",
           "text_color": "",
@@ -150,7 +150,7 @@ let
         },
         {
           "text": "Term",
-          "keyword": "term",
+          "value": "kitty",
           "icon": "",
           "value_color": "blue",
           "text_color": "",

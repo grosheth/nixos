@@ -15,7 +15,8 @@ PARTICLE_COUNT=5
 CPU_PARTICLES=("●" "●" "●" "●" "●")
 MEM_PARTICLES=("●" "●" "●" "●" "●")
 DISK_PARTICLES=("●" "●" "●" "●" "●")
-CPU_COLOR="#0db9d7"
+TEMP_PARTICLES=("●" "●" "●" "●" "●")
+CPU_COLOR="#EE87A9"
 MEM_COLOR="#6dd797"
 DISK_COLOR="#eed891"
 USAGE_THRESHOLDS=(10 25 50 75 100)
@@ -25,6 +26,7 @@ CPU_CRITICAL=90
 MEM_CRITICAL=85
 DISK_CRITICAL=90
 TEMP_CRITICAL=80
+UPTIME_CRITICAL=$((7 * 24 * 60 * 60))  # 7 days in seconds
 
 get_monitor_geometry() {
     local index=$1
@@ -192,6 +194,19 @@ get_uptime() {
     uptime | awk -F'up ' '{print $2}' | awk -F',' '{print $1}' | sed 's/ //g'
 }
 
+get_uptime_seconds() {
+    awk '{print int($1)}' /proc/uptime
+}
+
+get_uptime_color() {
+    local uptime_seconds=$1
+    if [ "$uptime_seconds" -ge "$UPTIME_CRITICAL" ]; then
+        echo "#e55c74"
+    else
+        echo "#6dd797"
+    fi
+}
+
 get_current_time() {
     date '+%H:%M'
 }
@@ -234,13 +249,11 @@ get_disk_color() {
 get_temp_color() {
     local temp=$1
     if [ "$temp" = "N/A" ]; then
-        echo "#e55c74"  # Default/fallback color
+        echo "#0db9d7"  # Default/fallback color
     elif [ $temp -ge 80 ]; then
-        echo "#ff4444"  # Red for critical (80+)
-    elif [ $temp -ge 70 ]; then
-        echo "#eed891"  # Yellow for 70-79
-    elif [ $temp -ge 50 ]; then
-        echo "#eed891"  # Yellow for 50-69
+        echo "#e55c74"  # Red for critical (80+)
+    elif [ $temp -ge 60 ]; then
+        echo "#eed891"  # Yellow for 60-79
     else
         echo "#0db9d7"  # Blue for 0-49
     fi
@@ -326,6 +339,29 @@ generate_disk_particles() {
     done
     particles+="%{F-}"
     
+    echo "$particles"
+}
+
+generate_temp_particles() {
+    local temp=$1
+    local timestamp=$2
+    local temp_color=$(get_temp_color $temp)
+    local particles="%{F$temp_color}"
+    local temp_int=0
+    if [ "$temp" != "N/A" ]; then
+        temp_int=$(printf "%d" "$temp")
+    fi
+    for ((i=0; i<PARTICLE_COUNT; i++)); do
+        local threshold=${USAGE_THRESHOLDS[$i]}
+        if [ "$temp" = "N/A" ]; then
+            particles+=" %{F#666666}${TEMP_PARTICLES[$i]}%{F$temp_color}"
+        elif [ $temp_int -ge $threshold ]; then
+            particles+=" ${TEMP_PARTICLES[$i]}"
+        else
+            particles+=" %{F#666666}${TEMP_PARTICLES[$i]}%{F$temp_color}"
+        fi
+    done
+    particles+="%{F-}"
     echo "$particles"
 }
 
@@ -417,48 +453,48 @@ start_bar() {
 
             bar_content+="  %{F#0db9d7}%{F-} $IP"
             if [ "$STATUS" = "ON" ]; then
-                bar_content+="%{F#6dd797}   ON%{F-}"
+                bar_content+="%{F#6dd797}   %{F-}ON"
             else
-                bar_content+="%{F#e55c74}   OFF%{F-}"
+                bar_content+="%{F#e55c74}   %{F-}OFF"
             fi
              
             if [ "$SSH_CONN" != "0" ]; then
                 bar_content+="  %{F#ff6b6b}%{F-} ${SSH_CONN}"
             fi
             if [ $time_diff -gt 0 ]; then
-                # Format with fixed width to prevent layout shifts
                 local rx_formatted=$(printf "%6s" "${rx_speed}K↓")
                 local tx_formatted=$(printf "%6s" "${tx_speed}K↑")
-                bar_content+="  %{F#EE87A9}%{F-} ${rx_formatted} ${tx_formatted}"
-            else
-                # Show placeholder when no network data
-                bar_content+="  %{F#EE87A9}%{F-}     0K↓      0K↑"
-            fi
-            
-            
-            # Center - VPN status, network speed, IP, and Spotify song
+                bar_content+="  %{F#eed891}%{F-} ${rx_formatted} ${tx_formatted}"
+            fi 
+
+            # Center
             bar_content+="%{c}"
-            bar_content+="%{F$temp_color}%{F-} ${TEMP}°C"
-            bar_content+="%{F$cpu_color} %{F-} ${cpu_formatted} $cpu_particles " 
-            bar_content+="%{F$mem_color}%{F-} ${mem_formatted} $mem_particles  "
-            bar_content+="%{F$disk_color}%{F-} ${disk_formatted} $disk_particles"
             
-            # Right side - Time, date, and other info
             local temp_color=$(get_temp_color $TEMP)
-            bar_content+="%{r}"
             if [ -n "$SONG" ]; then
                 bar_content+="  %{F#1DB954}%{F-} $SONG "
             fi
-            bar_content+="%{F#6dd797}%{F-} $UPTIME  "
-            bar_content+="%{F#EE87A9}%{F-} $DATE  "
+            UPTIME_SECONDS=$(get_uptime_seconds)
+            UPTIME_COLOR=$(get_uptime_color $UPTIME_SECONDS)
+            bar_content+="%{F$UPTIME_COLOR}%{F-} $UPTIME  "
+            bar_content+="%{F#e55c74}%{F-} $DATE  "
             bar_content+="%{F#eed891}%{F-} $TIME  "
+
+            # Right side
+            bar_content+="%{r}"
             
+            local temp_color=$(get_temp_color $TEMP)
+            local temp_particles=$(generate_temp_particles $TEMP $animation_frame)
+            bar_content+="%{F$temp_color}%{F-} ${TEMP}°C$temp_particles "
+            bar_content+="%{F$mem_color}%{F-} ${mem_formatted} $mem_particles "
+            bar_content+="%{F$cpu_color} %{F-} ${cpu_formatted} $cpu_particles " 
+            bar_content+="%{F$disk_color}%{F-} ${disk_formatted} $disk_particles"
             echo "$bar_content"
             
             # Increment animation frame for particle movement
             animation_frame=$((animation_frame + 1))
             sleep 1
-        done | lemonbar -p -g "$GEOM" -B "#18181b" -F "#dcdfe4" -a 20 -n bar -f "JetBrainsMonoNL Nerd Font:size=10"
+        done | lemonbar -p -g "$GEOM" -B "#18181b" -F "#ffffff" -a 20 -n bar -f "JetBrainsMonoNL Nerd Font:size=10"
     ) &
     
     echo $! > "$PID_FILE"
