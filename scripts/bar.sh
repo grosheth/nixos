@@ -365,16 +365,36 @@ generate_temp_particles() {
     echo "$particles"
 }
 
-get_spotify_song() {
+get_media_info() {
     if command -v playerctl >/dev/null 2>&1; then
-        local song=$(playerctl metadata --format '{{artist}} - {{title}}' 2>/dev/null)
+        # Try Spotify first
+        local song=""
+        song=$(playerctl -p spotify metadata --format '{{artist}} - {{title}}' 2>/dev/null)
         if [ -n "$song" ]; then
-            echo "$song"
-        else
-            echo ""
+            echo "spotify|$song"
+            return
         fi
+        # Try YouTube (look for player names containing 'youtube')
+        for player in $(playerctl -l 2>/dev/null); do
+            if [[ "$player" =~ [Yy]ou[Tt]ube ]]; then
+                song=$(playerctl -p "$player" metadata --format '{{artist}} - {{title}}' 2>/dev/null)
+                if [ -n "$song" ]; then
+                    echo "youtube|$song"
+                    return
+                fi
+            fi
+        done
+        # Fallback: try any available player
+        for player in $(playerctl -l 2>/dev/null); do
+            song=$(playerctl -p "$player" metadata --format '{{artist}} - {{title}}' 2>/dev/null)
+            if [ -n "$song" ]; then
+                echo "$player|$song"
+                return
+            fi
+        done
+        echo "|"
     else
-        echo ""
+        echo "|"
     fi
 }
 
@@ -418,8 +438,10 @@ start_bar() {
             UPTIME=$(get_uptime)
             TIME=$(get_current_time)
             DATE=$(get_current_date)
-            SONG=$(get_spotify_song)
-            SONG=$(truncate_string "$SONG" 40)  # Change 40 to your preferred max length
+            MEDIA_INFO=$(get_media_info)
+            MEDIA_PLAYER=$(echo "$MEDIA_INFO" | cut -d'|' -f1)
+            MEDIA_SONG=$(echo "$MEDIA_INFO" | cut -d'|' -f2-)
+            MEDIA_SONG=$(truncate_string "$MEDIA_SONG" 40)
             
             local current_time=$(date +%s)
             local time_diff=$((current_time - last_time))
@@ -471,8 +493,12 @@ start_bar() {
             bar_content+="%{c}"
             
             local temp_color=$(get_temp_color $TEMP)
-            if [ -n "$SONG" ]; then
-                bar_content+="  %{F#1DB954}%{F-} $SONG "
+            if [ -n "$MEDIA_SONG" ]; then
+                if [ "$MEDIA_PLAYER" = "spotify" ]; then
+                    bar_content+="  %{F#1DB954}%{F-} $MEDIA_SONG "
+                else
+                    bar_content+="  %{F#FF0000}%{F-} $MEDIA_SONG "
+                fi
             fi
             UPTIME_SECONDS=$(get_uptime_seconds)
             UPTIME_COLOR=$(get_uptime_color $UPTIME_SECONDS)
