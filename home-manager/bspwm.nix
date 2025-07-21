@@ -45,7 +45,7 @@
         xset s off -dpms
 
         pgrep -x sxhkd > /dev/null || sxhkd &
-        xss-lock -- ~/nixos/scripts/homeDash
+        ~/nixos/scripts/homeDash_idle.sh
       '';
     };
   };

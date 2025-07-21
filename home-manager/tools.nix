@@ -52,5 +52,6 @@
     cmake
     lemonbar-xft
     playerctl
+    xprintidle
   ];
 }

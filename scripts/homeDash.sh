@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
 
-# Save current DPMS and screensaver settings
-OLD_DPMS=$(xset q | grep 'DPMS is' | awk '{print $3}')
-OLD_TIMEOUT=$(xset q | grep 'timeout:' | awk '{print $2}')
-
-# Disable DPMS and screensaver
+# Disable DPMS and screensaver so the screen never goes black
 xset -dpms
 xset s off
 
-# Run homeDash
-~/work/homeDash/target/debug/homeDash
+IDLE_LIMIT=$((5 * 60 * 1000)) # 5 minutes in milliseconds
+# IDLE_LIMIT=$((5 * 60)) # 5 minutes in milliseconds
 
-# Restore previous settings (optional)
-if [ "$OLD_DPMS" = "Enabled" ]; then
-  xset +dpms
-else
-  xset -dpms
-fi
-xset s $OLD_TIMEOUT $OLD_TIMEOUT
+while true; do
+    idle=$(xprintidle)
+    if [ "$idle" -ge "$IDLE_LIMIT" ]; then
+        # Run your lock screen and wait for it to exit
+        ~/work/homeDash/target/debug/homeDash
+        # After unlock, wait for activity before starting to watch again
+        while [ "$(xprintidle)" -ge 1000 ]; do
+            sleep 1
+        done
+    fi
+    sleep 5
+done
