@@ -45,7 +45,7 @@
         xset s off -dpms
 
         pgrep -x sxhkd > /dev/null || sxhkd &
-
+        xss-lock -- ~/nixos/scripts/homeDash
       '';
     };
   };
@@ -64,9 +64,6 @@
       sleep 2
       notify-send -u low "💼 Work mode"
 
-      # Set screen to sleep after 5 minutes
-      xset s 300 300
-      xset dpms 300 300 300
     '';
     executable = true;
   };
@@ -85,9 +82,6 @@
       sleep 2
       notify-send -u low "☯️ Zen mode"
 
-      # Disable screen sleep
-      xset s off
-      xset -dpms
     '';
     executable = true;
   };
@@ -121,9 +115,6 @@
       sleep 2
       notify-send -u low "☯️ Zen mode"
 
-      # Disable screen sleep
-      xset s off
-      xset -dpms
     '';
     executable = true;
   };
@@ -133,6 +124,7 @@
     dmenu
     sxhkd
     xwallpaper
+    xss-lock
   ];
 
   services.sxhkd = {

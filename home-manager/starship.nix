@@ -71,7 +71,7 @@ $character
       };
       nix_shell = {
         disabled = false;
-        style = "bg:${colors.bg} fg:${colors.pink}";
+        style = "bg:${colors.bg} fg:${colors.white}";
         format = "[ NIX SHELL ]($style)";
       };
       time = {

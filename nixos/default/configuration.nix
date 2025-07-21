@@ -175,6 +175,8 @@ in
     wally-cli
   ];
 
+  networking.firewall.allowedTCPPorts = [ 8080 3000 ];
+
   security.sudo.extraRules = [
     {
       users = [ "salledelavage" ]; # Replace with your actual username if different
