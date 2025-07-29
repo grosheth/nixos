@@ -53,5 +53,6 @@
     lemonbar-xft
     playerctl
     xprintidle
+    ollama
   ];
 }
