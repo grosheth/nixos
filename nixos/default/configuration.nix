@@ -116,7 +116,6 @@ in
   # Change Default Shell
   users.defaultUserShell = pkgs.zsh;
 
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     brave
     sassc
@@ -131,6 +130,7 @@ in
     imagemagick
     pavucontrol
     home-manager
+    stow
 
     git
     glxinfo
