@@ -49,10 +49,17 @@
     gcc
     python3
     lua
-    cmake
     lemonbar-xft
     playerctl
     xprintidle
     ollama
+
+    rustc
+    cargo
+    rustfmt
+    cmake
+    gnumake
+    # clang
+    # pkg-config
   ];
 }
