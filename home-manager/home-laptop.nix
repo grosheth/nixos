@@ -8,7 +8,6 @@ in
     # ./kitty.nix
     ./i3.nix
     ./lf.nix
-    ./neovim.nix
     # ./picom.nix
     ./sh.nix
     ./starship.nix

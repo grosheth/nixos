@@ -131,6 +131,7 @@ in
     pavucontrol
     home-manager
     stow
+    neovim
 
     git
     glxinfo

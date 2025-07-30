@@ -19,7 +19,6 @@ in
     ./gysmo.nix
     ./kitty.nix
     ./lf.nix
-    ./neovim.nix
     # ./nitch.nix
     ./picom.nix
     ./rofi.nix

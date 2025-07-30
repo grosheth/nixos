@@ -18,7 +18,6 @@ in
     ./ghostty.nix
     ./kitty.nix
     ./lf.nix
-    ./neovim.nix
     ./picom.nix
     # ./polybar.nix
     ./rofi.nix
