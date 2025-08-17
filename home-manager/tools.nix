@@ -46,6 +46,7 @@
     nodejs
     elixir
     go
+    gopls
     gcc
     python3
     lua

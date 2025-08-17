@@ -151,6 +151,63 @@ end
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
+-- Define tab settings per filetype
+local tab_settings = {
+	go = {
+		tabstop = 2,
+		shiftwidth = 2,
+		expandtab = false,
+	},
+	html = {
+		tabstop = 2,
+		shiftwidth = 2,
+		expandtab = true,
+	},
+}
+
+-- Define default settings
+local default_settings = {
+	tabstop = 4,
+	shiftwidth = 4,
+	expandtab = true,
+}
+
+-- Helper function to apply settings
+local function apply_tab_settings(settings)
+	vim.opt_local.tabstop = settings.tabstop
+	vim.opt_local.shiftwidth = settings.shiftwidth
+	vim.opt_local.expandtab = settings.expandtab
+end
+
+-- Autocmd for all filetypes
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function()
+		local ft = vim.bo.filetype
+		local settings = tab_settings[ft] or default_settings
+		apply_tab_settings(settings)
+	end,
+})
+
+-- Run main.go
+vim.keymap.set("n", "<leader>gr", ":!go run %<CR>", { desc = "Run Go file" })
+
+-- Docker compose up
+vim.keymap.set(
+	"n",
+	"<leader>gd",
+	":!podman compose down & podman compose build && podman compose up -d <CR>",
+	{ desc = "Run Podman compose" }
+)
+
+-- Format file on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*.go",
+	callback = function()
+		vim.lsp.buf.format()
+	end,
+})
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -163,6 +220,20 @@ rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
+	-- Colorscheme
+	-- Using Lazy
+	{
+		"sainnhe/everforest",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.g.everforest_transparent_background = 2
+			vim.g.everforest_background = "hard"
+			vim.g.everforest_enable_italic = true
+			vim.cmd.colorscheme("everforest")
+		end,
+	},
+	-- Avante
 	{
 		dir = "~/work/avante.nvim", -- path to your manually cloned repo
 		name = "avante.nvim", -- optional, helps with display/updates
@@ -177,6 +248,11 @@ require("lazy").setup({
 			provider = "ollama",
 			providers = {
 				ollama = {
+					["local"] = true,
+					endpoint = "http://localhost:11434",
+					model = "deepseek-coder",
+				},
+				copilot = {
 					["local"] = true,
 					endpoint = "http://localhost:11434",
 					model = "deepseek-coder",
@@ -467,6 +543,7 @@ require("lazy").setup({
 		},
 	},
 	{
+
 		-- Main LSP Configuration
 		"neovim/nvim-lspconfig",
 		dependencies = {
@@ -674,7 +751,7 @@ require("lazy").setup({
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
 				-- clangd = {},
-				-- gopls = {},
+				gopls = {},
 				-- pyright = {},
 				-- rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -722,7 +799,9 @@ require("lazy").setup({
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
-				ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+				ensure_installed = {
+					"gopls",
+				},
 				automatic_installation = false,
 				handlers = {
 					function(server_name)
@@ -732,6 +811,17 @@ require("lazy").setup({
 						-- certain features of an LSP (for example, turning off formatting for ts_ls)
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 						require("lspconfig")[server_name].setup(server)
+						require("lspconfig").gopls.setup({
+							settings = {
+								gopls = {
+									analyses = {
+										unusedparams = true,
+										shadow = true,
+									},
+									staticcheck = true,
+								},
+							},
+						})
 					end,
 				},
 			})
@@ -941,6 +1031,7 @@ require("lazy").setup({
 				"query",
 				"vim",
 				"vimdoc",
+				"go",
 			},
 			-- Autoinstall languages that are not installed
 			auto_install = true,
@@ -953,12 +1044,6 @@ require("lazy").setup({
 			},
 			indent = { enable = true, disable = { "ruby" } },
 		},
-		-- There are additional nvim-treesitter modules that you can use to interact
-		-- with nvim-treesitter. You should go explore a few and see what interests you:
-		--
-		--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 	},
 
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
@@ -976,21 +1061,8 @@ require("lazy").setup({
 	-- require 'kickstart.plugins.autopairs',
 	-- require 'kickstart.plugins.neo-tree',
 	-- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
-
-	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-	--    This is the easiest way to modularize your config.
-	--
-	--  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-	-- { import = 'custom.plugins' },
-	--
-	-- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
-	-- Or use telescope!
-	-- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
-	-- you can continue same window with `<space>sr` which resumes last telescope search
 }, {
 	ui = {
-		-- If you are using a Nerd Font: set icons to an empty table which will use the
-		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
 		icons = vim.g.have_nerd_font and {} or {
 			cmd = "⌘",
 			config = "🛠",
