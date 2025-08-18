@@ -26,7 +26,7 @@ CPU_CRITICAL=90
 MEM_CRITICAL=85
 DISK_CRITICAL=90
 TEMP_CRITICAL=80
-UPTIME_CRITICAL=$((7 * 24 * 60 * 60))  # 7 days in seconds
+UPTIME_CRITICAL=$((7 * 24 * 60 * 60)) # 7 days in seconds
 
 get_monitor_geometry() {
     local index=$1
@@ -60,7 +60,7 @@ GEOM="${WIDTH}x${BAR_HEIGHT}+${X}+$((Y + TOP_MARGIN))"
 
 get_status() {
     # Check if interface exists and is up
-    if ip link show "$VPN_NAME" > /dev/null 2>&1 && ip addr show "$VPN_NAME" | grep -q "inet"; then
+    if ip link show "$VPN_NAME" >/dev/null 2>&1 && ip addr show "$VPN_NAME" | grep -q "inet"; then
         echo "ON"
     else
         echo "OFF"
@@ -103,7 +103,7 @@ get_volume() {
 get_temperature() {
     # Use lm-sensors for accurate CPU temperature
     local temp="N/A"
-    
+
     # Method 1: Try lm-sensors (most accurate for CPU)
     if command -v sensors >/dev/null 2>&1; then
         # Try to get CPU temperature from sensors output
@@ -113,7 +113,7 @@ get_temperature() {
             temp=$(printf "%.0f" "$cpu_temp")
         fi
     fi
-    
+
     # Method 2: Fallback to hwmon if lm-sensors fails
     if [ "$temp" = "N/A" ]; then
         for hwmon_dir in /sys/class/hwmon/hwmon*; do
@@ -123,12 +123,12 @@ get_temperature() {
                 if [ -f "$hwmon_dir/name" ]; then
                     hwmon_name=$(cat "$hwmon_dir/name")
                 fi
-                
+
                 # Look for CPU-related sensors
                 if [[ "$hwmon_name" =~ (coretemp|k10temp|zenpower|cpu|amd) ]]; then
                     for temp_file in "$hwmon_dir"/temp*_input; do
                         if [ -f "$temp_file" ]; then
-                            local hwmon_temp=$(( $(cat "$temp_file") / 1000 ))
+                            local hwmon_temp=$(($(cat "$temp_file") / 1000))
                             # Only use reasonable temperatures (between 30-100°C for CPU)
                             if [ $hwmon_temp -ge 30 ] && [ $hwmon_temp -le 100 ]; then
                                 temp=$hwmon_temp
@@ -140,12 +140,12 @@ get_temperature() {
             fi
         done
     fi
-    
+
     # Method 3: Try any thermal zone as last resort
     if [ "$temp" = "N/A" ]; then
         for zone in /sys/class/thermal/thermal_zone*/temp; do
             if [ -f "$zone" ]; then
-                local zone_temp=$(( $(cat "$zone") / 1000 ))
+                local zone_temp=$(($(cat "$zone") / 1000))
                 # Only use reasonable temperatures (between 30-100°C)
                 if [ $zone_temp -ge 30 ] && [ $zone_temp -le 100 ]; then
                     temp=$zone_temp
@@ -154,7 +154,7 @@ get_temperature() {
             fi
         done
     fi
-    
+
     # Method 4: Try any hwmon sensor as absolute last resort (but be more strict)
     if [ "$temp" = "N/A" ]; then
         for hwmon_dir in /sys/class/hwmon/hwmon*; do
@@ -163,15 +163,15 @@ get_temperature() {
                 if [ -f "$hwmon_dir/name" ]; then
                     hwmon_name=$(cat "$hwmon_dir/name")
                 fi
-                
+
                 # Skip known ambient/motherboard sensors
                 if [[ "$hwmon_name" =~ (acpitz|thermal|ambient|motherboard) ]]; then
                     continue
                 fi
-                
+
                 for temp_file in "$hwmon_dir"/temp*_input; do
                     if [ -f "$temp_file" ]; then
-                        local hwmon_temp=$(( $(cat "$temp_file") / 1000 ))
+                        local hwmon_temp=$(($(cat "$temp_file") / 1000))
                         # Accept any reasonable temperature above 25°C
                         if [ $hwmon_temp -ge 25 ] && [ $hwmon_temp -le 100 ]; then
                             temp=$hwmon_temp
@@ -182,7 +182,7 @@ get_temperature() {
             fi
         done
     fi
-    
+
     echo "$temp"
 }
 
@@ -220,7 +220,7 @@ get_cpu_color() {
     local cpu_usage=$1
     local cpu_usage_int=$(printf "%.0f" "$cpu_usage")
     if [ $cpu_usage_int -ge $CPU_CRITICAL ]; then
-        echo "#e55c74"  # Red for critical
+        echo "#e55c74" # Red for critical
     else
         echo "$CPU_COLOR"
     fi
@@ -230,7 +230,7 @@ get_mem_color() {
     local mem_usage=$1
     local mem_usage_int=$(printf "%.0f" "$mem_usage")
     if [ $mem_usage_int -ge $MEM_CRITICAL ]; then
-        echo "#e55c74"  # Red for critical
+        echo "#e55c74" # Red for critical
     else
         echo "$MEM_COLOR"
     fi
@@ -240,7 +240,7 @@ get_disk_color() {
     local disk_usage=$1
     local disk_usage_int=$(printf "%.0f" "$disk_usage")
     if [ $disk_usage_int -ge $DISK_CRITICAL ]; then
-        echo "#e55c74"  # Red for critical
+        echo "#e55c74" # Red for critical
     else
         echo "$DISK_COLOR"
     fi
@@ -249,13 +249,13 @@ get_disk_color() {
 get_temp_color() {
     local temp=$1
     if [ "$temp" = "N/A" ]; then
-        echo "#0db9d7"  # Default/fallback color
+        echo "#0db9d7" # Default/fallback color
     elif [ $temp -ge 80 ]; then
-        echo "#e55c74"  # Red for critical (80+)
+        echo "#e55c74" # Red for critical (80+)
     elif [ $temp -ge 60 ]; then
-        echo "#eed891"  # Yellow for 60-79
+        echo "#eed891" # Yellow for 60-79
     else
-        echo "#0db9d7"  # Blue for 0-49
+        echo "#0db9d7" # Blue for 0-49
     fi
 }
 
@@ -273,13 +273,13 @@ get_ssh_connections() {
 generate_cpu_particles() {
     local cpu_usage=$1
     local timestamp=$2
-    
+
     # Convert decimal usage to integer
     local cpu_usage_int=$(printf "%.0f" "$cpu_usage")
     local cpu_color=$(get_cpu_color $cpu_usage)
-    
+
     local particles="%{F$cpu_color}"
-    for ((i=0; i<PARTICLE_COUNT; i++)); do
+    for ((i = 0; i < PARTICLE_COUNT; i++)); do
         local threshold=${USAGE_THRESHOLDS[$i]}
         if [ $cpu_usage_int -ge $threshold ]; then
             # Active particle (stable position)
@@ -290,20 +290,20 @@ generate_cpu_particles() {
         fi
     done
     particles+="%{F-}"
-    
+
     echo "$particles"
 }
 
 generate_mem_particles() {
     local mem_usage=$1
     local timestamp=$2
-    
+
     # Convert decimal usage to integer
     local mem_usage_int=$(printf "%.0f" "$mem_usage")
     local mem_color=$(get_mem_color $mem_usage)
-    
+
     local particles="%{F$mem_color}"
-    for ((i=0; i<PARTICLE_COUNT; i++)); do
+    for ((i = 0; i < PARTICLE_COUNT; i++)); do
         local threshold=${USAGE_THRESHOLDS[$i]}
         if [ $mem_usage_int -ge $threshold ]; then
             # Active particle (stable position)
@@ -314,20 +314,20 @@ generate_mem_particles() {
         fi
     done
     particles+="%{F-}"
-    
+
     echo "$particles"
 }
 
 generate_disk_particles() {
     local disk_usage=$1
     local timestamp=$2
-    
+
     # Convert decimal usage to integer
     local disk_usage_int=$(printf "%.0f" "$disk_usage")
     local disk_color=$(get_disk_color $disk_usage)
-    
+
     local particles="%{F$disk_color}"
-    for ((i=0; i<PARTICLE_COUNT; i++)); do
+    for ((i = 0; i < PARTICLE_COUNT; i++)); do
         local threshold=${USAGE_THRESHOLDS[$i]}
         if [ $disk_usage_int -ge $threshold ]; then
             # Active particle (stable position)
@@ -338,7 +338,7 @@ generate_disk_particles() {
         fi
     done
     particles+="%{F-}"
-    
+
     echo "$particles"
 }
 
@@ -351,7 +351,7 @@ generate_temp_particles() {
     if [ "$temp" != "N/A" ]; then
         temp_int=$(printf "%d" "$temp")
     fi
-    for ((i=0; i<PARTICLE_COUNT; i++)); do
+    for ((i = 0; i < PARTICLE_COUNT; i++)); do
         local threshold=${USAGE_THRESHOLDS[$i]}
         if [ "$temp" = "N/A" ]; then
             particles+=" %{F#666666}${TEMP_PARTICLES[$i]}%{F$temp_color}"
@@ -417,7 +417,7 @@ start_bar() {
     fi
 
     echo "Starting VPN bar..."
-    
+
     # Start the bar in background and save PID
     (
         # Initialize network speed tracking
@@ -425,7 +425,7 @@ start_bar() {
         local last_tx=0
         local last_time=$(date +%s)
         local animation_frame=0
-        
+
         while :; do
             STATUS=$(get_status)
             CPU=$(get_cpu_usage)
@@ -442,28 +442,28 @@ start_bar() {
             MEDIA_PLAYER=$(echo "$MEDIA_INFO" | cut -d'|' -f1)
             MEDIA_SONG=$(echo "$MEDIA_INFO" | cut -d'|' -f2-)
             MEDIA_SONG=$(truncate_string "$MEDIA_SONG" 40)
-            
+
             local current_time=$(date +%s)
             local time_diff=$((current_time - last_time))
             if [ $time_diff -gt 0 ]; then
                 local current_network=$(get_network_speed)
                 local current_rx=$(echo $current_network | awk '{print $1}')
                 local current_tx=$(echo $current_network | awk '{print $2}')
-                local rx_speed=$(( (current_rx - last_rx) / time_diff / 1024 ))
-                local tx_speed=$(( (current_tx - last_tx) / time_diff / 1024 ))
+                local rx_speed=$(((current_rx - last_rx) / time_diff / 1024))
+                local tx_speed=$(((current_tx - last_tx) / time_diff / 1024))
                 last_rx=$current_rx
                 last_tx=$current_tx
                 last_time=$current_time
             fi
-            
+
             # Generate particles based on CPU, memory, and disk usage
             local cpu_particles=$(generate_cpu_particles $CPU $animation_frame)
             local mem_particles=$(generate_mem_particles $MEM $animation_frame)
             local disk_particles=$(generate_disk_particles $DISK $animation_frame)
-            
+
             # Build the bar content
             local bar_content=""
-            
+
             # Left side - System info with particles (fixed width percentages)
             local cpu_formatted=$(printf "%5s" "$CPU%")
             local mem_formatted=$(printf "%5s" "$MEM%")
@@ -472,14 +472,13 @@ start_bar() {
             local mem_color=$(get_mem_color $MEM)
             local disk_color=$(get_disk_color $DISK)
 
-
             bar_content+="  %{F#0db9d7}%{F-} $IP"
             if [ "$STATUS" = "ON" ]; then
                 bar_content+="%{F#6dd797}   %{F-}ON"
             else
                 bar_content+="%{F#e55c74}   %{F-}OFF"
             fi
-             
+
             if [ "$SSH_CONN" != "0" ]; then
                 bar_content+="  %{F#ff6b6b}%{F-} ${SSH_CONN}"
             fi
@@ -487,11 +486,11 @@ start_bar() {
                 local rx_formatted=$(printf "%6s" "${rx_speed}K↓")
                 local tx_formatted=$(printf "%6s" "${tx_speed}K↑")
                 bar_content+="  %{F#eed891}%{F-} ${rx_formatted} ${tx_formatted}"
-            fi 
+            fi
 
             # Center
             bar_content+="%{c}"
-            
+
             local temp_color=$(get_temp_color $TEMP)
             if [ -n "$MEDIA_SONG" ]; then
                 if [ "$MEDIA_PLAYER" = "spotify" ]; then
@@ -508,22 +507,22 @@ start_bar() {
 
             # Right side
             bar_content+="%{r}"
-            
+
             local temp_color=$(get_temp_color $TEMP)
             local temp_particles=$(generate_temp_particles $TEMP $animation_frame)
             bar_content+="%{F$temp_color}%{F-} ${TEMP}°C$temp_particles "
             bar_content+="%{F$mem_color}%{F-} ${mem_formatted} $mem_particles "
-            bar_content+="%{F$cpu_color} %{F-} ${cpu_formatted} $cpu_particles " 
+            bar_content+="%{F$cpu_color} %{F-} ${cpu_formatted} $cpu_particles "
             bar_content+="%{F$disk_color}%{F-} ${disk_formatted} $disk_particles"
             echo "$bar_content"
-            
+
             # Increment animation frame for particle movement
             animation_frame=$((animation_frame + 1))
             sleep 1
         done | lemonbar -p -g "$GEOM" -B "#18181b" -F "#ffffff" -a 20 -n bar -f "JetBrainsMonoNL Nerd Font:size=10"
     ) &
-    
-    echo $! > "$PID_FILE"
+
+    echo $! >"$PID_FILE"
     echo "VPN bar started (PID: $(cat $PID_FILE))"
 }
 
@@ -532,7 +531,7 @@ stop_bar() {
         echo "VPN bar is not running"
         exit 1
     fi
-    
+
     PID=$(cat "$PID_FILE")
     if kill -0 "$PID" 2>/dev/null; then
         echo "Stopping VPN bar (PID: $PID)..."
@@ -574,43 +573,43 @@ show_status() {
 }
 
 case "${1:-toggle}" in
-    start)
-        start_bar
-        ;;
-    stop)
-        stop_bar
-        ;;
-    restart)
-        stop_bar
-        sleep 1
-        start_bar
-        ;;
-    status)
-        show_status
-        ;;
-    temp)
-        echo "Testing temperature detection..."
-        echo "lm-sensors output:"
-        sensors 2>/dev/null || echo "sensors command not found"
-        echo ""
-        echo "hwmon sensors:"
-        for dir in /sys/class/hwmon/hwmon*; do
-            if [ -d "$dir" ]; then
-                echo "=== $(basename $dir) ==="
-                cat "$dir/name" 2>/dev/null || echo "No name file"
-                ls "$dir"/temp*_input 2>/dev/null || echo "No temp files"
-            fi
-        done
-        echo ""
-        echo "thermal zones:"
-        ls /sys/class/thermal/thermal_zone*/temp 2>/dev/null || echo "No thermal zones"
-        echo ""
-        echo "Current temperature: $(get_temperature)"
-        ;;
-    toggle)
-        toggle_bar
-        ;;
-    *)
-        toggle_bar
-        ;;
-esac 
+start)
+    start_bar
+    ;;
+stop)
+    stop_bar
+    ;;
+restart)
+    stop_bar
+    sleep 1
+    start_bar
+    ;;
+status)
+    show_status
+    ;;
+temp)
+    echo "Testing temperature detection..."
+    echo "lm-sensors output:"
+    sensors 2>/dev/null || echo "sensors command not found"
+    echo ""
+    echo "hwmon sensors:"
+    for dir in /sys/class/hwmon/hwmon*; do
+        if [ -d "$dir" ]; then
+            echo "=== $(basename $dir) ==="
+            cat "$dir/name" 2>/dev/null || echo "No name file"
+            ls "$dir"/temp*_input 2>/dev/null || echo "No temp files"
+        fi
+    done
+    echo ""
+    echo "thermal zones:"
+    ls /sys/class/thermal/thermal_zone*/temp 2>/dev/null || echo "No thermal zones"
+    echo ""
+    echo "Current temperature: $(get_temperature)"
+    ;;
+toggle)
+    toggle_bar
+    ;;
+*)
+    toggle_bar
+    ;;
+esac

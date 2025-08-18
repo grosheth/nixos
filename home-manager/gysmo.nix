@@ -37,7 +37,7 @@ let
         },
         {
           "text": "Term",
-          "value": "kitty",
+          "keyword": "term",
           "icon": "",
           "value_color": "blue",
           "text_color": "",
@@ -90,7 +90,7 @@ let
         "enabled": true,
         "horizontal_padding": 2,
         "vertical_padding": 0,
-        "position": "left"
+        "position": "right"
       },
       "header": {
         "enabled": false,
@@ -150,7 +150,7 @@ let
         },
         {
           "text": "Term",
-          "value": "kitty",
+          "keyword": "term",
           "icon": "",
           "value_color": "blue",
           "text_color": "",

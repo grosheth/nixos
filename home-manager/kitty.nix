@@ -1,6 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   colors = import ./colorscheme.nix { inherit lib; };
+in
 {
 
   home.packages = with pkgs; [
@@ -40,7 +41,7 @@ let
     extraConfig = ''
       map f1 launch --allow-remote-control kitty +kitten broadcast
 
-      #neovim
+      #neovim-colors
       # background            #14161b
       # foreground            #eef1f8
       # selection_foreground  #000000
@@ -80,43 +81,43 @@ let
       # color15  #e6e6e8
 
       #kaolin
-      background            #14161b
-      foreground            #ffffff
-      selection_foreground  #000000
-      selection_background  #FFFACD
+      background            ${colors.background.hex}
+      foreground            ${colors.foreground.hex}
+      selection_foreground  ${colors.selection_foreground.hex}
+      selection_background  ${colors.selection_background.hex}
       url_color             #4ca6e8
 
       # black
-      color0   #212026
-      color8   #4b5254
+      color0   ${colors.black.hex}
+      color8   ${colors.black.hex}
 
       # red
-      color1   #e55c74
-      color9   #e55c74
+      color1   ${colors.red.hex}
+      color9   ${colors.red.hex}
 
       # green
-      color2   #6dd797
-      color10  #6dd797
+      color2   ${colors.green.hex}
+      color10  ${colors.green.hex}
 
       # yellow
-      color3   #eed891
-      color11  #eed891
+      color3   ${colors.yellow.hex}
+      color11  ${colors.yellow.hex}
 
       # blue
-      color4   #4fa6ed
-      color12  #4fa6ed
+      color4   ${colors.blue.hex}
+      color12  ${colors.blue.hex}
 
       # magenta
-      color5   #DF215A
-      color13  #DF215A
+      color5   ${colors.magenta.hex}
+      color13  ${colors.magenta.hex}
 
       # cyan
-      color6   #56b6c2
-      color14  #56b6c2
+      color6   ${colors.cyan.hex}
+      color14  ${colors.cyan.hex}
 
       # white
-      color7   #dcdfe4
-      color15  #dcdfe4
+      color7   ${colors.white.hex}
+      color15  ${colors.white.hex}
     '';
   };
 }
