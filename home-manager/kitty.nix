@@ -1,4 +1,6 @@
 { pkgs, ... }:
+let
+  colors = import ./colorscheme.nix { inherit lib; };
 {
 
   home.packages = with pkgs; [
@@ -27,6 +29,9 @@
       "ctrl+right" = "neighboring_window right";
       "ctrl+up" = "neighboring_window up";
       "ctrl+down" = "neighboring_window down";
+      "ctrl+1" = "goto_tab 1";
+      "ctrl+2" = "goto_tab 2";
+      "ctrl+3" = "goto_tab 3";
 
     };
     settings = {

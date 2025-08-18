@@ -163,6 +163,11 @@ local tab_settings = {
 		shiftwidth = 2,
 		expandtab = true,
 	},
+	nix = {
+		tabstop = 2,
+		shiftwidth = 2,
+		expandtab = true,
+	},
 }
 
 -- Define default settings
