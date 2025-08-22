@@ -90,7 +90,7 @@ let
         "enabled": true,
         "horizontal_padding": 2,
         "vertical_padding": 0,
-        "position": "right"
+        "position": "left"
       },
       "header": {
         "enabled": false,
