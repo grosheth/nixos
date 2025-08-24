@@ -17,17 +17,15 @@
       };
       monitors = {
         DP-0 = [
-          "VI"
-          "VII"
-        ];
-        DP-2 = [
           "I"
           "II"
           "III"
           "IV"
           "V"
-         ];
+          "VI"
+        ];
         HDMI-0 = [
+          "VII"
           "VIII"
           "IX"
         ];
@@ -55,12 +53,10 @@
       #!/usr/bin/env bash
 
       ULTRAWIDE_MONITOR="DP-0"
-      SECONDARY_MONITOR_1="DP-2"
       SECONDARY_MONITOR_2="HDMI-0"
 
-      xrandr --output "$SECONDARY_MONITOR_1" --auto \
-             --output "$ULTRAWIDE_MONITOR" --off \
-             --output "$SECONDARY_MONITOR_2" --off
+      xrandr --output "$SECONDARY_MONITOR_2" --auto \
+             --output "$ULTRAWIDE_MONITOR" --off
       sleep 2
       notify-send -u low "💼 Work mode"
 
@@ -73,7 +69,6 @@
       #!/usr/bin/env bash
 
       ULTRAWIDE_MONITOR="DP-0"
-      SECONDARY_MONITOR_1="DP-2"
       SECONDARY_MONITOR_2="HDMI-0"
 
       xrandr --output "$ULTRAWIDE_MONITOR" --auto \
@@ -97,24 +92,6 @@
       if [[ $? -eq 0 ]]; then
         shutdown now
       fi
-    '';
-    executable = true;
-  };
-
-  home.file.".config/bspwm/vertical_mode.sh" = {
-    text = ''
-      #!/usr/bin/env bash
-
-      ULTRAWIDE_MONITOR="DP-0"
-      SECONDARY_MONITOR_1="DP-2"
-      SECONDARY_MONITOR_2="HDMI-0"
-
-      xrandr --output "$ULTRAWIDE_MONITOR" --off \
-             --output "$SECONDARY_MONITOR_1" --off \
-             --output "$SECONDARY_MONITOR_2" --auto
-      sleep 2
-      notify-send -u low "☯️ Zen mode"
-
     '';
     executable = true;
   };
@@ -148,7 +125,6 @@
       "alt + z" = "~/.screenlayout/screen_setup.sh";
       "alt + shift + z" = "~/.config/bspwm/zen_mode.sh";
       "alt + shift + w" = "~/.config/bspwm/work_mode.sh";
-      "alt + shift + v" = "~/.config/bspwm/vertical_mode.sh";
       # "alt + shift + " = "~/.config/bspwm/sleep_mode.sh";
 
       # Rofi
