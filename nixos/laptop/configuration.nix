@@ -7,8 +7,12 @@
   imports = [
     ./hardware-configuration.nix
     ./audio.nix
-    ./locale.nix
+    # ./locale.nix
   ];
+
+  # Time and Keyboard
+  time.timeZone = "America/Montreal";
+  i18n.defaultLocale = "en_CA.UTF-8";
 
   services.xserver = {
     enable = true;

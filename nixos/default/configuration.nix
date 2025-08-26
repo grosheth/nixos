@@ -16,6 +16,15 @@ in
     ./modules/nvidia-drivers.nix
   ];
 
+  # Time and Keyboard
+  time.timeZone = "America/Montreal";
+  services.xserver = {
+    xkb.layout = "us,ca";
+    xkbVariant = "";
+    xkbOptions = "grp:win_space_toggle";
+  };
+  # i18n.defaultLocale = "en_CA.UTF-8";
+
   programs.hyprland = if hyprland then {
     enable = true;
   } else {};
