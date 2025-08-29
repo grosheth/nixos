@@ -24,7 +24,7 @@
           "V"
           "VI"
         ];
-        HDMI-0 = [
+        DP-2 = [
           "VII"
           "VIII"
           "IX"
