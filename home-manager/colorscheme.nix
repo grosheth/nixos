@@ -24,7 +24,7 @@ in
   white      = color "white"      "#D3C6AA";
 }
 
-# kaolin
+# kaolic678ddn
 # {
 #   fg = color "foreground" "#ffffff";
 #   bg = color "background" "#14161b";
