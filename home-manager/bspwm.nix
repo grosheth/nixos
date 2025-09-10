@@ -16,9 +16,11 @@
         focused_border_color = "#ffffff";
       };
       monitors = {
-        DP-0 = [
+        HDMI-0 = [
           "I"
           "II"
+        ];
+        DP-0 = [
           "III"
           "IV"
           "V"
