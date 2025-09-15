@@ -7,7 +7,6 @@
   imports = [
     ./hardware-configuration.nix
     ./audio.nix
-    # ./locale.nix
   ];
 
   # Time and Keyboard

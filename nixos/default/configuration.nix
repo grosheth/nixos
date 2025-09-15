@@ -9,7 +9,7 @@ in
   imports = lib.filter (x: x != null) [
     ./hardware-configuration.nix
     ./audio.nix
-    ./locale.nix
+    # ./locale.nix
     (if x11 then ./modules/x11.nix else null)
     (if hyprland then ./modules/hyprland.nix else null)
     (if sway then ./modules/sway.nix else null)
@@ -18,12 +18,12 @@ in
 
   # Time and Keyboard
   time.timeZone = "America/Montreal";
-  services.xserver = {
-    xkb.layout = "us,ca";
-    xkbVariant = "";
-    xkbOptions = "grp:win_space_toggle";
-  };
-  # i18n.defaultLocale = "en_CA.UTF-8";
+  # services.xserver = {
+  #   xkb.layout = "us,ca";
+  #   xkbVariant = "";
+  #   xkbOptions = "grp:win_space_toggle";
+  # };
+  i18n.defaultLocale = "en_CA.UTF-8";
 
   programs.hyprland = if hyprland then {
     enable = true;
@@ -127,6 +127,7 @@ in
 
   environment.systemPackages = with pkgs; [
     brave
+    vivaldi
     sassc
     # nerdfonts
     brightnessctl
