@@ -13,7 +13,7 @@ in
     themeFile = "OneHalfDark";
     font = {
       name = "JetBrainsMono Nerd Font Mono";
-      size = 12;
+      size = 14;
     };
 
     keybindings = {
@@ -33,6 +33,8 @@ in
       "ctrl+1" = "goto_tab 1";
       "ctrl+2" = "goto_tab 2";
       "ctrl+3" = "goto_tab 3";
+      "ctrl+4" = "goto_tab 4";
+      "ctrl+5" = "goto_tab 5";
 
     };
     settings = {

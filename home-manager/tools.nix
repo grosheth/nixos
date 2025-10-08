@@ -6,6 +6,9 @@
     (writeShellScriptBin "bar" (builtins.readFile ../scripts/bar.sh))
     (writeShellScriptBin "vpn-toggler" (builtins.readFile ../scripts/vpn-toggler.sh))
     vscode
+    lynis
+    claude-code
+    cloudflared
     caligula
     htop
     bottom
