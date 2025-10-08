@@ -102,7 +102,7 @@
     dmenu
     sxhkd
     xwallpaper
-    xss-lock
+    # xss-lock
   ];
 
   services.sxhkd = {

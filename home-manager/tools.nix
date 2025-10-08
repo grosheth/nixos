@@ -25,7 +25,7 @@
     unzip
     xclip
     xdotool
-    maim
+    scrot
     gimp
     spotify
     discord
