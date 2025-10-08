@@ -64,7 +64,7 @@ animate_loading() {
     local delay=0.1
     local spinstr='|/-\'
     local temp
-    
+
     printf "${BOLD}${CYAN}%s " "$text"
     for i in {1..10}; do
         temp=${spinstr#?}
@@ -78,25 +78,25 @@ animate_loading() {
 print_animated_banner() {
     clear
     echo
-    
-    # ASCII art lines that appear one by one
+
+    # ASCII art lines with better color scheme
     local lines=(
-        "${BOLD}${LIGHT_BLUE}    ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██╗   ██╗██████╗ ██████╗  █████╗ ████████╗███████╗██████╗ ${RESET}"
-        "${BOLD}${LIGHT_BLUE}    ████╗  ██║██║╚██╗██╔╝██╔═══██╗██╔════╝    ██║   ██║██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██╔══██╗${RESET}"
-        "${CYAN}    ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║███████╗    ██║   ██║██████╔╝██║  ██║███████║   ██║   █████╗  ██████╔╝${RESET}"
-        "${CYAN}    ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║    ██║   ██║██╔═══╝ ██║  ██║██╔══██║   ██║   ██╔══╝  ██╔══██╗${RESET}"
-        "${BLUE}    ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║    ╚██████╔╝██║     ██████╔╝██║  ██║   ██║   ███████╗██║  ██║${RESET}"
-        "${DIM}${GRAY}    ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝     ╚═════╝ ╚═╝     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝${RESET}"
+        "${BOLD}${WHITE}    ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██╗   ██╗██████╗ ██████╗  █████╗ ████████╗███████╗██████╗ ${RESET}"
+        "${BOLD}${LIGHT_GREEN}    ████╗  ██║██║╚██╗██╔╝██╔═══██╗██╔════╝    ██║   ██║██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██╔══██╗${RESET}"
+        "${LIGHT_GREEN}    ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║███████╗    ██║   ██║██████╔╝██║  ██║███████║   ██║   █████╗  ██████╔╝${RESET}"
+        "${GREEN}    ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║    ██║   ██║██╔═══╝ ██║  ██║██╔══██║   ██║   ██╔══╝  ██╔══██╗${RESET}"
+        "${BOLD}${GREEN}    ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║    ╚██████╔╝██║     ██████╔╝██║  ██║   ██║   ███████╗██║  ██║${RESET}"
+        "${DIM}${CYAN}    ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝     ╚═════╝ ╚═╝     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝${RESET}"
     )
-    
+
     # Display lines with fade-in effect
     for line in "${lines[@]}"; do
         echo -e "$line"
         sleep 0.15
     done
-    
+
     echo
-    
+
     # Animated separator - smooth drawing
     echo -e "${DIM}${CYAN}"
     printf "    "
@@ -107,12 +107,12 @@ print_animated_banner() {
         fi
     done
     echo -e "${RESET}"
-    
+
     # Animated subtitle appearance
     sleep 0.3
     echo -e "${BOLD}${WHITE}                            ${ROCKET} Automated System Management ${ROCKET}${RESET}"
     sleep 0.3
-    
+
     # Animated bottom separator
     echo -e "${DIM}${CYAN}"
     printf "    "
@@ -123,18 +123,8 @@ print_animated_banner() {
         fi
     done
     echo -e "${RESET}"
-    
-    echo
-    
-    # Feature highlights with smooth cascade
-    sleep 0.4
-    printf "      ${LIGHT_GREEN}${SPARKLES} Smart Updates${RESET}"
-    sleep 0.3
-    printf "      ${LIGHT_BLUE}${SHIELD} Safe Rollbacks${RESET}"
-    sleep 0.3
-    printf "      ${LIGHT_YELLOW}${DEBUG} AI Debugging${RESET}"
     echo -e "\n"
-    
+
     # Final flourish - quick pulse
     for i in {1..2}; do
         tput cup $(($(tput lines) - 1)) 0
@@ -144,7 +134,7 @@ print_animated_banner() {
         echo -e "${BOLD}${LIGHT_GREEN}                              Ready to update!${RESET}"
         sleep 0.3
     done
-    
+
     # Clear the pulse line
     tput cup $(($(tput lines) - 1)) 0
     echo -e "                                                    "
@@ -152,19 +142,12 @@ print_animated_banner() {
 
 print_banner() {
     echo
-    echo -e "${BOLD}${LIGHT_BLUE}"
-    echo "    ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██╗   ██╗██████╗ ██████╗  █████╗ ████████╗███████╗██████╗ "
-    echo "    ████╗  ██║██║╚██╗██╔╝██╔═══██╗██╔════╝    ██║   ██║██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██╔══██╗"
-    echo -e "    ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║███████╗    ██║   ██║██████╔╝██║  ██║███████║   ██║   █████╗  ██████╔╝${RESET}"
-    echo -e "${CYAN}    ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║    ██║   ██║██╔═══╝ ██║  ██║██╔══██║   ██║   ██╔══╝  ██╔══██╗${RESET}"
-    echo -e "${BOLD}${BLUE}    ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║    ╚██████╔╝██║     ██████╔╝██║  ██║   ██║   ███████╗██║  ██║${RESET}"
-    echo -e "${DIM}${GRAY}    ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝     ╚═════╝ ╚═╝     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝${RESET}"
-    echo
-    echo -e "${DIM}${CYAN}    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄${RESET}"
-    echo -e "                            ${ROCKET}${BOLD}${WHITE} Automated System Management ${RESET}${ROCKET}"
-    echo -e "${DIM}${CYAN}    ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀${RESET}"
-    echo
-    echo -e "      ${LIGHT_GREEN}${SPARKLES} Smart Updates${RESET}      ${LIGHT_BLUE}${SHIELD} Safe Rollbacks${RESET}      ${LIGHT_YELLOW}${DEBUG} AI Debugging${RESET}"
+    echo -e "${BOLD}${WHITE}    ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██╗   ██╗██████╗ ██████╗  █████╗ ████████╗███████╗██████╗ ${RESET}"
+    echo -e "${BOLD}${LIGHT_GREEN}    ████╗  ██║██║╚██╗██╔╝██╔═══██╗██╔════╝    ██║   ██║██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██╔══██╗${RESET}"
+    echo -e "${LIGHT_GREEN}    ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║███████╗    ██║   ██║██████╔╝██║  ██║███████║   ██║   █████╗  ██████╔╝${RESET}"
+    echo -e "${GREEN}    ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║    ██║   ██║██╔═══╝ ██║  ██║██╔══██║   ██║   ██╔══╝  ██╔══██╗${RESET}"
+    echo -e "${BOLD}${GREEN}    ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║    ╚██████╔╝██║     ██████╔╝██║  ██║   ██║   ███████╗██║  ██║${RESET}"
+    echo -e "${DIM}${CYAN}    ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝     ╚═════╝ ╚═╝     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝${RESET}"
     echo
 }
 
