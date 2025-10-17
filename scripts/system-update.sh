@@ -229,27 +229,21 @@ print_animated_progress() {
     local current="$1"
     local total="$2"
     local description="$3"
-    local width=60
+    local width=40
     local percentage=$((current * 100 / total))
     local filled=$((current * width / total))
 
-    # Create gradient progress bar
+    # Create simple progress bar
     local bar=""
     for ((i = 0; i < filled; i++)); do
-        if ((i < filled / 3)); then
-            bar="${bar}${LIGHT_RED}█${RESET}"
-        elif ((i < 2 * filled / 3)); then
-            bar="${bar}${LIGHT_YELLOW}█${RESET}"
-        else
-            bar="${bar}${LIGHT_GREEN}█${RESET}"
-        fi
+        bar="${bar}█"
     done
 
     for ((i = filled; i < width; i++)); do
-        bar="${bar}${DIM}${GRAY}░${RESET}"
+        bar="${bar}░"
     done
 
-    printf "\r${BOLD}${CYAN}${LIGHTNING} Progress: ${RESET}[%s] ${BOLD}${WHITE}%3d%%${RESET} ${DIM}${GRAY}(%d/%d)${RESET} ${ITALIC}${description}${RESET}" "$bar" "$percentage" "$current" "$total"
+    printf "\r${LIGHTNING} Progress: [%s] %3d%% (%d/%d) %s" "$bar" "$percentage" "$current" "$total" "$description"
 }
 
 update_progress() {
@@ -474,29 +468,22 @@ run_with_retry() {
             rm "$temp_log"
 
             if [[ $attempt -eq $max_attempts ]]; then
-                log "ERROR" "Maximum retry attempts reached. Initiating emergency rollback..."
-                rollback_system
-                exit 1
+                log "ERROR" "Maximum retry attempts reached for: $description"
+                log "ERROR" "Last error output: $error_output"
+                log "ERROR" "Continuing with remaining steps..."
+                update_progress
+                return 1
             fi
 
-            debug_with_claude "$error_output" "$cmd" "$attempt"
+            log "WARNING" "Command failed, retrying in 2 seconds..."
+            sleep 2
             ((attempt++))
         fi
     done
 }
 
 calculate_total_steps() {
-    TOTAL_STEPS=1 # Always update channels
-
-    # Check if NixOS rebuild is needed
-    if check_nixos_needs_update; then
-        ((TOTAL_STEPS++))
-    fi
-
-    # Check if Home Manager rebuild is needed
-    if check_home_manager_needs_update; then
-        ((TOTAL_STEPS++))
-    fi
+    TOTAL_STEPS=2 # Always rebuild NixOS and rebuild Home Manager
 
     # Add flake updates if present
     if [[ -f "/etc/nixos/flake.nix" ]]; then
@@ -511,8 +498,6 @@ calculate_total_steps() {
 print_update_plan() {
     local plan_items=()
 
-    plan_items+=("${PACKAGE} Update NixOS channels")
-
     if [[ -f "/etc/nixos/flake.nix" ]]; then
         plan_items+=("${LIGHTNING} Update system flake inputs")
     fi
@@ -521,13 +506,8 @@ print_update_plan() {
         plan_items+=("${LIGHTNING} Update home flake inputs")
     fi
 
-    if check_nixos_needs_update; then
-        plan_items+=("${WRENCH} Rebuild NixOS system")
-    fi
-
-    if check_home_manager_needs_update; then
-        plan_items+=("${GEAR} Rebuild Home Manager configuration")
-    fi
+    plan_items+=("${WRENCH} Rebuild NixOS system")
+    plan_items+=("${GEAR} Rebuild Home Manager configuration")
 
     echo -e "\n${BOLD}${LIGHT_BLUE}╭─ Update Execution Plan ─────────────────────────────────────────────╮${RESET}"
     echo -e "${BOLD}${LIGHT_BLUE}│${RESET}                                                                      ${BOLD}${LIGHT_BLUE}│${RESET}"
@@ -580,16 +560,9 @@ main() {
 
     log "INFO" "Initializing NixOS system update process..."
 
-    # Check if there are any configuration changes
-    print_info_box "Configuration Analysis" "Scanning for changes in Nix configurations..." "${MAGNIFY}" "${LIGHT_BLUE}"
-    if ! check_for_changes; then
-        print_info_box "No Updates Required" "System is already up to date!" "${CHECKMARK}" "${LIGHT_GREEN}"
-        echo -e "${DIM}${ITALIC}No configuration changes detected. Exiting gracefully.${RESET}"
-        exit 0
-    fi
-
-    print_info_box "Changes Detected" "Configuration modifications found - proceeding..." "${LIGHTNING}" "${LIGHT_GREEN}"
-    log "SUCCESS" "Configuration changes detected - update required"
+    # Always proceed with updates (forced rebuild mode)
+    print_info_box "Forced Update Mode" "Proceeding with full system rebuild..." "${LIGHTNING}" "${LIGHT_GREEN}"
+    log "SUCCESS" "Forced update mode - proceeding with full rebuild"
 
     calculate_total_steps
     print_update_plan
@@ -603,28 +576,24 @@ main() {
     save_rollback_point
     print_subsection_divider
 
-    # Update channels
-    print_step_header $((CURRENT_STEP + 1)) "$TOTAL_STEPS" "Updating NixOS Channels" "${PACKAGE}"
-    run_with_retry "sudo nix-channel --update" "Updating NixOS channels" "true"
-
     # Update flakes if using flakes
     if [[ -f "/etc/nixos/flake.nix" ]]; then
         print_step_header $((CURRENT_STEP + 1)) "$TOTAL_STEPS" "Updating System Flake Inputs" "${LIGHTNING}"
-        run_with_retry "sudo nix flake update /etc/nixos" "Updating system flake inputs" "true"
+        run_with_retry "(cd /etc/nixos && sudo nix flake update)" "Updating system flake inputs" "true"
     fi
 
     if [[ -f "/home/salledelavage/nixos/flake.nix" ]]; then
         print_step_header $((CURRENT_STEP + 1)) "$TOTAL_STEPS" "Updating Home Flake Inputs" "${LIGHTNING}"
-        run_with_retry "cd /home/salledelavage/nixos && nix flake update" "Updating home flake inputs" "true"
+        run_with_retry "(cd /home/salledelavage/nixos && nix flake update)" "Updating home flake inputs" "true"
     fi
 
-    # Rebuild NixOS system (only if needed)
+    # Rebuild NixOS system (always)
     print_step_header $((CURRENT_STEP + 1)) "$TOTAL_STEPS" "Rebuilding NixOS System" "${WRENCH}"
-    run_with_retry "sudo nixos-rebuild switch" "Rebuilding NixOS system" "check_nixos_needs_update"
+    run_with_retry "sudo nixos-rebuild switch" "Rebuilding NixOS system" "true"
 
-    # Update home-manager (only if needed)
+    # Update home-manager (always)
     print_step_header $((CURRENT_STEP + 1)) "$TOTAL_STEPS" "Rebuilding Home Manager" "${GEAR}"
-    run_with_retry "home-manager switch" "Rebuilding home-manager configuration" "check_home_manager_needs_update"
+    run_with_retry "home-manager switch" "Rebuilding home-manager configuration" "true"
 
     # Clean up old logs (keep last 10)
     find "$STATE_DIR" -name "update-*.log" -type f | sort | head -n -10 | xargs -r rm 2>/dev/null || true

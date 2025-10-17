@@ -1,6 +1,5 @@
 { config, pkgs, username, lib, ... }:
 let
-  # Change these vars to enable or disable further configurations
   hyprland = false;
   sway = false;
   x11 = true;
