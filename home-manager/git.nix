@@ -2,19 +2,23 @@ let
   email = "salledelavager@gmail.com";
   name = "Salledelavage";
 in {
-  programs.git = {
-    enable = true;
+  programs = {
     delta = {
       enable = false;
     };
-    extraConfig = {
+  };
+  programs.git = {
+    enable = true;
+    settings = {
       color.ui = true;
       core.editor = "nvim";
       credential.helper = "store";
       github.user = name;
       push.autoSetupRemote = true;
+      user = {
+        name = name;
+        email = email;
+      };
     };
-    userEmail = email;
-    userName = name;
   };
 }
