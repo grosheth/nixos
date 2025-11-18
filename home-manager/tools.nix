@@ -41,7 +41,7 @@
     nitch
     lynx
     brave
-    rpi-imager
+    # rpi-imager
     usbutils
     code-cursor
     minikube
@@ -64,65 +64,17 @@
     cmake
     gnumake
 
+    protontricks
+    winetricks
+
+    # Gaming
+    prismlauncher
+
     # clang
     # pkg-config
 
     # CTF and Network Security Tools
     nmap
     wireshark
-    # tcpdump
-    # netcat-gnu
-    # socat
-    # hydra
-    # gobuster
-    # dirb
-    # nikto
-    # sqlmap
-    # john
-    # hashcat
-    # binwalk
-    # foremost
-    # exiftool
-    # steghide
-    # ghidra
-    # radare2
-    # gdb
-    # ltrace
-    # strace
-    # burpsuite
-    # metasploit
-    # aircrack-ng
-    # hashcat-utils
-    # crunch
-    # masscan
-    # rustscan
-    # feroxbuster
-    # ffuf
-    # wfuzz
-    # seclists
-    # rockyou
-    # wordlists
-    # enum4linux
-    # responder
-    # bloodhound
-    # neo4j
-    # evil-winrm
-    # powershell
-    # chisel
-    # proxychains
-    # tor
-    # torsocks
-    # yara
-    # volatility3
-    # autopsy
-    # sleuthkit
-    # hexedit
-    # xxd
-    # file
-    # pwntools
-    # checksec
-    # one_gadget
-    # patchelf
-    # gef
   ];
 }

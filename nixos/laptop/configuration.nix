@@ -70,7 +70,19 @@
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
     };
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
   };
+
+  # Make nix-shell use zsh by default
+  environment.shellInit = ''
+    if [ -n "$IN_NIX_SHELL" ]; then
+      export SHELL=${pkgs.zsh}/bin/zsh
+      exec ${pkgs.zsh}/bin/zsh -l
+    fi
+  '';
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

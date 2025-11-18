@@ -68,7 +68,7 @@ in
         NODEJS = " ";
         PYTHON = " ";
       };
-      initContent = ''
+      initExtra = ''
         SHELL=${pkgs.zsh}/bin/zsh
 
         function cd() {

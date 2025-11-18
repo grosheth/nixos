@@ -41,7 +41,19 @@ in
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
     };
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
   };
+
+  # Make nix-shell use zsh by default
+  environment.shellInit = ''
+    if [ -n "$IN_NIX_SHELL" ]; then
+      export SHELL=${pkgs.zsh}/bin/zsh
+      exec ${pkgs.zsh}/bin/zsh -l
+    fi
+  '';
 
   # virtualisation
   programs.virt-manager.enable = true;
@@ -119,6 +131,15 @@ in
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    extest.enable = true; # Better input/controller support
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin # GE-Proton for better game compatibility
+    ];
+    package = pkgs.steam.override {
+      extraEnv = {
+        PRESSURE_VESSEL_FILESYSTEMS_RO = "";
+      };
+    };
   };
 
   # Change Default Shell
@@ -143,7 +164,7 @@ in
     neovim
 
     git
-    glxinfo
+    mesa-demos
     wget
     pkgs.dunst
     libnotify
