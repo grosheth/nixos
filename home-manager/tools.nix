@@ -66,14 +66,6 @@
 
     protontricks
     winetricks
-
-    # Gaming
-    prismlauncher
-
-    # clang
-    # pkg-config
-
-    # CTF and Network Security Tools
     nmap
     wireshark
   ];
