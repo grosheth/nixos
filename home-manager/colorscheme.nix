@@ -44,4 +44,3 @@ in
 #   purple     = color "purple"     "#c678dd";
 #   white      = color "white"      "#dcdfe4";
 # }
-
