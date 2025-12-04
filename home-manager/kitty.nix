@@ -43,46 +43,7 @@ in
     extraConfig = ''
       map f1 launch --allow-remote-control kitty +kitten broadcast
 
-      #neovim-colors
-      # background            #14161b
-      # foreground            #eef1f8
-      # selection_foreground  #000000
-      # selection_background  #FFFACD
-      # url_color             #4ca6e8
-      #
-      # # black
-      # color0   #07080d
-      # color8   #4b5254
-      #
-      # # red
-      # color1   #ffc0b9
-      # color9   #ffc0b9
-      #
-      # # green
-      # color2   #b3f6c0
-      # color10  #b3f6c0
-      #
-      # # yellow
-      # color3   #fce094
-      # color11  #fce094
-      #
-      # # blue
-      # color4   #a6dbff
-      # color12  #a6dbff
-      #
-      # # magenta
-      # color5   #9d81ba
-      # color13  #9d81ba
-      #
-      # # cyan
-      # color6   #8cf8f7
-      # color14  #8cf8f7
-      #
-      # # white
-      # color7   #e6e6e8
-      # color15  #e6e6e8
-
-      #kaolin
+      # colorscheme
       background            ${colors.background.hex}
       foreground            ${colors.foreground.hex}
       selection_foreground  ${colors.selection_foreground.hex}

@@ -1,14 +1,15 @@
 { pkgs, ... }:
 let
+  colors = import ./colorscheme.nix { inherit (pkgs) lib; };
   colorschemeConfig = ''
     * {
         font: "jetbrains mono 14";
-        foreground: #e6e6e8;
-        background-color: #14191e;
-        active-background: #212020;
-        urgent-background: #e55c74;
-        urgent-foreground: #282a36;
-        selected-background: #e55c74;
+        foreground: ${colors.foreground.hex};
+        background-color: ${colors.background.hex};
+        active-background: ${colors.black.hex};
+        urgent-background: ${colors.red.hex};
+        urgent-foreground: ${colors.background.hex};
+        selected-background: ${colors.red.hex};
         selected-urgent-background: @urgent-background;
         selected-active-background: @active-background;
         separatorcolor: @active-background;
@@ -129,7 +130,7 @@ let
         text-color: inherit;
     }
   '';
-  colorschemeName = "kaolin";
+  colorschemeName = "custom";
 in
 {
   home.packages = with pkgs; [
@@ -139,7 +140,7 @@ in
   programs.rofi = {
     enable = true;
     location = "center";
-    theme = "kaolin";
+    theme = "custom";
     font = "JetBrainsMonoNerdFontMono-Regular";
     extraConfig = {
       show-icons = true;

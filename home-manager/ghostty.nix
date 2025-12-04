@@ -1,11 +1,13 @@
 { config, pkgs, ... }:
 let
+  colors = import ./colorscheme.nix { inherit (pkgs) lib; };
+
   ghosttyConfig = ''
     font-family = "JetBrains Mono Nerd Font"
     font-size = "12"
 
     cursor-style = bar
-    theme = kaolin
+    theme = custom
     config-file = keybindings
     window-decoration = false
   '';
@@ -24,28 +26,28 @@ let
   '';
 
   customTheme = ''
-    background = #14161b
-    foreground = #e6e6e8
-    selection-foreground = #44475a
-    cursor-color = #ffffff
-    palette = 0=#14161b
-    palette = 1=#e55c74
-    palette = 2=#6dd797
-    palette = 3=#eed891
-    palette = 4=#0db9d7
-    palette = 5=#EE87A9
-    palette = 6=#56b6c2
-    palette = 7=#dcdfe4
-    palette = 8=#4b5254
-    palette = 9=#e55c74
-    palette = 10=#6dd797
-    palette = 11=#eed891
-    palette = 12=#0db9d7
-    palette = 13=#EE87A9
-    palette = 14=#56b6c2
-    palette = 15=#dcdfe4
+    background = ${colors.background.hex}
+    foreground = ${colors.foreground.hex}
+    selection-foreground = ${colors.selection_foreground.hex}
+    cursor-color = ${colors.cursor.hex}
+    palette = 0=${colors.black.hex}
+    palette = 1=${colors.red.hex}
+    palette = 2=${colors.green.hex}
+    palette = 3=${colors.yellow.hex}
+    palette = 4=${colors.blue.hex}
+    palette = 5=${colors.magenta.hex}
+    palette = 6=${colors.cyan.hex}
+    palette = 7=${colors.white.hex}
+    palette = 8=${colors.black.hex}
+    palette = 9=${colors.red.hex}
+    palette = 10=${colors.green.hex}
+    palette = 11=${colors.yellow.hex}
+    palette = 12=${colors.blue.hex}
+    palette = 13=${colors.magenta.hex}
+    palette = 14=${colors.cyan.hex}
+    palette = 15=${colors.white.hex}
   '';
-  customThemeName = "kaolin";
+  customThemeName = "custom";
 in
 {
   home.file.".config/ghostty/config".text = ghosttyConfig;

@@ -8,20 +8,6 @@ let
   };
   langs = "$nodejs$python$rust$golang$lua";
   colors = import ./colorscheme.nix { inherit lib; };
-  # colors = {
-  #   # kaolin
-  #   black = "#212026";
-  #   pink = "#EE87A9";
-  #   red = "#e55c74";
-  #   green = "#6dd797";
-  #   purple = "#c678dd";
-  #   yellow = "#eed891";
-  #   cyan = "#56b6c2";
-  #   blue = "#0db9d7";
-  #   blue_alt = "#0bc9cf";
-  #   white = "#dcdfe4";
-  #   fg = "#ffffff";
-  #   bg = "#18181b";
 in
 {
   programs.starship = {
