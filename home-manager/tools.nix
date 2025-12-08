@@ -8,6 +8,7 @@
     vscode
     lynis
     claude-code
+    gemini-cli
     cloudflared
     caligula
     htop
