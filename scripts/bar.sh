@@ -61,9 +61,13 @@ GEOM="${WIDTH}x${BAR_HEIGHT}+${X}+$((Y + TOP_MARGIN))"
 get_status() {
     # Check if interface exists and is up
     if ip link show "$VPN_NAME" >/dev/null 2>&1 && ip addr show "$VPN_NAME" | grep -q "inet"; then
-        echo "ON"
+        echo "proton"
     else
-        echo "OFF"
+        if ip link show "tun0" >/dev/null 2>&1 && ip addr show "tun0" | grep -q "inet"; then
+            echo "tryhackme"
+        else
+            echo "OFF"
+        fi
     fi
 }
 
@@ -187,7 +191,11 @@ get_temperature() {
 }
 
 get_ip_address() {
-    ip route get 1.1.1.1 | awk '{print $7}' | head -1
+    if ip link show "tun0" >/dev/null 2>&1 && ip addr show "tun0" | grep -q "inet"; then
+        ip link show "tun0" >/dev/null 2>&1 && ip addr show "tun0" | grep -w "inet" | awk '{print $2}' | cut -d'/' -f1 | head -1
+    else
+        ip route get 1.1.1.1 | awk '{print $7}' | head -1
+    fi
 }
 
 get_uptime() {
@@ -473,8 +481,10 @@ start_bar() {
             local disk_color=$(get_disk_color $DISK)
 
             bar_content+="  %{F#0db9d7}%{F-} $IP"
-            if [ "$STATUS" = "ON" ]; then
-                bar_content+="%{F#6dd797}   %{F-}ON"
+            if [ "$STATUS" = "proton" ]; then
+                bar_content+="%{F#6dd797}   %{F-}ON (Proton)"
+            elif [ "$STATUS" = "tryhackme" ]; then
+                bar_content+="%{F#6dd797}   %{F-}ON (TryHackMe)"
             else
                 bar_content+="%{F#e55c74}   %{F-}OFF"
             fi

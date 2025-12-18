@@ -195,7 +195,7 @@ in
     # VPN
     wireguard-tools
     openvpn
-    
+
     # Bar
     lemonbar-xft
 
