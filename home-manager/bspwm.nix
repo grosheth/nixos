@@ -18,15 +18,15 @@
         HDMI-0 = [
           "I"
           "II"
+          "III"
         ];
         DP-0 = [
-          "III"
           "IV"
           "V"
           "VI"
+          "VII"
         ];
         DP-2 = [
-          "VII"
           "VIII"
           "IX"
         ];

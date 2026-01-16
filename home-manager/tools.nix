@@ -9,6 +9,7 @@
     lynis
     claude-code
     gemini-cli
+    codex
     cloudflared
     caligula
     htop
