@@ -9,6 +9,7 @@ let
     "FiraCode"
     "Mononoki"
     "Iosevka"
+    "tinos"
   ]; });
 
   cursor-theme = "Qogir";
@@ -21,6 +22,8 @@ in
       font-awesome
       nerd-fonts.iosevka
       nerd-fonts.jetbrains-mono
+      eb-garamond
+      libre-baskerville
     ];
     sessionVariables = {
       XCURSOR_THEME = cursor-theme;

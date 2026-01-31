@@ -49,21 +49,21 @@
     };
   };
 
-  home.file.".config/bspwm/work_mode.sh" = {
-    text = ''
-      #!/usr/bin/env bash
-
-      ULTRAWIDE_MONITOR="DP-0"
-      SECONDARY_MONITOR_2="HDMI-0"
-
-      xrandr --output "$SECONDARY_MONITOR_2" --auto \
-             --output "$ULTRAWIDE_MONITOR" --off
-      sleep 2
-      notify-send -u low "💼 Work mode"
-
-    '';
-    executable = true;
-  };
+  # home.file.".config/bspwm/work_mode.sh" = {
+  #   text = ''
+  #     #!/usr/bin/env bash
+  #
+  #     ULTRAWIDE_MONITOR="DP-0"
+  #     SECONDARY_MONITOR_2="HDMI-0"
+  #
+  #     xrandr --output "$SECONDARY_MONITOR_2" --auto \
+  #            --output "$ULTRAWIDE_MONITOR" --off
+  #     sleep 2
+  #     notify-send -u low "💼 Work mode"
+  #
+  #   '';
+  #   executable = true;
+  # };
 
   home.file.".config/bspwm/zen_mode.sh" = {
     text = ''
