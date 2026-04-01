@@ -60,6 +60,11 @@
     xprintidle
     ollama
 
+    kubectl
+    helm
+    sops
+    age
+
     rustc
     cargo
     rustfmt

@@ -27,6 +27,9 @@
     gysmo = {
       url = "github:grosheth/gysmo";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+    };
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
     };
@@ -35,7 +38,7 @@
     # NOTE: if you experience a build failure with Zen, the first thing to check is to remove this line!
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, home-manager, ghostty, gysmo, nixpkgs-fmt, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, ghostty, gysmo, nixpkgs-fmt, sops-nix, ... } @ inputs:
     let
       username = "salledelavage";
       system = "x86_64-linux";
@@ -71,7 +74,10 @@
             inherit system;
           };
           extraSpecialArgs = { inherit inputs username; };
-          modules = [ ./home-manager/home-dev.nix ];
+          modules = [
+            inputs.sops-nix.homeManagerModules.sops
+            ./home-manager/home-dev.nix
+          ];
         };
 
         default = inputs.home-manager.lib.homeManagerConfiguration {
@@ -80,7 +86,10 @@
             config.allowUnfree = true;
           };
           extraSpecialArgs = { inherit inputs username; };
-          modules = [ ./home-manager/home-default.nix ];
+          modules = [
+            inputs.sops-nix.homeManagerModules.sops
+            ./home-manager/home-default.nix
+          ];
         };
 
         laptop = inputs.home-manager.lib.homeManagerConfiguration {
@@ -89,7 +98,10 @@
             config.allowUnfree = true;
           };
           extraSpecialArgs = { inherit inputs username; };
-          modules = [ ./home-manager/home-laptop.nix ];
+          modules = [
+            inputs.sops-nix.homeManagerModules.sops
+            ./home-manager/home-laptop.nix
+          ];
         };
       };
       # formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;

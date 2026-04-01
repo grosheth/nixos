@@ -14,17 +14,18 @@ in
     (if hyprland then ./hyprland.nix else null)
     (if i3 then ./i3.nix else null)
     (if sway then ./sway.nix else null)
+    ./bar.nix
     ./git.nix
     ./ghostty.nix
     ./gysmo.nix
     ./kitty.nix
+    ./kubernetes.nix
     ./lf.nix
     # ./nitch.nix
     ./picom.nix
     ./rofi.nix
     ./sh.nix
     ./starship.nix
-    ./bar.nix
     ./theme.nix
     ./tools.nix
     # ./tmux.nix

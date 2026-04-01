@@ -386,6 +386,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_6": {
+      "locked": {
+        "lastModified": 1774610258,
+        "narHash": "sha256-HaThtroVD9wRdx7KQk0B75JmFcXlMUoEdDFNOMOlsOs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "832efc09b4caf6b4569fbf9dc01bec3082a00611",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ghostty": "ghostty",
@@ -396,6 +412,7 @@
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-fmt": "nixpkgs-fmt",
         "nixpkgs-wayland": "nixpkgs-wayland",
+        "sops-nix": "sops-nix",
         "zen-browser": "zen-browser"
       }
     },
@@ -413,6 +430,24 @@
         "owner": "rust-analyzer",
         "ref": "nightly",
         "repo": "rust-analyzer",
+        "type": "github"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_6"
+      },
+      "locked": {
+        "lastModified": 1774910634,
+        "narHash": "sha256-B+rZDPyktGEjOMt8PcHKYmgmKoF+GaNAFJhguktXAo0=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "19bf3d8678fbbfbc173beaa0b5b37d37938db301",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
         "type": "github"
       }
     },
