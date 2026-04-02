@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   sops = {
-    defaultSopsFile = "${config.home.homeDirectory}/.kubeconfig";
+    defaultSopsFile = ./secrets/kubeconfig.sops.yaml;
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
   };
 
