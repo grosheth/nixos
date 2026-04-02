@@ -34,6 +34,16 @@ require_var() {
   fi
 }
 
+resolve_path() {
+  local base="$1"
+  local p="$2"
+  if [[ "$p" = /* ]]; then
+    printf '%s' "$p"
+  else
+    printf '%s/%s' "$base" "$p"
+  fi
+}
+
 METHOD="${METHOD:-}"
 if [ -z "$METHOD" ]; then
   echo "Config error: METHOD is not set in $conf"
@@ -48,10 +58,12 @@ case "$METHOD" in
     ;;
   kustomize)
     path="${KUSTOMIZE_PATH:-$app_dir/kustomize}"
+    path="$(resolve_path "$app_dir" "$path")"
     kubectl delete -k "$path"
     ;;
   raw)
     path="${MANIFESTS_PATH:-$app_dir/manifests}"
+    path="$(resolve_path "$app_dir" "$path")"
     kubectl delete -f "$path"
     ;;
   *)

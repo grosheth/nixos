@@ -6,7 +6,6 @@ in
   imports = [
     ./git.nix
     # ./kitty.nix
-    ./k8s.nix
     ./i3.nix
     ./lf.nix
     # ./picom.nix

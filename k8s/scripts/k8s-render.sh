@@ -34,6 +34,16 @@ require_var() {
   fi
 }
 
+resolve_path() {
+  local base="$1"
+  local p="$2"
+  if [[ "$p" = /* ]]; then
+    printf '%s' "$p"
+  else
+    printf '%s/%s' "$base" "$p"
+  fi
+}
+
 METHOD="${METHOD:-}"
 if [ -z "$METHOD" ]; then
   echo "Config error: METHOD is not set in $conf"
@@ -58,7 +68,7 @@ case "$METHOD" in
     values_args=()
     if [ -n "${VALUES:-}" ]; then
       for v in $VALUES; do
-        values_args+=( -f "$app_dir/$v" )
+        values_args+=( -f "$(resolve_path "$app_dir" "$v")" )
       done
     fi
 
@@ -68,10 +78,12 @@ case "$METHOD" in
     ;;
   kustomize)
     path="${KUSTOMIZE_PATH:-$app_dir/kustomize}"
+    path="$(resolve_path "$app_dir" "$path")"
     kubectl kustomize "$path"
     ;;
   raw)
     path="${MANIFESTS_PATH:-$app_dir/manifests}"
+    path="$(resolve_path "$app_dir" "$path")"
     kubectl apply --dry-run=client -o yaml -f "$path"
     ;;
   *)
