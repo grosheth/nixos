@@ -7,7 +7,9 @@ in
 
   home.packages = with pkgs; [
     (writeShellScriptBin "k8s-apply" (builtins.readFile ../k8s/scripts/k8s-apply.sh))
+    (writeShellScriptBin "k8s-delete" (builtins.readFile ../k8s/scripts/k8s-delete.sh))
     (writeShellScriptBin "k8s-diff" (builtins.readFile ../k8s/scripts/k8s-diff.sh))
+    (writeShellScriptBin "k8s-list" (builtins.readFile ../k8s/scripts/k8s-list.sh))
     (writeShellScriptBin "k8s-render" (builtins.readFile ../k8s/scripts/k8s-render.sh))
   ];
 }
