@@ -16,6 +16,7 @@ in
     (if sway then ./sway.nix else null)
     ./git.nix
     ./ghostty.nix
+    ./k8s.nix
     ./kitty.nix
     ./lf.nix
     ./picom.nix

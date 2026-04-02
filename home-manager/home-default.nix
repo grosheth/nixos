@@ -19,6 +19,7 @@ in
     ./ghostty.nix
     ./gysmo.nix
     ./kitty.nix
+    ./k8s.nix
     ./kubernetes.nix
     ./lf.nix
     # ./nitch.nix
