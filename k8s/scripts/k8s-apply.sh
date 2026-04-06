@@ -4,7 +4,7 @@ set -euo pipefail
 K8S_ROOT="${K8S_ROOT:-$HOME/nixos/k8s}"
 
 usage() {
-  echo "Usage: k8s-apply <cluster> <app>"
+  echo "Usage: k8s-apply <namespace> <app>"
 }
 
 if [ "$#" -ne 2 ]; then
@@ -12,9 +12,9 @@ if [ "$#" -ne 2 ]; then
   exit 1
 fi
 
-cluster="$1"
+namespace="$1"
 app="$2"
-app_dir="$K8S_ROOT/clusters/$cluster/apps/$app"
+app_dir="$K8S_ROOT/namespaces/$namespace/apps/$app"
 conf="$app_dir/app.conf"
 
 if [ ! -f "$conf" ]; then

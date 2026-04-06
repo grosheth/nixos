@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: activemq-artemis-ui
+  namespace: mq
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: artemis.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: activemq-artemis-ui
+                port:
+                  number: 8161

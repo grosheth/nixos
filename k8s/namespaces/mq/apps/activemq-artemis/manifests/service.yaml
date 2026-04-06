@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: activemq-artemis
+  namespace: mq
+  labels:
+    app: activemq-artemis
+spec:
+  clusterIP: None
+  selector:
+    app: activemq-artemis
+  ports:
+    - name: core
+      port: 61616
+      targetPort: 61616
+    - name: amqp
+      port: 5672
+      targetPort: 5672
+    - name: web
+      port: 8161
+      targetPort: 8161
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: activemq-artemis-broker
+  namespace: mq
+  labels:
+    app: activemq-artemis
+spec:
+  selector:
+    app: activemq-artemis
+  ports:
+    - name: core
+      port: 61616
+      targetPort: 61616
+    - name: amqp
+      port: 5672
+      targetPort: 5672
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: activemq-artemis-ui
+  namespace: mq
+  labels:
+    app: activemq-artemis
+spec:
+  selector:
+    app: activemq-artemis
+  ports:
+    - name: web
+      port: 8161
+      targetPort: 8161

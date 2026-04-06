@@ -1,23 +1,23 @@
 # k8s deployments
 
-This folder holds per-cluster Kubernetes deployments with mixed install methods
+This folder holds per-namespace Kubernetes deployments with mixed install methods
 (raw manifests, kustomize, helm). Home Manager only installs helper commands; it
 never runs kubectl/helm during activation.
 
 ## Commands
 
-- `k8s-apply <cluster> <app>`
-- `k8s-diff <cluster> <app>`
-- `k8s-render <cluster> <app>`
+- `k8s-apply <namespace> <app>`
+- `k8s-diff <namespace> <app>`
+- `k8s-render <namespace> <app>`
 
 ## Structure
 
 ```
 k8s/
-  clusters/<cluster>/apps/<app>/app.conf
-  clusters/<cluster>/apps/<app>/manifests/  # raw
-  clusters/<cluster>/apps/<app>/kustomize/  # kustomize
-  clusters/<cluster>/apps/<app>/values.yaml # helm values (optional)
+  namespaces/<namespace>/apps/<app>/app.conf
+  namespaces/<namespace>/apps/<app>/manifests/  # raw
+  namespaces/<namespace>/apps/<app>/kustomize/  # kustomize
+  namespaces/<namespace>/apps/<app>/values.yaml # helm values (optional)
 ```
 
 ## app.conf
