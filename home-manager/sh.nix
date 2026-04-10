@@ -46,6 +46,21 @@ let
 
     # "code" = "cursor . &";
     # "codek" = "cursor";
+
+    # kubectl aliases
+    "k" = "kubectl";
+    "kgp" = "kubectl get pods";
+    "kgpa" = "kubectl get pods --all-namespaces";
+    "kgs" = "kubectl get svc";
+    "kga" = "kubectl get all";
+    "kgn" = "kubectl get nodes";
+    "kdp" = "kubectl describe pod";
+    "kds" = "kubectl describe svc";
+    "kl" = "kubectl logs";
+    "kpf" = "kubectl port-forward";
+    "kctx" = "kubectl config current-context";
+    "kctxu" = "kubectl config use-context";
+    "kns" = "kubectl config set-context --current --namespace";
   };
 in
 {
