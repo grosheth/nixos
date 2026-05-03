@@ -168,14 +168,14 @@ in
     wget
     pkgs.dunst
     libnotify
-    swww
+    awww
     kitty
     networkmanagerapplet
     git
     os-prober
     zsh
-    xorg.libxcb
-    xorg.xorgserver
+    libxcb
+    xorgserver
     arandr
 
     # Podman

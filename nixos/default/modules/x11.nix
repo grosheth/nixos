@@ -29,7 +29,7 @@
     extraPackages = with pkgs; [
       libglvnd
       mesa
-      xorg.xorgserver
+      xorgserver
     ];
   };
 

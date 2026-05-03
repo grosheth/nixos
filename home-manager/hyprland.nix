@@ -7,7 +7,7 @@
     brightnessctl
     pulseaudio # pactl
     playerctl
-    swww
+    awww
     wf-recorder
     slurp
   ];
