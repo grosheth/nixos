@@ -9,6 +9,7 @@ in {
   };
   programs.git = {
     enable = true;
+    signing.format = "openpgp";
     settings = {
       color.ui = true;
       core.editor = "nvim";

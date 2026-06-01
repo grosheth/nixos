@@ -14,7 +14,6 @@
     caligula
     htop
     bottom
-    bottles
     distrobox
     libreoffice
     eza
