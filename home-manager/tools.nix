@@ -42,6 +42,7 @@
     nitch
     lynx
     brave
+    circumflex #hacker news in terminal
     # rpi-imager
     usbutils
     code-cursor

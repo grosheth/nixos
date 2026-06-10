@@ -77,5 +77,5 @@ in
   programs.home-manager.enable = true;
   # programs.home-manager.path = "$HOME/work/home-manager";
 
-  home.stateVersion = "21.11";
+  home.stateVersion = "23.11";
 }
