@@ -1,6 +1,6 @@
 { config, pkgs, username, lib, ... }:
 let
-  hyprland = false;
+  hyprland = true;
   sway = false;
   x11 = true;
 in
