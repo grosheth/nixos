@@ -4,6 +4,7 @@
     (writeShellScriptBin "rofi-projects" (builtins.readFile ../scripts/rofi-projects.sh))
     (writeShellScriptBin "rofi-vpn" (builtins.readFile ../scripts/rofi-vpn.sh))
     (writeShellScriptBin "bar" (builtins.readFile ../scripts/bar.sh))
+    (writeShellScriptBin "hyprbar" (builtins.readFile ../scripts/bar-hyprland.sh))
     (writeShellScriptBin "vpn-toggler" (builtins.readFile ../scripts/vpn-toggler.sh))
     vscode
     lynis

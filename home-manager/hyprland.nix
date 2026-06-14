@@ -4,6 +4,8 @@
   ...
 }: {
   home.packages = with pkgs; [
+    wlr-randr
+    wdisplays
     brightnessctl
     pulseaudio # pactl
     playerctl
@@ -57,6 +59,7 @@
         "$mod, C, killactive,"
         "$mod, return, exec, $terminal"
         "$mod, D, exec, dmenu_run"
+        "$mod, M, exec, hyprbar toggle"
         "$mod, space, exec, pkill rofi || rofi -show drun"
 
         "$mod, 1, workspace, 1"
@@ -119,13 +122,13 @@
       };
 
       dwindle = {
-        pseudotile = "yes";
+        # pseudotile = "yes";
         preserve_split = "yes";
         # no_gaps_when_only = "yes";
       };
 
       gestures = {
-        workspace_swipe = true;
+        # workspace_swipe = true;
         workspace_swipe_touch = true;
         workspace_swipe_use_r = true;
       };
