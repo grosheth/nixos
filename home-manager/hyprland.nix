@@ -3,6 +3,37 @@
   pkgs,
   ...
 }: {
+
+  services.hypridle.enable = true;
+  programs.hyprlock.enable = true;
+
+  services.kanshi = {
+    enable = true;
+
+    profiles = {
+      main.outputs = [
+        {
+          criteria = "BNQ BenQ EX2780Q 4BK01346019";
+          mode = "2560x1440@144";
+          position = "5120,0";
+          scale = 1.0;
+        }
+        {
+          criteria = "BNQ BenQ EX2780Q S6L01178019";
+          mode = "2560x1440@144";
+          position = "0,0";
+          scale = 1.0;
+        }
+        {
+          criteria = "Samsung Electric Company LC34G55T HNTXA04571";
+          mode = "3440x1440@100";
+          position = "2560,0";
+          scale = 1.0;
+        }
+      ];
+    };
+  };
+
   home.packages = with pkgs; [
     wlr-randr
     wdisplays
@@ -10,8 +41,10 @@
     pulseaudio # pactl
     playerctl
     awww
+    mpvpaper
     wf-recorder
     slurp
+    kanshi
   ];
 
   xdg.desktopEntries."org.gnome.Settings" = {
@@ -54,7 +87,7 @@
       };
 
       bind = [
-        "CTRL/CONTROL, W, exec, rofi -show window"
+        "$mod, W, exec, rofi -show window"
         "$mod, B, exec, brave"
         "$mod, C, killactive,"
         "$mod, return, exec, $terminal"
@@ -76,24 +109,20 @@
 
       bindm = [
         # mouse movements
-        "$mod, mouse:272, movewindow"
+        "CONTROL/CTRL, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
         "$mod ALT, mouse:272, resizewindow"
       ];
 
       exec-once = [
         "hyprctl setcursor Qogir 24"
-        "swww-daemon"
+        "awww-daemon"
+        "mpvpaper -o 'loop --no-audio --hwdec=auto --video-unscaled=no' '*' ~/Downloads/firewatch.mp4"
         "fragments"
+        "hypridle"
         # Set screens
-        "/home/salledelavage/.screenlayout/screen_setup.sh"
+        # "/home/salledelavage/.screkenlayout/screen_setup.sh"
       ];
-
-      # monitor =[
-      #  "HDMI-A-1, 2560x1440, 2560x0, 1"
-      #  "DP-2, 2560x1440, 0x0, 1"
-      #  "HDMI-A-2, 2560x1440, 5120x0, 1"
-      # ];
 
       general = {
         layout = "dwindle";
@@ -132,46 +161,6 @@
         workspace_swipe_touch = true;
         workspace_swipe_use_r = true;
       };
-
-      # windowrule = let
-      #   f = regex: "float, ^(${regex})$";
-      # in [
-      #   (f "org.gnome.Calculator")
-      #   (f "org.gnome.Nautilus")
-      #   (f "pavucontrol")
-      #   (f "nm-connection-editor")
-      #   (f "blueberry.py")
-      #   (f "org.gnome.Settings")
-      #   (f "org.gnome.design.Palette")
-      #   (f "Color Picker")
-      #   (f "xdg-desktop-portal")
-      #   (f "xdg-desktop-portal-gnome")
-      #   (f "de.haeckerfelix.Fragments")
-      #   "workspace 7, title:Spotify"
-      # ];
-
-      # bindle = [
-      #   ",XF86MonBrightnessUp,   exec, brightnessctl set +5%"
-      #   ",XF86MonBrightnessDown, exec, brightnessctl set  5%-"
-      #   ",XF86KbdBrightnessUp,   exec, brightnessctl -d asus::kbd_backlight set +1"
-      #   ",XF86KbdBrightnessDown, exec, brightnessctl -d asus::kbd_backlight set  1-"
-      #   ",XF86AudioRaiseVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
-      #   ",XF86AudioLowerVolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-      # ];
-
-      # bindl = [
-      #   ",XF86AudioPlay,    exec, playerctl play-pause"
-      #   ",XF86AudioStop,    exec, playerctl pause"
-      #   ",XF86AudioPause,   exec, playerctl pause"
-      #   ",XF86AudioPrev,    exec, playerctl previous"
-      #   ",XF86AudioNext,    exec, playerctl next"
-      #   ",XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
-      # ];
-
-      # bindm = [
-      #   "ALT, mouse:273, resizewindow"
-      #   "ALT, mouse:272, movewindow"
-      # ];
 
       animations = {
         enabled = "yes";
