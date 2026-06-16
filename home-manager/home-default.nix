@@ -24,6 +24,7 @@ in
     ./lf.nix
     # ./nitch.nix
     ./picom.nix
+    ./quickshell.nix
     ./rofi.nix
     ./sh.nix
     ./starship.nix

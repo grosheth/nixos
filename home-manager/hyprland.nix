@@ -94,6 +94,7 @@
         "$mod, D, exec, dmenu_run"
         "$mod, M, exec, hyprbar toggle"
         "$mod, space, exec, pkill rofi || rofi -show drun"
+        "$mod SHIFT, space, exec, kando"
 
         "$mod, 1, workspace, 1"
         "$mod, 2, workspace, 2"

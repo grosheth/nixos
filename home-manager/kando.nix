@@ -5,15 +5,7 @@
     kando
   ];
 
-  wayland.windowManager.hyprland.settings.windowrulev2 = [
-    "float, class:^(menu\\.kando\\.Kando)$, title:^(Kando Menu)$"
-    "pin, class:^(menu\\.kando\\.Kando)$, title:^(Kando Menu)$"
-    "noblur, class:^(menu\\.kando\\.Kando)$, title:^(Kando Menu)$"
-    "opaque, class:^(menu\\.kando\\.Kando)$, title:^(Kando Menu)$"
-    "move 0 0, class:^(menu\\.kando\\.Kando)$, title:^(Kando Menu)$"
-    "size 100% 100%, class:^(menu\\.kando\\.Kando)$, title:^(Kando Menu)$"
-    "rounding 0, class:^(menu\\.kando\\.Kando)$, title:^(Kando Menu)$"
-    "bordersize 0, class:^(menu\\.kando\\.Kando)$, title:^(Kando Menu)$"
-    "noanim, class:^(menu\\.kando\\.Kando)$, title:^(Kando Menu)$"
+  wayland.windowManager.hyprland.settings.windowrule = [
+    "match:class ^(menu\\.kando\\.Kando)$, match:title ^(Kando Menu)$, float on, pin on, no_blur on, opaque on, move 0 0, size monitor_w monitor_h, rounding 0, border_size 0, no_anim on"
   ];
 }
