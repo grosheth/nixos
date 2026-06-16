@@ -16,12 +16,12 @@
         sleep 0.2
       fi
 
-      ${pkgs.quickshell}/bin/qs ipc call gallery enter "$workspace"
+      ${pkgs.quickshell}/bin/qs ipc -c gallery-transition call gallery enter "$workspace"
     '')
   ];
 
   xdg.configFile = {
     "quickshell/gallery-transition/shell.qml".source = ../configs/quickshell/gallery-transition/shell.qml;
-    "quickshell/gallery-transition/schoolofathens.jpg".source = ../assets/images/schoolofathens.jpg;
+    "quickshell/gallery-transition/schoolofathens.jpg".source = ../assets/images/hyprland/art-gallery-neo.png;
   };
 }
