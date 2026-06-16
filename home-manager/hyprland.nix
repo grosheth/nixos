@@ -15,7 +15,7 @@
         {
           criteria = "BNQ BenQ EX2780Q 4BK01346019";
           mode = "2560x1440@144";
-          position = "5120,0";
+          position = "6000,0";
           scale = 1.0;
         }
         {
@@ -26,7 +26,7 @@
         }
         {
           criteria = "Samsung Electric Company LC34G55T HNTXA04571";
-          mode = "3440x1440@100";
+          mode = "3440x1440@120";
           position = "2560,0";
           scale = 1.0;
         }
@@ -117,7 +117,7 @@
       exec-once = [
         "hyprctl setcursor Qogir 24"
         "awww-daemon"
-        "mpvpaper -o 'loop --no-audio --hwdec=auto --video-unscaled=no' '*' ~/Downloads/firewatch.mp4"
+        "awww img --outputs DP-3 ~/Downloads/hyprland-wallpaper/art-gallery.png"
         "fragments"
         "hypridle"
         # Set screens

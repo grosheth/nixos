@@ -18,6 +18,7 @@ in
     ./git.nix
     ./ghostty.nix
     ./gysmo.nix
+    ./kando.nix
     ./kitty.nix
     ./kubernetes.nix
     ./lf.nix
