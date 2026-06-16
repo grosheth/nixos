@@ -96,16 +96,13 @@
         "$mod, space, exec, pkill rofi || rofi -show drun"
         "$mod SHIFT, space, exec, kando"
 
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-        "$mod, 6, workspace, 6"
-        "$mod, 7, workspace, 7"
-        "$mod, 8, workspace, 8"
-        "$mod, 9, workspace, 9"
-        "$mod, 0, workspace, 10"
+        "$mod, 1, exec, gallery-enter 1"
+        "$mod, 2, exec, gallery-enter 2"
+        "$mod, 3, exec, gallery-enter 3"
+        "$mod, 4, exec, gallery-enter 4"
+        "$mod, 5, exec, gallery-enter 5"
+        "$mod, 6, exec, gallery-enter 6"
+        "$mod, 0, exec, gallery-enter 0"
       ];
 
       bindm = [
@@ -115,10 +112,22 @@
         "$mod ALT, mouse:272, resizewindow"
       ];
 
+      workspace = [
+        "1, monitor:DP-3, default:true"
+        "2, monitor:DP-3"
+        "3, monitor:DP-3"
+        "4, monitor:DP-3"
+        "5, monitor:DP-3"
+        "6, monitor:DP-3"
+        "10, monitor:DP-3"
+      ];
+
       exec-once = [
         "hyprctl setcursor Qogir 24"
         "awww-daemon"
+        "awww clear"
         "awww img --outputs DP-3 ~/Downloads/hyprland-wallpaper/art-gallery.png"
+        "gallery-transition"
         "fragments"
         "hypridle"
         # Set screens

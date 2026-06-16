@@ -8,11 +8,14 @@ ShellRoot {
 
   property bool overlayVisible: false
   property bool workspaceSwitchDispatched: false
+  property bool wallpaperDispatched: false
   property int targetWorkspace: 1
   property real zoomX: 0.5
   property real zoomY: 0.5
   property real zoomScale: 3.5
   property string galleryImage: "schoolofathens.jpg"
+  property string mainScreen: "DP-3"
+  property string wallpaperOutput: "DP-3"
 
   function paintingX(ws) {
     if (ws === 1) return 0.25;
@@ -32,19 +35,41 @@ ShellRoot {
     if (ws === 1) return 3.2;
     if (ws === 2) return 3.8;
     if (ws === 3) return 3.4;
+    if (ws === 10) return 1.0;
     return 3.5;
+  }
+
+  function wallpaperImage(ws) {
+    if (ws >= 1 && ws <= 6)
+      return "$HOME/.config/quickshell/gallery-transition/painting-" + String(ws) + ".png";
+
+    return "$HOME/.config/quickshell/gallery-transition/gallery.png";
   }
 
   function enter(ws) {
     if (overlayVisible)
       return;
 
-    targetWorkspace = ws;
+    targetWorkspace = ws === 0 ? 10 : ws;
     workspaceSwitchDispatched = false;
-    zoomX = paintingX(ws);
-    zoomY = paintingY(ws);
-    zoomScale = paintingScale(ws);
+    wallpaperDispatched = false;
+    zoomX = paintingX(targetWorkspace);
+    zoomY = paintingY(targetWorkspace);
+    zoomScale = paintingScale(targetWorkspace);
     overlayVisible = true;
+  }
+
+  function updateWallpaper() {
+    if (wallpaperDispatched)
+      return;
+
+    wallpaperDispatched = true;
+    wallpaperProc.command = [
+      "sh",
+      "-c",
+      "awww img --outputs " + root.wallpaperOutput + " " + wallpaperImage(targetWorkspace)
+    ];
+    wallpaperProc.running = true;
   }
 
   function switchWorkspace() {
@@ -73,6 +98,10 @@ ShellRoot {
     id: switchWorkspaceProc
   }
 
+  Process {
+    id: wallpaperProc
+  }
+
   Variants {
     model: Quickshell.screens
 
@@ -81,9 +110,11 @@ ShellRoot {
         id: win
 
         required property var modelData
+        property bool isMainScreen: modelData.name === root.mainScreen
+
         screen: modelData
 
-        visible: root.overlayVisible
+        visible: isMainScreen && root.overlayVisible
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
         focusable: false
@@ -99,7 +130,7 @@ ShellRoot {
         WlrLayershell.namespace: "gallery-transition"
 
         onVisibleChanged: {
-          if (visible)
+          if (visible && isMainScreen)
             enterAnimation.restart();
         }
 
@@ -112,6 +143,7 @@ ShellRoot {
             id: camera
             anchors.fill: parent
             clip: true
+            visible: win.isMainScreen
 
             Image {
               id: gallery
@@ -124,12 +156,6 @@ ShellRoot {
             }
           }
 
-          Rectangle {
-            id: flash
-            anchors.fill: parent
-            color: "white"
-            opacity: 0
-          }
         }
 
         SequentialAnimation {
@@ -137,7 +163,6 @@ ShellRoot {
 
           ScriptAction {
             script: {
-              flash.opacity = 0;
               gallery.scale = 1.0;
               gallery.x = 0;
               gallery.y = 0;
@@ -149,7 +174,7 @@ ShellRoot {
               target: gallery
               property: "scale"
               to: root.zoomScale
-              duration: 520
+              duration: 1400
               easing.type: Easing.InOutCubic
             }
 
@@ -157,7 +182,7 @@ ShellRoot {
               target: gallery
               property: "x"
               to: (gallery.width / 2) - (root.zoomX * gallery.width * root.zoomScale)
-              duration: 520
+              duration: 1400
               easing.type: Easing.InOutCubic
             }
 
@@ -165,17 +190,13 @@ ShellRoot {
               target: gallery
               property: "y"
               to: (gallery.height / 2) - (root.zoomY * gallery.height * root.zoomScale)
-              duration: 520
+              duration: 1400
               easing.type: Easing.InOutCubic
             }
           }
 
-          NumberAnimation {
-            target: flash
-            property: "opacity"
-            to: 1.0
-            duration: 120
-            easing.type: Easing.OutQuad
+          ScriptAction {
+            script: root.updateWallpaper()
           }
 
           ScriptAction {
@@ -186,20 +207,11 @@ ShellRoot {
             duration: 90
           }
 
-          NumberAnimation {
-            target: flash
-            property: "opacity"
-            to: 0.0
-            duration: 260
-            easing.type: Easing.OutCubic
-          }
-
           ScriptAction {
             script: {
               gallery.scale = 1.0;
               gallery.x = 0;
               gallery.y = 0;
-              flash.opacity = 0;
               root.overlayVisible = false;
             }
           }
