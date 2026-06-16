@@ -22,6 +22,6 @@
 
   xdg.configFile = {
     "quickshell/gallery-transition/shell.qml".source = ../configs/quickshell/gallery-transition/shell.qml;
-    "quickshell/gallery-transition/schoolofathens.jpg".source = ../assets/images/hyprland/art-gallery-neo.png;
+    "quickshell/gallery-transition/schoolofathens.jpg".source = ../assets/hyprland/art-gallery-neo.png;
   };
 }
