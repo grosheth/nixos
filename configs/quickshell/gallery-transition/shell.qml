@@ -13,28 +13,39 @@ ShellRoot {
   property real zoomX: 0.5
   property real zoomY: 0.5
   property real zoomScale: 3.5
-  property string galleryImage: "schoolofathens.jpg"
+  property int zoomDuration: 1400
+  property int switchDelay: 800
+  property url galleryImage: "file:///home/salledelavage/.config/quickshell/gallery-transition/gallery.png"
   property string mainScreen: "DP-3"
   property string wallpaperOutput: "DP-3"
 
   function paintingX(ws) {
-    if (ws === 1) return 0.25;
-    if (ws === 2) return 0.50;
-    if (ws === 3) return 0.75;
+    if (ws === 1) return 0.145;
+    if (ws === 2) return 0.328;
+    if (ws === 3) return 0.495;
+    if (ws === 4) return 0.649;
+    if (ws === 5) return 0.830;
+    if (ws === 6) return 0.932;
     return 0.50;
   }
 
   function paintingY(ws) {
-    if (ws === 1) return 0.45;
-    if (ws === 2) return 0.42;
-    if (ws === 3) return 0.48;
+    if (ws === 1) return 0.315;
+    if (ws === 2) return 0.308;
+    if (ws === 3) return 0.288;
+    if (ws === 4) return 0.291;
+    if (ws === 5) return 0.313;
+    if (ws === 6) return 0.312;
     return 0.50;
   }
 
   function paintingScale(ws) {
-    if (ws === 1) return 3.2;
-    if (ws === 2) return 3.8;
-    if (ws === 3) return 3.4;
+    if (ws === 1) return 2.4;
+    if (ws === 2) return 4.0;
+    if (ws === 3) return 3.0;
+    if (ws === 4) return 4.0;
+    if (ws === 5) return 3.8;
+    if (ws === 6) return 3.6;
     if (ws === 10) return 1.0;
     return 3.5;
   }
@@ -72,6 +83,14 @@ ShellRoot {
     wallpaperProc.running = true;
   }
 
+  function updateTheme() {
+    galleryThemeProc.command = [
+      "gallery-theme",
+      String(targetWorkspace)
+    ];
+    galleryThemeProc.running = true;
+  }
+
   function switchWorkspace() {
     if (workspaceSwitchDispatched)
       return;
@@ -100,6 +119,10 @@ ShellRoot {
 
   Process {
     id: wallpaperProc
+  }
+
+  Process {
+    id: galleryThemeProc
   }
 
   Variants {
@@ -174,7 +197,7 @@ ShellRoot {
               target: gallery
               property: "scale"
               to: root.zoomScale
-              duration: 1400
+              duration: root.zoomDuration
               easing.type: Easing.InOutCubic
             }
 
@@ -182,7 +205,7 @@ ShellRoot {
               target: gallery
               property: "x"
               to: (gallery.width / 2) - (root.zoomX * gallery.width * root.zoomScale)
-              duration: 1400
+              duration: root.zoomDuration
               easing.type: Easing.InOutCubic
             }
 
@@ -190,21 +213,31 @@ ShellRoot {
               target: gallery
               property: "y"
               to: (gallery.height / 2) - (root.zoomY * gallery.height * root.zoomScale)
-              duration: 1400
+              duration: root.zoomDuration
               easing.type: Easing.InOutCubic
+            }
+
+            SequentialAnimation {
+              PauseAnimation {
+                duration: root.switchDelay
+              }
+
+              ScriptAction {
+                script: root.updateTheme()
+              }
+
+              ScriptAction {
+                script: root.updateWallpaper()
+              }
+
+              ScriptAction {
+                script: root.switchWorkspace()
+              }
             }
           }
 
-          ScriptAction {
-            script: root.updateWallpaper()
-          }
-
-          ScriptAction {
-            script: root.switchWorkspace()
-          }
-
           PauseAnimation {
-            duration: 90
+            duration: 60
           }
 
           ScriptAction {

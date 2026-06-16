@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   colors = import ./colorscheme.nix { inherit (pkgs) lib; };
   colorschemeConfig = ''
@@ -129,6 +129,8 @@ let
         background-color: inherit;
         text-color: inherit;
     }
+
+    @import "${config.home.homeDirectory}/.local/state/gallery-theme/current.rasi"
   '';
   colorschemeName = "custom";
 in

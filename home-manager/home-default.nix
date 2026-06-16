@@ -16,6 +16,7 @@ in
     (if sway then ./sway.nix else null)
     ./bar.nix
     ./git.nix
+    ./gallery-theme.nix
     ./ghostty.nix
     ./gysmo.nix
     ./kando.nix
