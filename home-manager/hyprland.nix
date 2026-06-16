@@ -127,6 +127,7 @@
         "awww-daemon"
         "awww clear"
         "awww img --outputs DP-3 ~/Downloads/hyprland-wallpaper/art-gallery.png"
+        "gallery-signature"
         "gallery-transition"
         "fragments"
         "hypridle"

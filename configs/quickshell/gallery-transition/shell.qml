@@ -91,6 +91,20 @@ ShellRoot {
     galleryThemeProc.running = true;
   }
 
+  function updateSignature() {
+    signatureProc.command = [
+      "qs",
+      "ipc",
+      "-c",
+      "gallery-signature",
+      "call",
+      "signature",
+      "set",
+      String(targetWorkspace)
+    ];
+    signatureProc.running = true;
+  }
+
   function switchWorkspace() {
     if (workspaceSwitchDispatched)
       return;
@@ -123,6 +137,10 @@ ShellRoot {
 
   Process {
     id: galleryThemeProc
+  }
+
+  Process {
+    id: signatureProc
   }
 
   Variants {
@@ -224,6 +242,10 @@ ShellRoot {
 
               ScriptAction {
                 script: root.updateTheme()
+              }
+
+              ScriptAction {
+                script: root.updateSignature()
               }
 
               ScriptAction {
