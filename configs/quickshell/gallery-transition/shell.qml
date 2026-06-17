@@ -21,21 +21,21 @@ ShellRoot {
 
   function paintingX(ws) {
     if (ws === 1) return 0.145;
-    if (ws === 2) return 0.328;
-    if (ws === 3) return 0.495;
-    if (ws === 4) return 0.649;
-    if (ws === 5) return 0.830;
+    if (ws === 2) return 0.312;
+    if (ws === 3) return 0.482;
+    if (ws === 4) return 0.642;
+    if (ws === 5) return 0.818;
     if (ws === 6) return 0.932;
     return 0.50;
   }
 
   function paintingY(ws) {
-    if (ws === 1) return 0.315;
-    if (ws === 2) return 0.308;
-    if (ws === 3) return 0.288;
-    if (ws === 4) return 0.291;
-    if (ws === 5) return 0.313;
-    if (ws === 6) return 0.312;
+    if (ws === 1) return 0.338;
+    if (ws === 2) return 0.370;
+    if (ws === 3) return 0.377;
+    if (ws === 4) return 0.372;
+    if (ws === 5) return 0.376;
+    if (ws === 6) return 0.370;
     return 0.50;
   }
 
@@ -78,7 +78,7 @@ ShellRoot {
     wallpaperProc.command = [
       "sh",
       "-c",
-      "awww img --outputs " + root.wallpaperOutput + " " + wallpaperImage(targetWorkspace)
+      "awww img --transition-type none --resize stretch --outputs " + root.wallpaperOutput + " " + wallpaperImage(targetWorkspace)
     ];
     wallpaperProc.running = true;
   }

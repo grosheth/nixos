@@ -45,6 +45,19 @@
     wf-recorder
     slurp
     kanshi
+    (writeShellScriptBin "gallery-wallpaper" ''
+      image="${../assets/hyprland/art-gallery-neo.png}"
+
+      for _ in $(${coreutils}/bin/seq 1 25); do
+        if ${awww}/bin/awww img --transition-type none --resize stretch --outputs DP-3 "$image"; then
+          exit 0
+        fi
+
+        ${coreutils}/bin/sleep 0.2
+      done
+
+      exit 1
+    '')
   ];
 
   xdg.desktopEntries."org.gnome.Settings" = {
@@ -126,7 +139,7 @@
         "hyprctl setcursor Qogir 24"
         "awww-daemon"
         "awww clear"
-        "awww img --outputs DP-3 ~/Downloads/hyprland-wallpaper/art-gallery.png"
+        "gallery-wallpaper"
         "gallery-signature"
         "gallery-transition"
         "fragments"

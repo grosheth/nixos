@@ -46,22 +46,22 @@ ShellRoot {
   }
 
   function signatureX(ws, width, itemWidth) {
-    if (ws === 1) return width * 0.205;
-    if (ws === 2) return width * 0.318;
-    if (ws === 3) return width * 0.565;
-    if (ws === 4) return width * 0.605;
-    if (ws === 5) return width * 0.775;
-    if (ws === 6) return width * 0.875;
+    if (ws === 1) return width * 0.075;
+    if (ws === 2) return width * 0.285;
+    if (ws === 3) return width * 0.415;
+    if (ws === 4) return width * 0.610;
+    if (ws === 5) return width * 0.780;
+    if (ws === 6) return width * 0.840;
     return width - itemWidth - 52;
   }
 
   function signatureY(ws, height, itemHeight) {
-    if (ws === 1) return height * 0.610;
-    if (ws === 2) return height * 0.455;
+    if (ws === 1) return height * 0.600;
+    if (ws === 2) return height * 0.445;
     if (ws === 3) return height * 0.425;
-    if (ws === 4) return height * 0.455;
-    if (ws === 5) return height * 0.452;
-    if (ws === 6) return height * 0.510;
+    if (ws === 4) return height * 0.460;
+    if (ws === 5) return height * 0.455;
+    if (ws === 6) return height * 0.500;
     return height - itemHeight - 54;
   }
 
@@ -88,10 +88,8 @@ ShellRoot {
         id: win
 
         required property var modelData
-        property bool isMainScreen: modelData.name === root.mainScreen
-
         screen: modelData
-        visible: isMainScreen
+        visible: true
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
         focusable: false
@@ -112,24 +110,27 @@ ShellRoot {
           Rectangle {
             id: signature
 
-            width: signatureText.implicitWidth + 22
-            height: signatureText.implicitHeight + 10
-            x: root.signatureX(root.workspace, parent.width, width)
-            y: root.signatureY(root.workspace, parent.height, height)
+            width: signatureText.implicitWidth + 48
+            height: signatureText.implicitHeight + 28
+            x: (parent.width - width) / 2
+            y: 72
 
-            color: "#00000000"
-            opacity: 0.70
+            color: "#cc14161b"
+            opacity: 1.0
+            radius: 4
+            border.width: 2
+            border.color: root.accent(root.workspace)
 
             Text {
               id: signatureText
 
               anchors.centerIn: parent
-              text: "sdlv · " + root.currentTime + " · No. " + root.roomNumber(root.workspace) + "\n" + root.roomName(root.workspace)
-              color: root.accent(root.workspace)
+              text: "SIGNATURE TEST · " + root.currentTime + " · No. " + root.roomNumber(root.workspace) + "\n" + root.roomName(root.workspace)
+              color: "#fff275"
               style: Text.Outline
-              styleColor: root.muted(root.workspace)
+              styleColor: "#000000"
               font.family: "EB Garamond"
-              font.pixelSize: 18
+              font.pixelSize: 52
               font.italic: true
               lineHeight: 0.86
               horizontalAlignment: Text.AlignRight
