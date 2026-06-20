@@ -6,9 +6,7 @@ let
   } ''
     image=${../../../assets/hyprland/art-gallery-neo.png}
 
-    magick -size 8560x1440 xc:black \
-      \( "$image" -resize 3440x1440^ -gravity center -extent 3440x1440 \) -geometry +2560+0 -composite \
-      "$out"
+    magick "$image" -resize 3440x1440^ -gravity center -extent 3440x1440 "$out"
   '';
 
   hyprlandSession = pkgs.writeShellScriptBin "Hyprland-gallery-session" ''
@@ -37,7 +35,7 @@ in
 
   programs.regreet = {
     enable = true;
-    cageArgs = [ "-s" "-m" "extend" ];
+    cageArgs = [ "-s" "-m" "last" ];
     settings = {
       background = {
         path = "/etc/greetd/gallery.png";

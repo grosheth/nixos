@@ -2,7 +2,12 @@
   inputs,
   pkgs,
   ...
-}: {
+}:
+let
+  blackWallpaper = pkgs.runCommand "pitch-black-wallpaper.png" { nativeBuildInputs = [pkgs.imagemagick]; } ''
+    magick -size 1x1 xc:black PNG24:$out
+  '';
+in {
 
   services.hypridle.enable = true;
   programs.hyprlock.enable = true;
@@ -46,10 +51,41 @@
     slurp
     kanshi
     (writeShellScriptBin "gallery-wallpaper" ''
-      image="${../assets/hyprland/art-gallery-neo.png}"
+      gallery_image="${../assets/hyprland/art-gallery-neo.png}"
+      black_image="${blackWallpaper}"
+
+      set_gallery_wallpaper() {
+        ${awww}/bin/awww img --transition-type none --resize stretch --outputs DP-3 "$gallery_image"
+      }
+
+      set_benq_wallpapers() {
+        outputs_file="$(${coreutils}/bin/mktemp)"
+
+        if ! ${pkgs.hyprland}/bin/hyprctl monitors -j \
+          | ${pkgs.jq}/bin/jq -r '[.[] | select((.description // "") | test("BenQ|BNQ"; "i")) | .name] | if length >= 2 then .[] else empty end' \
+          > "$outputs_file"; then
+          ${coreutils}/bin/rm -f "$outputs_file"
+          return 1
+        fi
+
+        if [ ! -s "$outputs_file" ]; then
+          ${coreutils}/bin/rm -f "$outputs_file"
+          return 1
+        fi
+
+        status=0
+        while IFS= read -r output; do
+          if [ -n "$output" ]; then
+            ${awww}/bin/awww img --transition-type none --resize stretch --outputs "$output" "$black_image" || status=1
+          fi
+        done < "$outputs_file"
+
+        ${coreutils}/bin/rm -f "$outputs_file"
+        return "$status"
+      }
 
       for _ in $(${coreutils}/bin/seq 1 25); do
-        if ${awww}/bin/awww img --transition-type none --resize stretch --outputs DP-3 "$image"; then
+        if set_gallery_wallpaper && set_benq_wallpapers; then
           state_dir="''${XDG_RUNTIME_DIR:-/tmp}"
           printf '%s\n' 10 > "$state_dir/gallery-current-workspace"
           exit 0
