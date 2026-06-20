@@ -74,140 +74,141 @@
     xwayland.enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.default;
     package = pkgs.hyprland;
-    settings = {
+    # configType = lua;
+  };
 
-      "$mod" = "ALT";
-      "$terminal" = "ghostty";
+  xdg.configFile."hypr/hyprland.lua".text = ''
+    local mod = "ALT"
+    local terminal = "ghostty"
+
+    local function exec(command)
+      return hl.dsp.exec_cmd(command)
+    end
+
+    hl.config({
+      general = {
+        layout = "dwindle",
+        resize_on_border = true,
+      },
 
       decoration = {
+        dim_inactive = false,
         shadow = {
-          range = 6;
-          render_power = 2;
-        };
-
-        dim_inactive = false;
-
+          enabled = true,
+          range = 6,
+          render_power = 2,
+        },
         blur = {
-          enabled = true;
-          size = 8;
-          passes = 3;
-          new_optimizations = "on";
-          noise = 0.01;
-          contrast = 0.9;
-          brightness = 0.8;
-          popups = true;
-        };
-      };
-
-      bind = [
-        "$mod, W, exec, rofi -show window"
-        "$mod, B, exec, brave"
-        "$mod, C, killactive,"
-        "$mod, return, exec, $terminal"
-        "$mod, D, exec, dmenu_run"
-        "$mod, M, exec, hyprbar toggle"
-        "$mod, space, exec, pkill rofi || rofi -show drun"
-        "$mod SHIFT, space, exec, kando"
-
-        "$mod, 1, exec, gallery-enter 1"
-        "$mod, 2, exec, gallery-enter 2"
-        "$mod, 3, exec, gallery-enter 3"
-        "$mod, 4, exec, gallery-enter 4"
-        "$mod, 5, exec, gallery-enter 5"
-        "$mod, 6, exec, gallery-enter 6"
-        "$mod, 0, exec, gallery-enter 0"
-      ];
-
-      bindm = [
-        # mouse movements
-        "CONTROL/CTRL, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindow"
-        "$mod ALT, mouse:272, resizewindow"
-      ];
-
-      workspace = [
-        "1, monitor:DP-3, default:true"
-        "2, monitor:DP-3"
-        "3, monitor:DP-3"
-        "4, monitor:DP-3"
-        "5, monitor:DP-3"
-        "6, monitor:DP-3"
-        "10, monitor:DP-3"
-      ];
-
-      exec-once = [
-        "hyprctl setcursor Qogir 24"
-        "awww-daemon"
-        "awww clear"
-        "gallery-wallpaper"
-        "gallery-signature"
-        "gallery-transition"
-        "fragments"
-        "hypridle"
-        # Set screens
-        # "/home/salledelavage/.screkenlayout/screen_setup.sh"
-      ];
-
-      general = {
-        layout = "dwindle";
-        resize_on_border = true;
-      };
+          enabled = true,
+          size = 8,
+          passes = 3,
+          new_optimizations = true,
+          noise = 0.01,
+          contrast = 0.9,
+          brightness = 0.8,
+          popups = true,
+        },
+      },
 
       misc = {
-        disable_splash_rendering = true;
-        force_default_wallpaper = 1;
-      };
+        disable_splash_rendering = true,
+        force_default_wallpaper = 1,
+      },
 
       input = {
-        kb_layout = "us";
-        follow_mouse = 1;
+        kb_layout = "us",
+        follow_mouse = 1,
+        sensitivity = 0,
+        float_switch_override_focus = 2,
         touchpad = {
-          natural_scroll = "yes";
-          disable_while_typing = true;
-          drag_lock = true;
-        };
-        sensitivity = 0;
-        float_switch_override_focus = 2;
-      };
+          natural_scroll = true,
+          disable_while_typing = true,
+          drag_lock = true,
+        },
+      },
 
       binds = {
-        allow_workspace_cycles = true;
-      };
+        allow_workspace_cycles = true,
+      },
 
       dwindle = {
-        # pseudotile = "yes";
-        preserve_split = "yes";
-        # no_gaps_when_only = "yes";
-      };
+        preserve_split = true,
+      },
 
       gestures = {
-        # workspace_swipe = true;
-        workspace_swipe_touch = true;
-        workspace_swipe_use_r = true;
-      };
+        workspace_swipe_touch = true,
+        workspace_swipe_use_r = true,
+      },
+    })
 
-      animations = {
-        enabled = "yes";
-        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
-        animation = [
-          "windows, 1, 5, myBezier"
-          "windowsOut, 1, 7, default, popin 80%"
-          "border, 1, 10, default"
-          "fade, 1, 7, default"
-          "workspaces, 1, 6, default"
-        ];
-      };
+    hl.curve("galleryBezier", {
+      type = "bezier",
+      points = {
+        { 0.05, 0.9 },
+        { 0.1, 1.05 },
+      },
+    })
 
-      "plugin:touch_gestures" = {
-        sensitivity = 8.0;
-        workspace_swipe_fingers = 3;
-        long_press_delay = 400;
-        edge_margin = 16;
-        hyprgrass-bind = [
-          ", edge:r:l, workspace, +1"
-          ", edge:l:r, workspace, -1"
-        ];
-      };
-    };
-  };
+    hl.animation({ leaf = "global", enabled = true, speed = 1, bezier = "default" })
+    hl.animation({ leaf = "windows", enabled = true, speed = 5, bezier = "galleryBezier" })
+    hl.animation({ leaf = "windowsOut", enabled = true, speed = 7, bezier = "default", style = "popin 80%" })
+    hl.animation({ leaf = "border", enabled = true, speed = 10, bezier = "default" })
+    hl.animation({ leaf = "fade", enabled = true, speed = 7, bezier = "default" })
+    hl.animation({ leaf = "workspaces", enabled = true, speed = 6, bezier = "default" })
+
+    hl.workspace_rule({ workspace = "1", monitor = "DP-3", default = true })
+    hl.workspace_rule({ workspace = "2", monitor = "DP-3" })
+    hl.workspace_rule({ workspace = "3", monitor = "DP-3" })
+    hl.workspace_rule({ workspace = "4", monitor = "DP-3" })
+    hl.workspace_rule({ workspace = "5", monitor = "DP-3" })
+    hl.workspace_rule({ workspace = "6", monitor = "DP-3" })
+    hl.workspace_rule({ workspace = "10", monitor = "DP-3" })
+
+    hl.on("hyprland.start", function()
+      hl.exec_cmd("hyprctl setcursor Qogir 24")
+      hl.exec_cmd("awww-daemon")
+      hl.exec_cmd("awww clear")
+      hl.exec_cmd("gallery-wallpaper")
+      hl.exec_cmd("gallery-status")
+      hl.exec_cmd("gallery-transition")
+      hl.exec_cmd("fragments")
+      hl.exec_cmd("hypridle")
+    end)
+
+    hl.bind(mod .. " + W", exec("rofi -show window"))
+    hl.bind(mod .. " + B", exec("brave"))
+    hl.bind(mod .. " + C", hl.dsp.window.close())
+    hl.bind(mod .. " + return", exec(terminal))
+    hl.bind(mod .. " + D", exec("dmenu_run"))
+    hl.bind(mod .. " + M", exec("gallery-status-toggle"))
+    hl.bind(mod .. " + space", exec("pkill rofi || rofi -show drun"))
+    hl.bind(mod .. " + SHIFT + space", exec("kando"))
+
+    for _, workspace in ipairs({ 1, 2, 3, 4, 5, 6, 0 }) do
+      hl.bind(mod .. " + " .. workspace, exec("gallery-enter " .. workspace))
+    end
+
+    hl.bind("CONTROL + mouse:272", hl.dsp.window.drag(), { mouse = true })
+    hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+    hl.bind(mod .. " + ALT + mouse:272", hl.dsp.window.resize(), { mouse = true })
+
+    hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
+
+    hl.window_rule({
+      name = "kando-overlay",
+      match = {
+        class = "^(menu\\.kando\\.Kando)$",
+        title = "^(Kando Menu)$",
+      },
+      float = true,
+      pin = true,
+      no_blur = true,
+      opaque = true,
+      move = "0 0",
+      size = "monitor_w monitor_h",
+      rounding = 0,
+      border_size = 0,
+      no_anim = true,
+    })
+  '';
 }

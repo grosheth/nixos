@@ -96,9 +96,9 @@ ShellRoot {
       "qs",
       "ipc",
       "-c",
-      "gallery-signature",
+      "gallery-status",
       "call",
-      "signature",
+      "status",
       "set",
       String(targetWorkspace)
     ];

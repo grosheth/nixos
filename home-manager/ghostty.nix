@@ -4,12 +4,18 @@ let
 
   ghosttyConfig = ''
     font-family = "JetBrains Mono Nerd Font"
-    font-size = "12"
+    font-size = "12.5"
+    adjust-cell-height = 8%
 
     cursor-style = bar
     theme = custom
     config-file = keybindings
-    window-decoration = false
+    window-decoration = none
+    window-padding-color = background
+
+    # background-opacity-cells = true
+    background-opacity = 0.0
+    background-blur = 0
   '';
 
   keybindingsConfig = ''
