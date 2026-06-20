@@ -71,6 +71,77 @@
     terminal = false;
   };
 
+  xdg.configFile."hypr/hyprlock.conf".text = ''
+    general {
+      disable_loading_bar = true
+      hide_cursor = false
+      grace = 0
+    }
+
+    background {
+      monitor =
+      path = ${../assets/hyprland/art-gallery-neo.png}
+      blur_passes = 0
+      contrast = 1.0
+      brightness = 0.82
+      vibrancy = 0.10
+      vibrancy_darkness = 0.15
+    }
+
+    label {
+      monitor =
+      text = $TIME
+      color = rgba(DBBC7Fff)
+      font_size = 88
+      font_family = EB Garamond
+      position = 0, 140
+      halign = center
+      valign = center
+    }
+
+    label {
+      monitor =
+      text = Gallery Hall
+      color = rgba(7FBBB3ff)
+      font_size = 30
+      font_family = EB Garamond
+      position = 0, 74
+      halign = center
+      valign = center
+    }
+
+    label {
+      monitor =
+      text = cmd[update:60000] date +"%A, %d %B"
+      color = rgba(D3C6AAe6)
+      font_size = 14
+      font_family = JetBrains Mono Nerd Font
+      position = 0, 28
+      halign = center
+      valign = center
+    }
+
+    input-field {
+      monitor =
+      size = 340, 48
+      outline_thickness = 1
+      dots_size = 0.20
+      dots_spacing = 0.30
+      dots_center = true
+      outer_color = rgba(7FBBB3ff)
+      inner_color = rgba(14161bcc)
+      font_color = rgba(D3C6AAff)
+      fail_color = rgba(E67E80ff)
+      check_color = rgba(DBBC7Fff)
+      placeholder_text = <i>Enter password</i>
+      fade_on_empty = false
+      rounding = 4
+      position = 0, -48
+      halign = center
+      valign = center
+    }
+  '';
+
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;

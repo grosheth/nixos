@@ -12,6 +12,7 @@ in
     (if x11 then ./modules/x11.nix else null)
     (if hyprland then ./modules/hyprland.nix else null)
     (if sway then ./modules/sway.nix else null)
+    ./modules/greetd.nix
     ./modules/nvidia-drivers.nix
   ];
 
