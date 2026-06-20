@@ -79,7 +79,7 @@
     }
 
     background {
-      monitor =
+      monitor = DP-3
       path = ${../assets/hyprland/art-gallery-neo.png}
       blur_passes = 0
       contrast = 1.0
@@ -185,7 +185,7 @@
 
       misc = {
         disable_splash_rendering = true,
-        force_default_wallpaper = 1,
+        force_default_wallpaper = 0,
       },
 
       input = {
