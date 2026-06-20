@@ -4,18 +4,18 @@ format = "$os$hostname$username$directory$fill $all$time\n$character\n"
 
 [container]
 format = "[$symbol ](style)"
-style = "bg:#212026 fg:#000000"
+style = "fg:#000000"
 symbol = " 󰏖"
 
 [directory]
 format = "[ $path ]($style)"
-style = "bg:#000000 fg:#6dd797"
+style = "fg:#6dd797"
 truncation_length = 3
 truncation_symbol = "~/󰇘/"
 
 [git_branch]
 format = "[$symbol$branch ](:$remote_branch)($style)"
-style = "bg:#000000 fg:#0d9c94"
+style = "fg:#0d9c94"
 symbol = ""
 
 [git_commit]
@@ -23,57 +23,57 @@ commit_hash_length = 4
 tag_symbol = "🔖"
 
 [golang]
-format = "[$symbol($version) ](bg:#000000 fg:#0bc9cf)"
+format = "[$symbol($version) ](fg:#0bc9cf)"
 symbol = " "
 
 [hostname]
 format = "[$hostname ]($style)"
 ssh_only = false
-style = "fg:#ef6787 bg:#000000"
+style = "fg:#ef6787"
 
 [line_break]
 disabled = true
 
 [lua]
-format = "[$symbol($version) ](bg:#000000 fg:#2a57cc)"
+format = "[$symbol($version) ](fg:#2a57cc)"
 symbol = "󰢱 "
 
 [nix_shell]
 disabled = false
 format = "[ NIX SHELL ]($style)"
-style = "bg:#000000 fg:#9d81ba"
+style = "fg:#9d81ba"
 
 [nodejs]
-format = "[$symbol($version) ](bg:#000000 fg:#eed891)"
+format = "[$symbol($version) ](fg:#eed891)"
 symbol = " "
 
 [os]
 disabled = false
 format = "[$symbol ]($style)"
-style = "bg:#000000 fg:#ef6787"
+style = "fg:#ef6787"
 
 [os.symbols]
 Arch = "[ ](fg:#0bc9cf)"
 Debian = "[](fg:#ef6787)"
 EndeavourOS = "[ ](fg:#9d81ba)"
-Fedora = "[ ](fg:color bg:#0bc9cf)"
-NixOS = "[](fg:#f8f8f2 bg:#000000)"
+Fedora = "[ ](fg:color)"
+NixOS = "[](fg:#f8f8f2)"
 SUSE = "[ ](fg:#6dd797)"
 Ubuntu = "[ ](fg:#9d81ba"
 openSUSE = "[ ](fg:#6dd797)"
 
 [python]
-format = "[$symbol$pyenv_prefix($version)(($virtualenv)) ](bg:#000000 fg:#0d9c94)"
+format = "[$symbol$pyenv_prefix($version)(($virtualenv)) ](fg:#0d9c94)"
 symbol = " "
 
 [time]
 disabled = false
 format = "[󰔟 $time ]($style)"
-style = "bg:#000000 fg:#0bc9cf"
+style = "fg:#0bc9cf"
 time_format = "%m-%d %R"
 
 [username]
 format = "[$user ]($style)"
 show_always = true
-style_user = "bg:#000000 fg:#eed891"
+style_user = "fg:#eed891"
 

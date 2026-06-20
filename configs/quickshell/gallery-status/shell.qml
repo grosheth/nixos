@@ -7,6 +7,7 @@ ShellRoot {
   id: root
 
   property bool panelOpen: false
+  property bool compactOpen: true
   property int workspace: 10
   property string mainScreen: "DP-3"
   property string currentTime: Qt.formatTime(new Date(), "HH:mm")
@@ -21,6 +22,14 @@ ShellRoot {
     "volume": "N/A",
     "uptime": "unknown",
     "ssh": "0",
+    "load": "0.00 0.00 0.00",
+    "memUsed": "unknown",
+    "diskUsed": "unknown",
+    "kernel": "unknown",
+    "host": "nixos",
+    "packages": "N/A",
+    "battery": "AC",
+    "monitors": "unknown",
     "media": ""
   })
 
@@ -31,7 +40,15 @@ ShellRoot {
     if (ws === 4) return "Man in Black";
     if (ws === 5) return "Color Blocks";
     if (ws === 6) return "Flowers and Ash";
-    return "Gallery Hall";
+    if (ws === 10) return "Gallery Hall";
+    return "Workspace " + root.roomNumber(ws);
+  }
+
+  function wallpaperSource(ws) {
+    if (ws >= 1 && ws <= 6)
+      return "file:///home/salledelavage/.config/quickshell/gallery-transition/painting-" + String(ws) + ".png";
+
+    return "file:///home/salledelavage/.config/quickshell/gallery-transition/gallery.png";
   }
 
   function roomNumber(ws) {
@@ -40,24 +57,92 @@ ShellRoot {
     return String(ws);
   }
 
+  function palette(ws) {
+    if (ws === 1) return {
+      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
+      red: "#b94a42", green: "#6f8a68", yellow: "#c8914c",
+      blue: "#1e5d78", magenta: "#9d352f", cyan: "#3d86a7",
+      accent: "#b94a42", accent2: "#1e5d78", muted: "#4f4642",
+      active: "#c45145"
+    };
+    if (ws === 2) return {
+      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
+      red: "#a14232", green: "#788347", yellow: "#d1a55a",
+      blue: "#1f5f86", magenta: "#8b5b72", cyan: "#5a9bb8",
+      accent: "#1f5f86", accent2: "#d1a55a", muted: "#5f554f",
+      active: "#3d86a7"
+    };
+    if (ws === 3) return {
+      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
+      red: "#9d352f", green: "#4d6b45", yellow: "#d8c6a7",
+      blue: "#3d86a7", magenta: "#b9853d", cyan: "#86b6c7",
+      accent: "#3d86a7", accent2: "#d8c6a7", muted: "#4f625b",
+      active: "#86b6c7"
+    };
+    if (ws === 4) return {
+      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
+      red: "#8e331c", green: "#5a5b56", yellow: "#f0a24b",
+      blue: "#252d34", magenta: "#9d352f", cyan: "#9a9891",
+      accent: "#d65a20", accent2: "#f0a24b", muted: "#333435",
+      active: "#d65a20"
+    };
+    if (ws === 5) return {
+      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
+      red: "#a14232", green: "#5a7564", yellow: "#d8c6a7",
+      blue: "#1e5d78", magenta: "#b9853d", cyan: "#3d86a7",
+      accent: "#1e5d78", accent2: "#a14232", muted: "#5a5b56",
+      active: "#3d86a7"
+    };
+    if (ws === 6) return {
+      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
+      red: "#a14232", green: "#4d5c2f", yellow: "#d1a55a",
+      blue: "#2f6f86", magenta: "#c69781", cyan: "#6f9e91",
+      accent: "#c69781", accent2: "#4d5c2f", muted: "#4f4642",
+      active: "#c69781"
+    };
+    return {
+      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
+      red: "#E67E80", green: "#A7C080", yellow: "#DBBC7F",
+      blue: "#7FBBB3", magenta: "#D699B6", cyan: "#83C092",
+      accent: "#7FBBB3", accent2: "#DBBC7F", muted: "#4f4642",
+      active: "#7FBBB3"
+    };
+  }
+
+  function alpha(hex, aa) {
+    return "#" + aa + hex.slice(1);
+  }
+
   function accent(ws) {
-    if (ws === 1) return "#c45145";
-    if (ws === 2) return "#3d86a7";
-    if (ws === 3) return "#86b6c7";
-    if (ws === 4) return "#d65a20";
-    if (ws === 5) return "#3d86a7";
-    if (ws === 6) return "#c69781";
-    return "#7FBBB3";
+    return root.palette(ws).active;
+  }
+
+  function accent2(ws) {
+    return root.palette(ws).accent2;
   }
 
   function muted(ws) {
-    if (ws === 1) return "#4f4642";
-    if (ws === 2) return "#5f554f";
-    if (ws === 3) return "#4f625b";
-    if (ws === 4) return "#333435";
-    if (ws === 5) return "#5a5b56";
-    if (ws === 6) return "#4f4642";
-    return "#4f4642";
+    return root.palette(ws).muted;
+  }
+
+  function foreground(ws) {
+    return root.palette(ws).fg;
+  }
+
+  function panelFill(ws) {
+    return root.alpha(root.palette(ws).accent, "d0");
+  }
+
+  function overlayPanelFill(ws) {
+    return "transparent";
+  }
+
+  function quietText(ws) {
+    return root.palette(ws).cyan;
+  }
+
+  function dividerColor(ws) {
+    return root.alpha(root.palette(ws).muted, "88");
   }
 
   function normalizeWorkspace(ws) {
@@ -65,11 +150,16 @@ ShellRoot {
   }
 
   function metricColor(value, warning, critical) {
+    var p = root.palette(root.workspace);
     var n = Number(value);
-    if (isNaN(n)) return "#7FBBB3";
-    if (n >= critical) return "#E67E80";
-    if (n >= warning) return "#DBBC7F";
-    return "#A7C080";
+    if (isNaN(n)) return p.cyan;
+    if (n >= critical) return p.red;
+    if (n >= warning) return p.yellow;
+    return p.green;
+  }
+
+  function tempLabel() {
+    return root.status.temp === "N/A" ? "N/A" : root.status.temp + " C";
   }
 
   function refreshStatus() {
@@ -94,6 +184,25 @@ ShellRoot {
 
     function toggle(): void {
       root.panelOpen = !root.panelOpen;
+      root.refreshStatus();
+    }
+
+    function toggleWorkspace(ws: int): void {
+      root.workspace = root.normalizeWorkspace(ws);
+      root.panelOpen = !root.panelOpen;
+      root.refreshStatus();
+    }
+
+    function open(): void {
+      root.panelOpen = true;
+      root.refreshStatus();
+    }
+
+    function toggleCompact(): void {
+      root.compactOpen = !root.compactOpen;
+      if (!root.compactOpen) {
+        root.panelOpen = false;
+      }
       root.refreshStatus();
     }
 
@@ -144,18 +253,28 @@ ShellRoot {
 
         required property var modelData
         property bool isMainScreen: modelData.name === root.mainScreen
+        property bool isBenqScreen: !isMainScreen
 
         screen: modelData
-        visible: isMainScreen
+        visible: (isMainScreen && root.panelOpen) || (isBenqScreen && root.compactOpen)
+        implicitWidth: 430
+        implicitHeight: 116
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
         focusable: false
 
         anchors {
-          top: true
-          bottom: true
-          left: true
+          top: isMainScreen
+          left: isMainScreen
           right: true
+          bottom: true
+        }
+
+        margins {
+          top: 0
+          left: 0
+          right: isMainScreen ? 0 : 34
+          bottom: isMainScreen ? 0 : 34
         }
 
         WlrLayershell.layer: WlrLayer.Overlay
@@ -164,15 +283,26 @@ ShellRoot {
         Item {
           anchors.fill: parent
 
+          Image {
+            id: overlayWallpaper
+
+            visible: win.isMainScreen && root.panelOpen
+            anchors.fill: parent
+            source: root.wallpaperSource(root.workspace)
+            fillMode: Image.Stretch
+            smooth: true
+          }
+
           Rectangle {
             id: signature
 
-            width: 310
-            height: 88
-            x: parent.width - width - 34
-            y: parent.height - height - 34
+            visible: win.isBenqScreen
+            width: 350
+            height: 116
+            x: parent.width - width
+            y: parent.height - height
 
-            color: "#cc14161b"
+            color: root.alpha(root.palette(root.workspace).black, "cc")
             radius: 4
             border.width: 1
             border.color: root.accent(root.workspace)
@@ -193,16 +323,16 @@ ShellRoot {
 
               anchors {
                 left: parent.left
-                leftMargin: 24
+                leftMargin: 28
                 right: parent.right
-                rightMargin: 18
+                rightMargin: 22
                 top: parent.top
-                topMargin: 12
+                topMargin: 16
               }
               text: "No. " + root.roomNumber(root.workspace) + " / " + root.currentTime
-              color: "#D3C6AA"
+              color: root.foreground(root.workspace)
               font.family: "JetBrains Mono Nerd Font"
-              font.pixelSize: 13
+              font.pixelSize: 16
               font.bold: true
               elide: Text.ElideRight
             }
@@ -215,9 +345,9 @@ ShellRoot {
                 topMargin: 2
               }
               text: root.roomName(root.workspace)
-              color: "#fff275"
+              color: root.accent2(root.workspace)
               font.family: "EB Garamond"
-              font.pixelSize: 28
+              font.pixelSize: 34
               font.italic: true
               elide: Text.ElideRight
             }
@@ -227,12 +357,12 @@ ShellRoot {
                 left: room.left
                 right: room.right
                 bottom: parent.bottom
-                bottomMargin: 10
+                bottomMargin: 14
               }
               text: root.status.vpn + "  /  " + root.status.cpu + "% CPU  /  " + root.status.mem + "% MEM"
-              color: "#a7a39a"
+              color: root.quietText(root.workspace)
               font.family: "JetBrains Mono Nerd Font"
-              font.pixelSize: 11
+              font.pixelSize: 14
               elide: Text.ElideRight
             }
           }
@@ -240,114 +370,272 @@ ShellRoot {
           Rectangle {
             id: statusPanel
 
-            width: 390
-            height: 410
-            x: parent.width - width - 34
-            y: root.panelOpen ? parent.height - height - 136 : parent.height + 18
+            visible: win.isMainScreen
+            width: parent.width
+            height: parent.height
+            x: 0
+            y: 0
             opacity: root.panelOpen ? 1 : 0
 
-            color: "#e614161b"
-            radius: 6
-            border.width: 1
-            border.color: root.accent(root.workspace)
-
-            Behavior on y {
-              NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
-            }
+            color: "transparent"
 
             Behavior on opacity {
               NumberAnimation { duration: 120 }
             }
 
-            Column {
-              anchors.fill: parent
-              anchors.margins: 22
-              spacing: 14
+            Rectangle {
+              id: titlePlaque
 
-              Text {
-                width: parent.width
-                text: "CATALOGUE " + root.roomNumber(root.workspace)
-                color: root.accent(root.workspace)
-                font.family: "JetBrains Mono Nerd Font"
-                font.pixelSize: 13
-                font.bold: true
-              }
+              width: 430
+              height: 118
+              x: 72
+              y: 72
 
-              Text {
-                width: parent.width
-                text: root.roomName(root.workspace)
-                color: "#fff275"
-                font.family: "EB Garamond"
-                font.pixelSize: 36
-                font.italic: true
-                elide: Text.ElideRight
-              }
+              color: root.overlayPanelFill(root.workspace)
+              radius: 6
+              border.width: 1
+              border.color: root.accent(root.workspace)
 
               Rectangle {
-                width: parent.width
-                height: 1
-                color: root.muted(root.workspace)
+                width: 4
+                anchors {
+                  top: parent.top
+                  bottom: parent.bottom
+                  left: parent.left
+                  margins: 12
+                }
+                color: root.accent(root.workspace)
               }
 
-              Grid {
-                width: parent.width
-                columns: 2
-                columnSpacing: 18
-                rowSpacing: 12
+              Column {
+                anchors.fill: parent
+                anchors.leftMargin: 30
+                anchors.rightMargin: 22
+                anchors.topMargin: 16
+                spacing: 4
+
+                Text {
+                  width: parent.width
+                  text: "No. " + root.roomNumber(root.workspace) + " / " + root.currentDate + " / " + root.currentTime
+                  color: root.accent(root.workspace)
+                  font.family: "JetBrains Mono Nerd Font"
+                  font.pixelSize: 14
+                  font.bold: true
+                  elide: Text.ElideRight
+                }
+
+                Text {
+                  width: parent.width
+                  text: root.roomName(root.workspace)
+                  color: root.accent2(root.workspace)
+                  font.family: "EB Garamond"
+                  font.pixelSize: 38
+                  font.italic: true
+                  elide: Text.ElideRight
+                }
+
+                Text {
+                  width: parent.width
+                  text: root.status.host + "  /  uptime " + root.status.uptime
+                  color: root.quietText(root.workspace)
+                  font.family: "JetBrains Mono Nerd Font"
+                  font.pixelSize: 12
+                  elide: Text.ElideRight
+                }
+              }
+            }
+
+            Rectangle {
+              id: hardwarePlaque
+
+              width: 430
+              height: 178
+              x: parent.width - width - 72
+              y: 96
+
+              color: root.overlayPanelFill(root.workspace)
+              radius: 6
+              border.width: 1
+              border.color: root.muted(root.workspace)
+
+              Column {
+                anchors.fill: parent
+                anchors.margins: 18
+                spacing: 12
+
+                Text {
+                  width: parent.width
+                  text: "SYSTEM"
+                  color: root.accent(root.workspace)
+                  font.family: "JetBrains Mono Nerd Font"
+                  font.pixelSize: 12
+                  font.bold: true
+                }
 
                 Repeater {
                   model: [
-                    ["VPN", root.status.vpn, root.status.vpn === "OFF" ? "#E67E80" : "#A7C080"],
-                    ["IP", root.status.ip, "#D3C6AA"],
                     ["CPU", root.status.cpu + "%", root.metricColor(root.status.cpu, 70, 90)],
                     ["MEM", root.status.mem + "%", root.metricColor(root.status.mem, 70, 85)],
                     ["DISK", root.status.disk + "%", root.metricColor(root.status.disk, 80, 92)],
-                    ["TEMP", root.status.temp + "C", root.metricColor(root.status.temp, 65, 80)],
-                    ["VOL", root.status.volume, "#DBBC7F"],
-                    ["SSH", root.status.ssh, root.status.ssh === "0" ? "#7FBBB3" : "#E67E80"],
-                    ["UP", root.status.uptime, "#A7C080"],
-                    ["DATE", root.currentDate, "#D3C6AA"]
+                    ["TEMP", root.tempLabel(), root.metricColor(root.status.temp, 65, 80)]
                   ]
 
-                  delegate: Column {
-                    width: (statusPanel.width - 62) / 2
-                    spacing: 3
+                  delegate: Row {
+                    width: parent.width
+                    height: 20
+                    spacing: 12
+                    property var metric: modelData
 
                     Text {
-                      width: parent.width
-                      text: modelData[0]
-                      color: "#8f8a82"
+                      width: 54
+                      text: metric[0]
+                      color: root.quietText(root.workspace)
                       font.family: "JetBrains Mono Nerd Font"
-                      font.pixelSize: 10
+                      font.pixelSize: 12
                       font.bold: true
                     }
 
                     Text {
-                      width: parent.width
-                      text: modelData[1]
-                      color: modelData[2]
+                      width: 64
+                      text: metric[1]
+                      color: metric[2]
                       font.family: "JetBrains Mono Nerd Font"
                       font.pixelSize: 14
-                      elide: Text.ElideRight
+                      font.bold: true
+                    }
+
+                    Repeater {
+                      model: [10, 25, 50, 75, 100]
+
+                      delegate: Text {
+                        text: "●"
+                        color: Number(metric[1].replace("%", "").replace(" C", "")) >= modelData ? metric[2] : root.alpha(root.muted(root.workspace), "99")
+                        font.family: "JetBrains Mono Nerd Font"
+                        font.pixelSize: 12
+                      }
                     }
                   }
                 }
               }
+            }
 
-              Rectangle {
-                width: parent.width
-                height: 1
-                color: root.muted(root.workspace)
+            Rectangle {
+              id: networkPlaque
+
+              width: 360
+              height: 128
+              x: 92
+              y: parent.height - height - 104
+
+              color: root.overlayPanelFill(root.workspace)
+              radius: 6
+              border.width: 1
+              border.color: root.muted(root.workspace)
+
+              Column {
+                anchors.fill: parent
+                anchors.margins: 18
+                spacing: 8
+
+                Text {
+                  width: parent.width
+                  text: "NETWORK"
+                  color: root.accent(root.workspace)
+                  font.family: "JetBrains Mono Nerd Font"
+                  font.pixelSize: 12
+                  font.bold: true
+                }
+
+                Text {
+                  width: parent.width
+                  text: root.status.ip
+                  color: root.foreground(root.workspace)
+                  font.family: "JetBrains Mono Nerd Font"
+                  font.pixelSize: 18
+                  font.bold: true
+                  elide: Text.ElideRight
+                }
+
+                Text {
+                  width: parent.width
+                  text: "VPN " + root.status.vpn + "  /  SSH " + root.status.ssh
+                  color: root.status.vpn === "OFF" ? root.palette(root.workspace).red : root.palette(root.workspace).green
+                  font.family: "JetBrains Mono Nerd Font"
+                  font.pixelSize: 13
+                  elide: Text.ElideRight
+                }
               }
+            }
+
+            Rectangle {
+              id: mediaPlaque
+
+              width: 620
+              height: 74
+              x: (parent.width - width) / 2
+              y: parent.height - height - 70
+
+              color: root.overlayPanelFill(root.workspace)
+              radius: 6
+              border.width: 1
+              border.color: root.muted(root.workspace)
 
               Text {
-                width: parent.width
-                text: root.status.media === "" ? "No active media" : root.status.media
-                color: root.status.media === "" ? "#8f8a82" : "#D3C6AA"
+                anchors.fill: parent
+                anchors.margins: 18
+                text: root.status.media === "" ? "No active media  /  " + root.status.volume : root.status.media + "  /  " + root.status.volume
+                color: root.status.media === "" ? root.quietText(root.workspace) : root.foreground(root.workspace)
                 font.family: "JetBrains Mono Nerd Font"
-                font.pixelSize: 13
+                font.pixelSize: 15
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
                 elide: Text.ElideRight
               }
+            }
+
+            Text {
+              width: parent.width - 144
+              height: 24
+              x: 72
+              y: parent.height - 36
+              text: root.status.kernel + "  /  " + root.status.memUsed + " MEM  /  " + root.status.diskUsed + " DISK  /  " + root.status.monitors
+              color: root.quietText(root.workspace)
+              font.family: "JetBrains Mono Nerd Font"
+              font.pixelSize: 12
+              horizontalAlignment: Text.AlignHCenter
+              elide: Text.ElideRight
+            }
+
+            Text {
+              width: 260
+              height: 70
+              x: parent.width - width - 72
+              y: parent.height - height - 108
+              text: root.currentTime
+              color: root.accent2(root.workspace)
+              font.family: "EB Garamond"
+              font.pixelSize: 58
+              font.italic: true
+              horizontalAlignment: Text.AlignRight
+              verticalAlignment: Text.AlignVCenter
+            }
+
+            Rectangle {
+              visible: false
+              width: 1
+              height: parent.height - 190
+              x: parent.width - 538
+              y: 72
+              color: root.dividerColor(root.workspace)
+            }
+
+            Rectangle {
+              visible: false
+              width: parent.width - 210
+              height: 1
+              x: 72
+              y: parent.height - 176
+              color: root.dividerColor(root.workspace)
             }
           }
         }

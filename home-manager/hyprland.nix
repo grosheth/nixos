@@ -50,6 +50,8 @@
 
       for _ in $(${coreutils}/bin/seq 1 25); do
         if ${awww}/bin/awww img --transition-type none --resize stretch --outputs DP-3 "$image"; then
+          state_dir="''${XDG_RUNTIME_DIR:-/tmp}"
+          printf '%s\n' 10 > "$state_dir/gallery-current-workspace"
           exit 0
         fi
 
@@ -181,6 +183,7 @@
     hl.bind(mod .. " + return", exec(terminal))
     hl.bind(mod .. " + D", exec("dmenu_run"))
     hl.bind(mod .. " + M", exec("gallery-status-toggle"))
+    hl.bind(mod .. " + N", exec("gallery-status-compact-toggle"))
     hl.bind(mod .. " + space", exec("pkill rofi || rofi -show drun"))
     hl.bind(mod .. " + SHIFT + space", exec("kando"))
 
