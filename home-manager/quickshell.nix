@@ -18,7 +18,17 @@
       volume="$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | awk 'NR == 1 {print $5}' || true)"
       volume="''${volume:-N/A}"
       uptime_value="$(uptime | awk -F'up ' '{print $2}' | awk -F',' '{print $1}' | sed 's/^ *//;s/ *$//')"
-      ssh_count="$(ss -tn state established 2>/dev/null | grep -c ':22 ' || true)"
+      ssh_count="$(awk '
+        FNR == 1 { next }
+        {
+          split($2, local, ":")
+          split($3, remote, ":")
+          if ($4 == "01" && (toupper(local[2]) == "0016" || toupper(remote[2]) == "0016")) {
+            count++
+          }
+        }
+        END { print count + 0 }
+      ' /proc/net/tcp /proc/net/tcp6 2>/dev/null || echo 0)"
 
       if ip link show wg-enp5s0 >/dev/null 2>&1 && ip addr show wg-enp5s0 | grep -q inet; then
         vpn="Proton"

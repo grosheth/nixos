@@ -50,6 +50,11 @@ in {
     wf-recorder
     slurp
     kanshi
+    (writeShellScriptBin "gallery-layout" ''
+      ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:BNQ BenQ EX2780Q S6L01178019,2560x1440@144,0x0,1"
+      ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:Samsung Electric Company LC34G55T HNTXA04571,3440x1440@120,2560x0,1"
+      ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:BNQ BenQ EX2780Q 4BK01346019,2560x1440@144,6000x0,1"
+    '')
     (writeShellScriptBin "gallery-wallpaper" ''
       gallery_image="${../assets/hyprland/art-gallery-neo.png}"
       black_image="${blackWallpaper}"
@@ -275,6 +280,7 @@ in {
 
     hl.on("hyprland.start", function()
       hl.exec_cmd("hyprctl setcursor Qogir 24")
+      hl.exec_cmd("gallery-layout")
       hl.exec_cmd("awww-daemon")
       hl.exec_cmd("awww clear")
       hl.exec_cmd("gallery-wallpaper")
@@ -289,6 +295,7 @@ in {
     hl.bind(mod .. " + C", hl.dsp.window.close())
     hl.bind(mod .. " + return", exec(terminal))
     hl.bind(mod .. " + D", exec("dmenu_run"))
+    hl.bind(mod .. " + L", exec("hyprlock"))
     hl.bind(mod .. " + M", exec("gallery-status-toggle"))
     hl.bind(mod .. " + N", exec("gallery-status-compact-toggle"))
     hl.bind(mod .. " + space", exec("pkill rofi || rofi -show drun"))

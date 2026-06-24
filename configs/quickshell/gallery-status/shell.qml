@@ -158,6 +158,11 @@ ShellRoot {
     return p.green;
   }
 
+  function metricValue(value) {
+    var n = Number(String(value).replace("%", "").replace(" C", ""));
+    return isNaN(n) ? 0 : Math.max(0, Math.min(100, n));
+  }
+
   function tempLabel() {
     return root.status.temp === "N/A" ? "N/A" : root.status.temp + " C";
   }
@@ -386,61 +391,82 @@ ShellRoot {
             Rectangle {
               id: titlePlaque
 
-              width: 430
-              height: 118
+              width: 760
+              height: 178
               x: 72
-              y: 72
+              y: 62
 
-              color: root.overlayPanelFill(root.workspace)
-              radius: 6
-              border.width: 1
-              border.color: root.accent(root.workspace)
+              color: "transparent"
 
               Rectangle {
-                width: 4
-                anchors {
-                  top: parent.top
-                  bottom: parent.bottom
-                  left: parent.left
-                  margins: 12
-                }
-                color: root.accent(root.workspace)
+                width: 132
+                height: 1
+                x: 2
+                y: 26
+                color: root.alpha(root.accent(root.workspace), "cc")
               }
 
-              Column {
-                anchors.fill: parent
-                anchors.leftMargin: 30
-                anchors.rightMargin: 22
-                anchors.topMargin: 16
-                spacing: 4
+              Text {
+                id: roomMeta
 
-                Text {
-                  width: parent.width
-                  text: "No. " + root.roomNumber(root.workspace) + " / " + root.currentDate + " / " + root.currentTime
-                  color: root.accent(root.workspace)
-                  font.family: "JetBrains Mono Nerd Font"
-                  font.pixelSize: 14
-                  font.bold: true
-                  elide: Text.ElideRight
-                }
+                width: parent.width
+                height: 28
+                x: 0
+                y: 0
+                text: "No. " + root.roomNumber(root.workspace) + " / " + root.currentDate + " / " + root.currentTime
+                color: root.alpha(root.accent(root.workspace), "e6")
+                font.family: "JetBrains Mono Nerd Font"
+                font.pixelSize: 14
+                font.bold: true
+                elide: Text.ElideRight
+                style: Text.Raised
+                styleColor: root.alpha(root.palette(root.workspace).black, "bb")
+              }
 
-                Text {
-                  width: parent.width
-                  text: root.roomName(root.workspace)
-                  color: root.accent2(root.workspace)
-                  font.family: "EB Garamond"
-                  font.pixelSize: 38
-                  font.italic: true
-                  elide: Text.ElideRight
-                }
+              Text {
+                width: parent.width
+                height: 94
+                x: 0
+                y: 30
+                text: root.roomName(root.workspace)
+                color: root.accent2(root.workspace)
+                font.family: "EB Garamond"
+                font.pixelSize: 78
+                font.italic: true
+                elide: Text.ElideRight
+                style: Text.Raised
+                styleColor: root.alpha(root.palette(root.workspace).black, "dd")
+              }
 
-                Text {
-                  width: parent.width
-                  text: root.status.host + "  /  uptime " + root.status.uptime
-                  color: root.quietText(root.workspace)
-                  font.family: "JetBrains Mono Nerd Font"
-                  font.pixelSize: 12
-                  elide: Text.ElideRight
+              Text {
+                width: 440
+                height: 26
+                x: 4
+                y: 134
+                text: root.status.host + "  /  uptime " + root.status.uptime
+                color: root.alpha(root.foreground(root.workspace), "dd")
+                font.family: "JetBrains Mono Nerd Font"
+                font.pixelSize: 13
+                elide: Text.ElideRight
+                style: Text.Raised
+                styleColor: root.alpha(root.palette(root.workspace).black, "bb")
+              }
+
+              Row {
+                x: 4
+                y: 164
+                height: 10
+                spacing: 8
+
+                Repeater {
+                  model: [root.accent(root.workspace), root.accent2(root.workspace), root.quietText(root.workspace), root.palette(root.workspace).red]
+
+                  delegate: Rectangle {
+                    width: modelData === root.palette(root.workspace).red ? 28 : 46
+                    height: 2
+                    color: modelData
+                    opacity: 0.86
+                  }
                 }
               }
             }
@@ -448,28 +474,61 @@ ShellRoot {
             Rectangle {
               id: hardwarePlaque
 
-              width: 430
-              height: 178
+              width: 480
+              height: 292
               x: parent.width - width - 72
               y: 96
 
-              color: root.overlayPanelFill(root.workspace)
-              radius: 6
-              border.width: 1
-              border.color: root.muted(root.workspace)
+              color: "transparent"
+
+              Rectangle {
+                width: 154
+                height: 1
+                x: parent.width - width
+                y: 22
+                color: root.alpha(root.accent(root.workspace), "bb")
+              }
+
+              Rectangle {
+                width: 74
+                height: 1
+                x: parent.width - width
+                y: 236
+                color: root.alpha(root.accent2(root.workspace), "99")
+              }
 
               Column {
                 anchors.fill: parent
-                anchors.margins: 18
-                spacing: 12
+                anchors.margins: 0
+                spacing: 7
 
-                Text {
+                Row {
                   width: parent.width
-                  text: "SYSTEM"
-                  color: root.accent(root.workspace)
-                  font.family: "JetBrains Mono Nerd Font"
-                  font.pixelSize: 12
-                  font.bold: true
+                  height: 18
+                  spacing: 10
+
+                  Text {
+                    width: 56
+                    text: "btop"
+                    color: root.accent2(root.workspace)
+                    font.family: "JetBrains Mono Nerd Font"
+                    font.pixelSize: 13
+                    font.bold: true
+                    style: Text.Raised
+                    styleColor: root.alpha(root.palette(root.workspace).black, "bb")
+                  }
+
+                  Text {
+                    width: parent.width - 66
+                    text: root.status.load + " load"
+                    color: root.quietText(root.workspace)
+                    font.family: "JetBrains Mono Nerd Font"
+                    font.pixelSize: 12
+                    horizontalAlignment: Text.AlignRight
+                    elide: Text.ElideRight
+                    style: Text.Raised
+                    styleColor: root.alpha(root.palette(root.workspace).black, "bb")
+                  }
                 }
 
                 Repeater {
@@ -481,38 +540,107 @@ ShellRoot {
                   ]
 
                   delegate: Row {
+                    id: metricRow
+
                     width: parent.width
-                    height: 20
-                    spacing: 12
+                    height: 30
+                    spacing: 10
                     property var metric: modelData
+                    property int fillValue: root.metricValue(metric[1])
 
                     Text {
-                      width: 54
+                      width: 48
+                      height: parent.height
                       text: metric[0]
                       color: root.quietText(root.workspace)
                       font.family: "JetBrains Mono Nerd Font"
                       font.pixelSize: 12
                       font.bold: true
+                      verticalAlignment: Text.AlignVCenter
+                      style: Text.Raised
+                      styleColor: root.alpha(root.palette(root.workspace).black, "bb")
+                    }
+
+                    Rectangle {
+                      width: parent.width - 128
+                      height: 18
+                      y: 8
+                      color: root.alpha(root.palette(root.workspace).black, "66")
+                      radius: 2
+                      clip: true
+
+                      Rectangle {
+                        width: parent.width * metricRow.fillValue / 100
+                        height: parent.height
+                        color: metric[2]
+                        opacity: 0.82
+                      }
+
+                      Row {
+                        anchors.fill: parent
+                        spacing: 2
+
+                        Repeater {
+                          model: 16
+
+                          delegate: Rectangle {
+                            width: (parent.width - 30) / 16
+                            height: parent.height
+                            color: "transparent"
+                            border.width: 1
+                            border.color: root.alpha(root.palette(root.workspace).black, "99")
+                          }
+                        }
+                      }
                     }
 
                     Text {
-                      width: 64
+                      width: 60
+                      height: parent.height
                       text: metric[1]
                       color: metric[2]
                       font.family: "JetBrains Mono Nerd Font"
                       font.pixelSize: 14
                       font.bold: true
+                      horizontalAlignment: Text.AlignRight
+                      verticalAlignment: Text.AlignVCenter
+                      style: Text.Raised
+                      styleColor: root.alpha(root.palette(root.workspace).black, "bb")
                     }
+                  }
+                }
 
-                    Repeater {
-                      model: [10, 25, 50, 75, 100]
+                Rectangle {
+                  width: 104
+                  height: 1
+                  color: root.alpha(root.muted(root.workspace), "99")
+                }
 
-                      delegate: Text {
-                        text: "●"
-                        color: Number(metric[1].replace("%", "").replace(" C", "")) >= modelData ? metric[2] : root.alpha(root.muted(root.workspace), "99")
-                        font.family: "JetBrains Mono Nerd Font"
-                        font.pixelSize: 12
-                      }
+                Grid {
+                  width: parent.width
+                  height: 42
+                  columns: 2
+                  rowSpacing: 6
+                  columnSpacing: 12
+
+                  Repeater {
+                    model: [
+                      ["MEM", root.status.memUsed],
+                      ["DISK", root.status.diskUsed],
+                      ["PKGS", root.status.packages],
+                      ["BAT", root.status.battery]
+                    ]
+
+                    delegate: Text {
+                      width: (parent.width - 12) / 2
+                      height: 18
+                      text: modelData[0] + " " + modelData[1]
+                      color: root.foreground(root.workspace)
+                      font.family: "JetBrains Mono Nerd Font"
+                      font.pixelSize: 11
+                      elide: Text.ElideRight
+                      style: Text.Raised
+                      styleColor: root.alpha(root.palette(root.workspace).black, "bb")
                     }
                   }
                 }
@@ -527,14 +655,27 @@ ShellRoot {
               x: 92
               y: parent.height - height - 104
 
-              color: root.overlayPanelFill(root.workspace)
-              radius: 6
-              border.width: 1
-              border.color: root.muted(root.workspace)
+              color: "transparent"
+
+              Rectangle {
+                width: 118
+                height: 1
+                x: 0
+                y: 20
+                color: root.alpha(root.accent(root.workspace), "bb")
+              }
+
+              Rectangle {
+                width: 54
+                height: 1
+                x: 0
+                y: 104
+                color: root.alpha(root.accent2(root.workspace), "99")
+              }
 
               Column {
                 anchors.fill: parent
-                anchors.margins: 18
+                anchors.margins: 0
                 spacing: 8
 
                 Text {
@@ -544,6 +685,8 @@ ShellRoot {
                   font.family: "JetBrains Mono Nerd Font"
                   font.pixelSize: 12
                   font.bold: true
+                  style: Text.Raised
+                  styleColor: root.alpha(root.palette(root.workspace).black, "bb")
                 }
 
                 Text {
@@ -554,6 +697,8 @@ ShellRoot {
                   font.pixelSize: 18
                   font.bold: true
                   elide: Text.ElideRight
+                  style: Text.Raised
+                  styleColor: root.alpha(root.palette(root.workspace).black, "bb")
                 }
 
                 Text {
@@ -563,6 +708,8 @@ ShellRoot {
                   font.family: "JetBrains Mono Nerd Font"
                   font.pixelSize: 13
                   elide: Text.ElideRight
+                  style: Text.Raised
+                  styleColor: root.alpha(root.palette(root.workspace).black, "bb")
                 }
               }
             }
@@ -570,51 +717,77 @@ ShellRoot {
             Rectangle {
               id: mediaPlaque
 
-              width: 620
-              height: 74
+              width: 900
+              height: 104
               x: (parent.width - width) / 2
-              y: parent.height - height - 70
+              y: parent.height - height - 82
 
-              color: root.overlayPanelFill(root.workspace)
-              radius: 6
-              border.width: 1
-              border.color: root.muted(root.workspace)
+              color: "transparent"
+              border.width: 0
 
-              Text {
+              Rectangle {
+                width: 190
+                height: 1
+                x: (parent.width - width) / 2
+                y: 0
+                color: root.alpha(root.accent(root.workspace), "bb")
+              }
+
+              Rectangle {
+                width: 92
+                height: 1
+                x: (parent.width - width) / 2
+                y: parent.height - 1
+                color: root.alpha(root.accent2(root.workspace), "99")
+              }
+
+              Column {
                 anchors.fill: parent
-                anchors.margins: 18
-                text: root.status.media === "" ? "No active media  /  " + root.status.volume : root.status.media + "  /  " + root.status.volume
-                color: root.status.media === "" ? root.quietText(root.workspace) : root.foreground(root.workspace)
-                font.family: "JetBrains Mono Nerd Font"
-                font.pixelSize: 15
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                elide: Text.ElideRight
+                anchors.topMargin: 12
+                anchors.leftMargin: 32
+                anchors.rightMargin: 32
+                spacing: 8
+
+                Text {
+                  width: parent.width
+                  height: 40
+                  text: root.status.media === "" ? "No active media  /  " + root.status.volume : root.status.media + "  /  " + root.status.volume
+                  color: root.status.media === "" ? root.alpha(root.accent(root.workspace), "dd") : root.accent2(root.workspace)
+                  font.family: "JetBrains Mono Nerd Font"
+                  font.pixelSize: 18
+                  font.bold: root.status.media !== ""
+                  verticalAlignment: Text.AlignVCenter
+                  horizontalAlignment: Text.AlignHCenter
+                  elide: Text.ElideRight
+                  style: Text.Raised
+                  styleColor: root.alpha(root.palette(root.workspace).black, "bb")
+                }
+
+                Text {
+                  width: parent.width
+                  height: 34
+                  text: root.status.kernel + "  /  " + root.status.memUsed + " MEM  /  " + root.status.diskUsed + " DISK  /  " + root.status.monitors
+                  color: root.alpha(root.quietText(root.workspace), "e6")
+                  font.family: "JetBrains Mono Nerd Font"
+                  font.pixelSize: 13
+                  verticalAlignment: Text.AlignVCenter
+                  horizontalAlignment: Text.AlignHCenter
+                  elide: Text.ElideRight
+                  style: Text.Raised
+                  styleColor: root.alpha(root.palette(root.workspace).black, "bb")
+                }
               }
             }
 
             Text {
-              width: parent.width - 144
-              height: 24
-              x: 72
-              y: parent.height - 36
-              text: root.status.kernel + "  /  " + root.status.memUsed + " MEM  /  " + root.status.diskUsed + " DISK  /  " + root.status.monitors
-              color: root.quietText(root.workspace)
-              font.family: "JetBrains Mono Nerd Font"
-              font.pixelSize: 12
-              horizontalAlignment: Text.AlignHCenter
-              elide: Text.ElideRight
-            }
-
-            Text {
-              width: 260
-              height: 70
+              width: 310
+              height: 86
               x: parent.width - width - 72
               y: parent.height - height - 108
               text: root.currentTime
               color: root.accent2(root.workspace)
               font.family: "EB Garamond"
-              font.pixelSize: 58
+              font.pixelSize: 72
               font.italic: true
               horizontalAlignment: Text.AlignRight
               verticalAlignment: Text.AlignVCenter
