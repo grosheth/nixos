@@ -169,7 +169,7 @@
     "quickshell/gallery-transition/shell.qml".source = ../configs/quickshell/gallery-transition/shell.qml;
     "quickshell/gallery-signature/shell.qml".source = ../configs/quickshell/gallery-signature/shell.qml;
     "quickshell/gallery-status/shell.qml".source = ../configs/quickshell/gallery-status/shell.qml;
-    "quickshell/gallery-status/gallery.png".source = ../assets/hyprland/art-gallery-neo.png;
+    "quickshell/gallery-status/gallery.png".source = ../assets/hyprland/dark-gallery.png;
     "quickshell/gallery-transition/gallery.png".source = ../assets/hyprland/art-gallery-neo.png;
     "quickshell/gallery-transition/painting-1.png".source = ../assets/hyprland/painting-1.png;
     "quickshell/gallery-transition/painting-2.png".source = ../assets/hyprland/painting-2.png;
