@@ -143,9 +143,80 @@
       mode_file="$state_dir/gallery-mode"
       current_workspace_file="$state_dir/gallery-current-workspace"
 
+      current="$(cat "$current_workspace_file" 2>/dev/null || true)"
+      if [ -z "$current" ]; then
+        current="$(hyprctl monitors -j 2>/dev/null | jq -r '.[] | select(.name == "DP-3") | .activeWorkspace.id // empty' 2>/dev/null || true)"
+      fi
+      if [ -z "$current" ]; then
+        current="$(hyprctl activeworkspace -j 2>/dev/null | jq -r '.id // empty' 2>/dev/null || true)"
+      fi
+
       mode="$(cat "$mode_file" 2>/dev/null || true)"
       if [ -z "$mode" ]; then
-        current="$(cat "$current_workspace_file" 2>/dev/null || true)"
+        case "$current" in
+          1|2|3|4|5|11) mode=light ;;
+          *) mode=dark ;;
+        esac
+      fi
+      if [ "$mode" != "light" ]; then
+        mode=dark
+      fi
+
+      case "$current" in
+        1) next_mode=dark; workspace=6 ;;
+        2) next_mode=dark; workspace=7 ;;
+        3) next_mode=dark; workspace=8 ;;
+        4) next_mode=dark; workspace=9 ;;
+        5) next_mode=dark; workspace=10 ;;
+        6) next_mode=light; workspace=1 ;;
+        7) next_mode=light; workspace=2 ;;
+        8) next_mode=light; workspace=3 ;;
+        9) next_mode=light; workspace=4 ;;
+        10) next_mode=light; workspace=5 ;;
+        11) next_mode=dark; workspace=12 ;;
+        12) next_mode=light; workspace=11 ;;
+        *)
+          if [ "$mode" = "light" ]; then
+            next_mode=dark
+            workspace=6
+          else
+            next_mode=light
+            workspace=1
+          fi
+          ;;
+      esac
+
+      printf '%s\n' "$next_mode" > "$mode_file"
+      printf '%s\n' "$workspace" > "$current_workspace_file"
+
+      if ! ${pkgs.procps}/bin/pgrep -f "quickshell.*gallery-status" >/dev/null; then
+        ${pkgs.quickshell}/bin/quickshell -c gallery-status >/dev/null 2>&1 &
+        sleep 0.2
+      fi
+
+      if ! ${pkgs.procps}/bin/pgrep -f "quickshell.*gallery-transition" >/dev/null; then
+        ${pkgs.quickshell}/bin/quickshell -c gallery-transition >/dev/null 2>&1 &
+        sleep 0.2
+      fi
+
+      ${pkgs.quickshell}/bin/qs ipc -c gallery-status call status set "$workspace" >/dev/null 2>&1 || true
+      ${pkgs.quickshell}/bin/qs ipc -c gallery-transition call gallery enter "$workspace"
+    '')
+    (writeShellScriptBin "gallery-enter-main" ''
+      state_dir="''${XDG_RUNTIME_DIR:-/tmp}"
+      mode_file="$state_dir/gallery-mode"
+      current_workspace_file="$state_dir/gallery-current-workspace"
+
+      current="$(cat "$current_workspace_file" 2>/dev/null || true)"
+      if [ -z "$current" ]; then
+        current="$(hyprctl monitors -j 2>/dev/null | jq -r '.[] | select(.name == "DP-3") | .activeWorkspace.id // empty' 2>/dev/null || true)"
+      fi
+      if [ -z "$current" ]; then
+        current="$(hyprctl activeworkspace -j 2>/dev/null | jq -r '.id // empty' 2>/dev/null || true)"
+      fi
+
+      mode="$(cat "$mode_file" 2>/dev/null || true)"
+      if [ -z "$mode" ]; then
         case "$current" in
           1|2|3|4|5|11) mode=light ;;
           *) mode=dark ;;
@@ -156,14 +227,12 @@
       fi
 
       if [ "$mode" = "light" ]; then
-        next_mode=dark
-        workspace=12
-      else
-        next_mode=light
         workspace=11
+      else
+        workspace=12
       fi
 
-      printf '%s\n' "$next_mode" > "$mode_file"
+      printf '%s\n' "$mode" > "$mode_file"
       printf '%s\n' "$workspace" > "$current_workspace_file"
 
       if ! ${pkgs.procps}/bin/pgrep -f "quickshell.*gallery-status" >/dev/null; then
@@ -235,7 +304,27 @@
     "quickshell/gallery-status/shell.qml".source = ../configs/quickshell/gallery-status/shell.qml;
     "quickshell/gallery-status/dark-gallery.png".source = ../assets/hyprland/dark-gallery.png;
     "quickshell/gallery-status/light-gallery.png".source = ../assets/hyprland/white-gallery.png;
+    "quickshell/gallery-status/white-painting-1.png".source = ../assets/hyprland/white-painting-1.png;
+    "quickshell/gallery-status/white-painting-2.png".source = ../assets/hyprland/white-painting-2.png;
+    "quickshell/gallery-status/white-painting-3.png".source = ../assets/hyprland/white-painting-3.png;
+    "quickshell/gallery-status/white-painting-4.png".source = ../assets/hyprland/white-painting-4.png;
+    "quickshell/gallery-status/white-painting-5.png".source = ../assets/hyprland/white-painting-5.png;
+    "quickshell/gallery-status/dark-painting-1.png".source = ../assets/hyprland/dark-painting-1.png;
+    "quickshell/gallery-status/dark-painting-2.png".source = ../assets/hyprland/dark-painting-2.png;
+    "quickshell/gallery-status/dark-painting-3.png".source = ../assets/hyprland/dark-painting-3.png;
+    "quickshell/gallery-status/dark-painting-4.png".source = ../assets/hyprland/dark-painting-4.png;
+    "quickshell/gallery-status/dark-painting-5.png".source = ../assets/hyprland/dark-painting-5.png;
     "quickshell/gallery-transition/dark-gallery.png".source = ../assets/hyprland/dark-gallery.png;
     "quickshell/gallery-transition/light-gallery.png".source = ../assets/hyprland/white-gallery.png;
+    "quickshell/gallery-transition/white-painting-1.png".source = ../assets/hyprland/white-painting-1.png;
+    "quickshell/gallery-transition/white-painting-2.png".source = ../assets/hyprland/white-painting-2.png;
+    "quickshell/gallery-transition/white-painting-3.png".source = ../assets/hyprland/white-painting-3.png;
+    "quickshell/gallery-transition/white-painting-4.png".source = ../assets/hyprland/white-painting-4.png;
+    "quickshell/gallery-transition/white-painting-5.png".source = ../assets/hyprland/white-painting-5.png;
+    "quickshell/gallery-transition/dark-painting-1.png".source = ../assets/hyprland/dark-painting-1.png;
+    "quickshell/gallery-transition/dark-painting-2.png".source = ../assets/hyprland/dark-painting-2.png;
+    "quickshell/gallery-transition/dark-painting-3.png".source = ../assets/hyprland/dark-painting-3.png;
+    "quickshell/gallery-transition/dark-painting-4.png".source = ../assets/hyprland/dark-painting-4.png;
+    "quickshell/gallery-transition/dark-painting-5.png".source = ../assets/hyprland/dark-painting-5.png;
   };
 }

@@ -42,6 +42,10 @@ ShellRoot {
   }
 
   function wallpaperSource(ws) {
+    if (ws >= 1 && ws <= 5)
+      return "file:///home/salledelavage/.config/quickshell/gallery-status/white-painting-" + String(ws) + ".png";
+    if (ws >= 6 && ws <= 10)
+      return "file:///home/salledelavage/.config/quickshell/gallery-status/dark-painting-" + String(ws - 5) + ".png";
     if (root.isLightWorkspace(ws))
       return "file:///home/salledelavage/.config/quickshell/gallery-status/light-gallery.png";
 

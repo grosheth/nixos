@@ -21,6 +21,10 @@ ShellRoot {
   }
 
   function galleryImage(ws) {
+    if (ws >= 1 && ws <= 5)
+      return "file:///home/salledelavage/.config/quickshell/gallery-transition/white-painting-" + String(ws) + ".png";
+    if (ws >= 6 && ws <= 10)
+      return "file:///home/salledelavage/.config/quickshell/gallery-transition/dark-painting-" + String(ws - 5) + ".png";
     if (isLightWorkspace(ws))
       return "file:///home/salledelavage/.config/quickshell/gallery-transition/light-gallery.png";
 
@@ -28,6 +32,10 @@ ShellRoot {
   }
 
   function wallpaperImage(ws) {
+    if (ws >= 1 && ws <= 5)
+      return "$HOME/.config/quickshell/gallery-transition/white-painting-" + String(ws) + ".png";
+    if (ws >= 6 && ws <= 10)
+      return "$HOME/.config/quickshell/gallery-transition/dark-painting-" + String(ws - 5) + ".png";
     if (isLightWorkspace(ws))
       return "$HOME/.config/quickshell/gallery-transition/light-gallery.png";
 
@@ -138,7 +146,7 @@ ShellRoot {
         Rectangle {
           id: scene
           anchors.fill: parent
-          color: "black"
+          color: "transparent"
 
           Image {
             id: gallery

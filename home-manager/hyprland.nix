@@ -347,6 +347,7 @@ in {
     end
 
     hl.bind(mod .. " + minus", exec("gallery-toggle-mode"))
+    hl.bind(mod .. " + escape", exec("gallery-enter-main"))
 
     hl.bind("CONTROL + mouse:272", hl.dsp.window.drag(), { mouse = true })
     hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
