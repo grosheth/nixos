@@ -39,17 +39,17 @@ Item {
     PauseAnimation { duration: 1800 }
   }
 
-  Rectangle {
-    id: floorReflection
-
-    x: ambient.gx(260 + 1050 * ambient.floorSweep)
-    y: ambient.gy(622)
-    width: ambient.gw(460)
-    height: Math.max(2, ambient.gh(3))
-    rotation: -4
-    color: "#7FBBB3"
-    opacity: 0.10
-  }
+  // Rectangle {
+  //   id: floorReflection
+  //
+  //   x: ambient.gx(260 + 1050 * ambient.floorSweep)
+  //   y: ambient.gy(622)
+  //   width: ambient.gw(460)
+  //   height: Math.max(2, ambient.gh(3))
+  //   rotation: -4
+  //   color: "#7FBBB3"
+  //   opacity: 0.10
+  // }
 
   Rectangle {
     x: ambient.gx(510 + 720 * ambient.floorSweep)
@@ -58,19 +58,20 @@ Item {
     height: Math.max(1, ambient.gh(2))
     rotation: -2
     color: "#DBBC7F"
-    opacity: 0.08
-  }
+    opacity: 0.03
+}
 
   Rectangle {
     id: moonGlow
 
-    x: ambient.gx(103)
-    y: ambient.gy(62)
-    width: ambient.gw(132)
-    height: ambient.gh(132)
+    x: ambient.gx(154)
+    y: ambient.gy(102)
+    width: ambient.gw(41)
+    height: ambient.gh(41)
     radius: Math.min(width, height) / 2
-    color: "#d8e5ff"
-    opacity: 0.10
+    // color: "#d8e5ff"
+    color: "#ffffff"
+    opacity: 0.01
 
     SequentialAnimation on opacity {
       running: ambient.active && ambient.visible
@@ -89,9 +90,9 @@ Item {
 
   Repeater {
     model: [
-      { "x": 86, "y": 351, "w": 176, "delay": 0 },
-      { "x": 118, "y": 384, "w": 214, "delay": 900 },
-      { "x": 48, "y": 421, "w": 156, "delay": 1700 }
+      { "x": 86, "y": 451, "w": 90, "delay": 0 },
+      { "x": 118, "y": 484, "w": 100, "delay": 900 },
+      { "x": 70, "y": 421, "w": 70, "delay": 1700 }
     ]
 
     delegate: Rectangle {
@@ -127,24 +128,53 @@ Item {
     }
   }
 
-  Rectangle {
-    id: portraitBacklight
+  Repeater {
+    model: [
+      { "x": 205, "y": 335, "rise": 20, "size": 2, "delay": 0, "duration": 2600 },
+      { "x": 215, "y": 335, "rise": 32, "size": 1, "delay": 850, "duration": 3000 },
+      { "x": 220, "y": 335, "rise": 22, "size": 1, "delay": 1500, "duration": 2500 },
+      { "x": 210, "y": 335, "rise": 38, "size": 2, "delay": 2200, "duration": 3200 }
+    ]
 
-    x: ambient.gx(415)
-    y: ambient.gy(174)
-    width: ambient.gw(124)
-    height: ambient.gh(278)
-    radius: Math.max(4, ambient.gw(18))
-    color: "#E67E80"
-    opacity: 0.05
+    delegate: Rectangle {
+      id: shipEmber
 
-    SequentialAnimation on opacity {
-      running: ambient.active && ambient.visible
-      loops: Animation.Infinite
-      PauseAnimation { duration: 600 }
-      NumberAnimation { from: 0.04; to: 0.11; duration: 1800; easing.type: Easing.InOutCubic }
-      NumberAnimation { to: 0.05; duration: 2700; easing.type: Easing.InOutCubic }
-      PauseAnimation { duration: 1300 }
+      property var spark: modelData
+      property real lift: 0
+      property real side: 0
+
+      x: ambient.gx(spark.x + side)
+      y: ambient.gy(spark.y - lift)
+      width: Math.max(2, ambient.gw(spark.size))
+      height: width
+      radius: width / 2
+      color: "#E67E80"
+      opacity: 0
+
+      SequentialAnimation on lift {
+        running: ambient.active && ambient.visible
+        loops: Animation.Infinite
+        PauseAnimation { duration: shipEmber.spark.delay }
+        NumberAnimation { from: 0; to: shipEmber.spark.rise; duration: shipEmber.spark.duration; easing.type: Easing.OutCubic }
+        PauseAnimation { duration: 1600 }
+      }
+
+      SequentialAnimation on side {
+        running: ambient.active && ambient.visible
+        loops: Animation.Infinite
+        PauseAnimation { duration: shipEmber.spark.delay }
+        NumberAnimation { from: -4; to: 5; duration: shipEmber.spark.duration; easing.type: Easing.InOutCubic }
+        PauseAnimation { duration: 1600 }
+      }
+
+      SequentialAnimation on opacity {
+        running: ambient.active && ambient.visible
+        loops: Animation.Infinite
+        PauseAnimation { duration: shipEmber.spark.delay }
+        NumberAnimation { from: 0; to: 0.74; duration: 520; easing.type: Easing.InOutCubic }
+        NumberAnimation { to: 0; duration: shipEmber.spark.duration - 520; easing.type: Easing.OutCubic }
+        PauseAnimation { duration: 1600 }
+      }
     }
   }
 
@@ -201,10 +231,10 @@ Item {
   Rectangle {
     id: volcanoGlow
 
-    x: ambient.gx(935)
-    y: ambient.gy(204)
-    width: ambient.gw(112)
-    height: ambient.gh(80)
+    x: ambient.gx(1040)
+    y: ambient.gy(230)
+    width: ambient.gw(10)
+    height: ambient.gh(10)
     radius: Math.min(width, height) / 2
     color: "#E67E80"
     opacity: 0.10
@@ -227,9 +257,9 @@ Item {
 
   Repeater {
     model: [
-      { "x": 972, "y": 231, "rise": 66, "size": 3, "delay": 0, "duration": 2800, "color": "#E67E80" },
-      { "x": 1000, "y": 238, "rise": 74, "size": 2, "delay": 700, "duration": 3400, "color": "#DBBC7F" },
-      { "x": 950, "y": 244, "rise": 48, "size": 2, "delay": 1600, "duration": 2600, "color": "#E67E80" }
+      { "x": 1040, "y": 231, "rise": 66, "size": 3, "delay": 0, "duration": 2800, "color": "#E67E80" },
+      { "x": 1040, "y": 238, "rise": 74, "size": 2, "delay": 700, "duration": 3400, "color": "#DBBC7F" },
+      { "x": 1040, "y": 244, "rise": 48, "size": 2, "delay": 1600, "duration": 2600, "color": "#E67E80" }
     ]
 
     delegate: Rectangle {
@@ -274,13 +304,112 @@ Item {
     }
   }
 
+  Repeater {
+    model: [
+      { "x": 1040, "y": 221, "rise": 84, "size": 24, "delay": 500, "duration": 5200 },
+      { "x": 1040, "y": 214, "rise": 98, "size": 18, "delay": 1800, "duration": 6200 },
+      { "x": 1040, "y": 230, "rise": 76, "size": 20, "delay": 3200, "duration": 5600 }
+    ]
+
+    delegate: Rectangle {
+      id: smokeWisp
+
+      property var wisp: modelData
+      property real lift: 0
+      property real drift: 0
+
+      x: ambient.gx(wisp.x + drift)
+      y: ambient.gy(wisp.y - lift)
+      width: ambient.gw(wisp.size)
+      height: ambient.gh(wisp.size * 0.62)
+      radius: Math.min(width, height) / 2
+      color: "#D3C6AA"
+      opacity: 0
+
+      SequentialAnimation on lift {
+        running: ambient.active && ambient.visible
+        loops: Animation.Infinite
+        PauseAnimation { duration: smokeWisp.wisp.delay }
+        NumberAnimation { from: 0; to: smokeWisp.wisp.rise; duration: smokeWisp.wisp.duration; easing.type: Easing.OutCubic }
+        PauseAnimation { duration: 2400 }
+      }
+
+      SequentialAnimation on drift {
+        running: ambient.active && ambient.visible
+        loops: Animation.Infinite
+        PauseAnimation { duration: smokeWisp.wisp.delay }
+        NumberAnimation { from: -6; to: 18; duration: smokeWisp.wisp.duration; easing.type: Easing.InOutCubic }
+        PauseAnimation { duration: 2400 }
+      }
+
+      SequentialAnimation on opacity {
+        running: ambient.active && ambient.visible
+        loops: Animation.Infinite
+        PauseAnimation { duration: smokeWisp.wisp.delay }
+        NumberAnimation { from: 0; to: 0.06; duration: 1200; easing.type: Easing.InOutCubic }
+        NumberAnimation { to: 0; duration: smokeWisp.wisp.duration - 1200; easing.type: Easing.OutCubic }
+        PauseAnimation { duration: 2400 }
+      }
+    }
+  }
+
+  Repeater {
+    model: [
+      { "x": 1246, "y": 350, "rise": 54, "size": 2, "delay": 300, "duration": 2600 },
+      { "x": 1296, "y": 421, "rise": 68, "size": 3, "delay": 1100, "duration": 3100 },
+      { "x": 1354, "y": 382, "rise": 48, "size": 2, "delay": 1900, "duration": 2800 },
+      { "x": 1384, "y": 455, "rise": 56, "size": 2, "delay": 2700, "duration": 3200 }
+    ]
+
+    delegate: Rectangle {
+      id: topHatEmber
+
+      property var ember: modelData
+      property real lift: 0
+      property real drift: 0
+
+      x: ambient.gx(ember.x + drift)
+      y: ambient.gy(ember.y - lift)
+      width: Math.max(2, ambient.gw(ember.size))
+      height: width
+      radius: width / 2
+      color: "#E67E80"
+      opacity: 0
+
+      SequentialAnimation on lift {
+        running: ambient.active && ambient.visible
+        loops: Animation.Infinite
+        PauseAnimation { duration: topHatEmber.ember.delay }
+        NumberAnimation { from: 0; to: topHatEmber.ember.rise; duration: topHatEmber.ember.duration; easing.type: Easing.OutCubic }
+        PauseAnimation { duration: 1500 }
+      }
+
+      SequentialAnimation on drift {
+        running: ambient.active && ambient.visible
+        loops: Animation.Infinite
+        PauseAnimation { duration: topHatEmber.ember.delay }
+        NumberAnimation { from: -4; to: 7; duration: topHatEmber.ember.duration; easing.type: Easing.InOutCubic }
+        PauseAnimation { duration: 1500 }
+      }
+
+      SequentialAnimation on opacity {
+        running: ambient.active && ambient.visible
+        loops: Animation.Infinite
+        PauseAnimation { duration: topHatEmber.ember.delay }
+        NumberAnimation { from: 0; to: 0.64; duration: 480; easing.type: Easing.InOutCubic }
+        NumberAnimation { to: 0; duration: topHatEmber.ember.duration - 480; easing.type: Easing.OutCubic }
+        PauseAnimation { duration: 1500 }
+      }
+    }
+  }
+
   Rectangle {
     id: blueFlameOuter
 
-    x: ambient.gx(1324)
-    y: ambient.gy(442)
-    width: ambient.gw(142)
-    height: ambient.gh(132)
+    x: ambient.gx(1390)
+    y: ambient.gy(470)
+    width: ambient.gw(40)
+    height: ambient.gh(40)
     radius: Math.min(width, height) / 2
     color: "#3b82ff"
     opacity: 0.16
@@ -302,33 +431,12 @@ Item {
     }
   }
 
-  Rectangle {
-    id: blueFlameCore
-
-    x: ambient.gx(1371)
-    y: ambient.gy(476)
-    width: ambient.gw(42)
-    height: ambient.gh(72)
-    radius: Math.min(width, height) / 2
-    color: "#83C092"
-    opacity: 0.34
-
-    SequentialAnimation on opacity {
-      running: ambient.active && ambient.visible
-      loops: Animation.Infinite
-      NumberAnimation { from: 0.22; to: 0.50; duration: 460; easing.type: Easing.InOutCubic }
-      NumberAnimation { to: 0.28; duration: 760; easing.type: Easing.InOutCubic }
-      NumberAnimation { to: 0.42; duration: 380; easing.type: Easing.InOutCubic }
-      NumberAnimation { to: 0.24; duration: 940; easing.type: Easing.InOutCubic }
-    }
-  }
-
   Repeater {
     model: [
-      { "x": 1354, "y": 540, "rise": 92, "size": 3, "delay": 0, "duration": 2200 },
-      { "x": 1390, "y": 528, "rise": 112, "size": 2, "delay": 440, "duration": 2500 },
+      { "x": 1454, "y": 540, "rise": 92, "size": 3, "delay": 0, "duration": 2200 },
+      { "x": 1490, "y": 528, "rise": 112, "size": 2, "delay": 440, "duration": 2500 },
       { "x": 1428, "y": 548, "rise": 86, "size": 2, "delay": 980, "duration": 2100 },
-      { "x": 1368, "y": 574, "rise": 74, "size": 2, "delay": 1500, "duration": 2300 },
+      { "x": 1468, "y": 574, "rise": 74, "size": 2, "delay": 1500, "duration": 2300 },
       { "x": 1450, "y": 586, "rise": 70, "size": 3, "delay": 2100, "duration": 2600 }
     ]
 
@@ -375,51 +483,11 @@ Item {
   }
 
   Rectangle {
-    id: doorLight
-
-    x: ambient.gx(1496)
-    y: ambient.gy(252)
-    width: ambient.gw(58)
-    height: ambient.gh(304)
-    radius: Math.max(2, ambient.gw(8))
-    color: "#DBBC7F"
-    opacity: 0.07
-
-    SequentialAnimation on opacity {
-      running: ambient.active && ambient.visible
-      loops: Animation.Infinite
-      NumberAnimation { from: 0.05; to: 0.13; duration: 5200; easing.type: Easing.InOutCubic }
-      NumberAnimation { to: 0.06; duration: 6100; easing.type: Easing.InOutCubic }
-    }
-  }
-
-  Rectangle {
-    id: ravenSigil
-
-    x: ambient.gx(1718)
-    y: ambient.gy(89)
-    width: ambient.gw(142)
-    height: ambient.gh(212)
-    radius: Math.max(4, ambient.gw(18))
-    color: "#E67E80"
-    opacity: 0.07
-
-    SequentialAnimation on opacity {
-      running: ambient.active && ambient.visible
-      loops: Animation.Infinite
-      PauseAnimation { duration: 1200 }
-      NumberAnimation { from: 0.05; to: 0.16; duration: 1400; easing.type: Easing.InOutCubic }
-      NumberAnimation { to: 0.06; duration: 2800; easing.type: Easing.InOutCubic }
-      PauseAnimation { duration: 2200 }
-    }
-  }
-
-  Rectangle {
     id: ravenEye
 
-    x: ambient.gx(1742)
-    y: ambient.gy(176)
-    width: Math.max(3, ambient.gw(5))
+    x: ambient.gx(1736)
+    y: ambient.gy(171)
+    width: Math.max(1, ambient.gw(2))
     height: width
     radius: width / 2
     color: "#DBBC7F"
@@ -437,9 +505,9 @@ Item {
 
   Repeater {
     model: [
-      { "x": 1698, "y": 523, "w": 24, "h": 58, "delay": 0 },
-      { "x": 1768, "y": 534, "w": 20, "h": 48, "delay": 360 },
-      { "x": 1832, "y": 512, "w": 22, "h": 62, "delay": 820 }
+      { "x": 1772, "y": 456, "w": 5, "h": 10, "delay": 0 },
+      { "x": 1791, "y": 428, "w": 5, "h": 10, "delay": 360 },
+      { "x": 1817, "y": 433, "w": 5, "h": 10, "delay": 820 }
     ]
 
     delegate: Rectangle {
@@ -477,10 +545,7 @@ Item {
 
   Repeater {
     model: [
-      { "x": 38, "y": 101, "w": 266, "delay": 700 },
-      { "x": 616, "y": 165, "w": 500, "delay": 2600 },
-      { "x": 1218, "y": 128, "w": 182, "delay": 4600 },
-      { "x": 1668, "y": 43, "w": 206, "delay": 6400 }
+      { "x": 610, "y": 165, "w": 330, "delay": 2600 },
     ]
 
     delegate: Item {
@@ -494,7 +559,7 @@ Item {
       width: ambient.gw(glint.w)
       height: Math.max(2, ambient.gh(3))
       clip: true
-      rotation: -1
+      rotation: 0
       opacity: 0.75
 
       Rectangle {
