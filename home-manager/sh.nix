@@ -22,6 +22,7 @@ let
 
     "db" = "distrobox";
     "gg" = "lazygit";
+    "reload" = "gallery-ui-reload";
     # Neovim
     "nvim" = "neovim";
     "n" = "nvim .";

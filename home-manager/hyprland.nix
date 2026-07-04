@@ -12,33 +12,6 @@ in {
   services.hypridle.enable = true;
   programs.hyprlock.enable = true;
 
-  services.kanshi = {
-    enable = true;
-
-    profiles = {
-      main.outputs = [
-        {
-          criteria = "BNQ BenQ EX2780Q 4BK01346019";
-          mode = "2560x1440@144";
-          position = "6000,0";
-          scale = 1.0;
-        }
-        {
-          criteria = "BNQ BenQ EX2780Q S6L01178019";
-          mode = "2560x1440@144";
-          position = "0,0";
-          scale = 1.0;
-        }
-        {
-          criteria = "Samsung Electric Company LC34G55T HNTXA04571";
-          mode = "3440x1440@120";
-          position = "2560,0";
-          scale = 1.0;
-        }
-      ];
-    };
-  };
-
   home.packages = with pkgs; [
     wlr-randr
     wdisplays
@@ -49,14 +22,36 @@ in {
     mpvpaper
     wf-recorder
     slurp
-    kanshi
     (writeShellScriptBin "gallery-layout" ''
-      ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:BNQ BenQ EX2780Q S6L01178019,2560x1440@144,0x0,1"
-      ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:Samsung Electric Company LC34G55T HNTXA04571,3440x1440@120,2560x0,1"
-      ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:BNQ BenQ EX2780Q 4BK01346019,2560x1440@144,6000x0,1"
+      monitors_ready() {
+        ${pkgs.hyprland}/bin/hyprctl monitors -j \
+          | ${pkgs.jq}/bin/jq -e '
+            def has_desc($desc): any(.[]; (.description // "") == $desc);
+            has_desc("BNQ BenQ EX2780Q S6L01178019")
+              and has_desc("Samsung Electric Company LC34G55T HNTXA04571")
+              and has_desc("BNQ BenQ EX2780Q 4BK01346019")
+          ' >/dev/null 2>&1
+      }
+
+      apply_layout() {
+        ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:BNQ BenQ EX2780Q S6L01178019,2560x1440@144,0x0,1"
+        ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:Samsung Electric Company LC34G55T HNTXA04571,3440x1440@120,2560x0,1"
+        ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:BNQ BenQ EX2780Q 4BK01346019,2560x1440@144,6000x0,1"
+      }
+
+      for _ in $(${coreutils}/bin/seq 1 25); do
+        if monitors_ready; then
+          apply_layout
+          exit 0
+        fi
+
+        ${coreutils}/bin/sleep 0.2
+      done
+
+      apply_layout
     '')
     (writeShellScriptBin "gallery-wallpaper" ''
-      gallery_image="${../assets/hyprland/art-gallery-neo.png}"
+      gallery_image="${../assets/hyprland/dark-gallery.png}"
       black_image="${blackWallpaper}"
 
       set_gallery_wallpaper() {
@@ -101,6 +96,29 @@ in {
 
       exit 1
     '')
+    (writeShellScriptBin "gallery-ui-reload" ''
+      ${pkgs.systemd}/bin/systemctl --user stop kanshi.service >/dev/null 2>&1 || true
+      ${pkgs.hyprland}/bin/hyprctl reload >/dev/null 2>&1 || true
+      gallery-layout >/dev/null 2>&1 || true
+
+      if ! ${pkgs.procps}/bin/pgrep -x awww-daemon >/dev/null; then
+        ${awww}/bin/awww-daemon >/dev/null 2>&1 &
+        ${coreutils}/bin/sleep 0.2
+      fi
+
+      ${awww}/bin/awww clear >/dev/null 2>&1 || true
+
+      for config in gallery-status gallery-transition gallery-signature; do
+        ${pkgs.quickshell}/bin/qs kill -c "$config" --any-display >/dev/null 2>&1 || true
+      done
+
+      ${coreutils}/bin/sleep 0.2
+
+      gallery-wallpaper >/dev/null 2>&1 || true
+      gallery-status >/dev/null 2>&1 &
+      gallery-transition >/dev/null 2>&1 &
+      gallery-signature >/dev/null 2>&1 &
+    '')
   ];
 
   xdg.desktopEntries."org.gnome.Settings" = {
@@ -121,7 +139,7 @@ in {
 
     background {
       monitor = DP-3
-      path = ${../assets/hyprland/art-gallery-neo.png}
+      path = ${../assets/hyprland/dark-gallery.png}
       blur_passes = 0
       contrast = 1.0
       brightness = 0.82

@@ -4,7 +4,7 @@ let
   greeterBackground = pkgs.runCommand "regreet-gallery-background.png" {
     nativeBuildInputs = [ pkgs.imagemagick ];
   } ''
-    image=${../../../assets/hyprland/art-gallery-neo.png}
+    image=${../../../assets/hyprland/dark-gallery.png}
 
     magick "$image" -resize 3440x1440^ -gravity center -extent 3440x1440 "$out"
   '';
