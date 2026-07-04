@@ -8,7 +8,7 @@ ShellRoot {
 
   property bool panelOpen: false
   property bool compactOpen: true
-  property int workspace: 10
+  property int workspace: 12
   property string mainScreen: "DP-3"
   property string currentTime: Qt.formatTime(new Date(), "HH:mm")
   property string currentDate: Qt.formatDate(new Date(), "ddd dd MMM")
@@ -34,72 +34,38 @@ ShellRoot {
   })
 
   function roomName(ws) {
-    if (ws === 1) return "Tricolor Rupture";
-    if (ws === 2) return "Blue Dress Study";
-    if (ws === 3) return "Mountain Study";
-    if (ws === 4) return "Man in Black";
-    if (ws === 5) return "Color Blocks";
-    if (ws === 6) return "Flowers and Ash";
-    if (ws === 10) return "Gallery Hall";
+    if (ws === 11) return "Light Gallery";
+    if (ws === 12) return "Dark Gallery";
+    if (ws >= 1 && ws <= 5) return "Light Painting " + String(ws);
+    if (ws >= 6 && ws <= 10) return "Dark Painting " + String(ws - 5);
     return "Workspace " + root.roomNumber(ws);
   }
 
   function wallpaperSource(ws) {
-    if (ws >= 1 && ws <= 6)
-      return "file:///home/salledelavage/.config/quickshell/gallery-transition/painting-" + String(ws) + ".png";
+    if (root.isLightWorkspace(ws))
+      return "file:///home/salledelavage/.config/quickshell/gallery-status/light-gallery.png";
 
-    return "file:///home/salledelavage/.config/quickshell/gallery-transition/gallery.png";
+    return "file:///home/salledelavage/.config/quickshell/gallery-status/dark-gallery.png";
   }
 
   function roomNumber(ws) {
-    if (ws === 10) return "00";
     if (ws < 10) return "0" + String(ws);
     return String(ws);
   }
 
+  function isLightWorkspace(ws) {
+    return (ws >= 1 && ws <= 5) || ws === 11;
+  }
+
   function palette(ws) {
-    if (ws === 1) return {
-      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
-      red: "#b94a42", green: "#6f8a68", yellow: "#c8914c",
-      blue: "#1e5d78", magenta: "#9d352f", cyan: "#3d86a7",
-      accent: "#b94a42", accent2: "#1e5d78", muted: "#4f4642",
-      active: "#c45145"
+    if (root.isLightWorkspace(ws)) return {
+      bg: "#f4efe3", fg: "#2f2a24", black: "#ded4c4",
+      red: "#9b3f36", green: "#59724d", yellow: "#a77938",
+      blue: "#2f5d6a", magenta: "#7a4e68", cyan: "#4f7f82",
+      accent: "#2f5d6a", accent2: "#9b6b2f", muted: "#9a8d7b",
+      active: "#2f5d6a"
     };
-    if (ws === 2) return {
-      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
-      red: "#a14232", green: "#788347", yellow: "#d1a55a",
-      blue: "#1f5f86", magenta: "#8b5b72", cyan: "#5a9bb8",
-      accent: "#1f5f86", accent2: "#d1a55a", muted: "#5f554f",
-      active: "#3d86a7"
-    };
-    if (ws === 3) return {
-      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
-      red: "#9d352f", green: "#4d6b45", yellow: "#d8c6a7",
-      blue: "#3d86a7", magenta: "#b9853d", cyan: "#86b6c7",
-      accent: "#3d86a7", accent2: "#d8c6a7", muted: "#4f625b",
-      active: "#86b6c7"
-    };
-    if (ws === 4) return {
-      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
-      red: "#8e331c", green: "#5a5b56", yellow: "#f0a24b",
-      blue: "#252d34", magenta: "#9d352f", cyan: "#9a9891",
-      accent: "#d65a20", accent2: "#f0a24b", muted: "#333435",
-      active: "#d65a20"
-    };
-    if (ws === 5) return {
-      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
-      red: "#a14232", green: "#5a7564", yellow: "#d8c6a7",
-      blue: "#1e5d78", magenta: "#b9853d", cyan: "#3d86a7",
-      accent: "#1e5d78", accent2: "#a14232", muted: "#5a5b56",
-      active: "#3d86a7"
-    };
-    if (ws === 6) return {
-      bg: "#14161b", fg: "#D3C6AA", black: "#212026",
-      red: "#a14232", green: "#4d5c2f", yellow: "#d1a55a",
-      blue: "#2f6f86", magenta: "#c69781", cyan: "#6f9e91",
-      accent: "#c69781", accent2: "#4d5c2f", muted: "#4f4642",
-      active: "#c69781"
-    };
+
     return {
       bg: "#14161b", fg: "#D3C6AA", black: "#212026",
       red: "#E67E80", green: "#A7C080", yellow: "#DBBC7F",

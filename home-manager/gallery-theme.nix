@@ -40,79 +40,26 @@ let
   '';
 
   palettes = {
-    "1.env" = mkPalette {
-      red = "#b94a42";
-      green = "#6f8a68";
-      yellow = "#c8914c";
-      blue = "#1e5d78";
-      magenta = "#9d352f";
-      cyan = "#3d86a7";
-      accent = "#b94a42";
-      accent2 = "#1e5d78";
-      muted = "#4f4642";
-      activeBorder = "#c45145";
+    "11.env" = mkPalette {
+      background = "#f4efe3";
+      foreground = "#2f2a24";
+      selectionForeground = "#f4efe3";
+      selectionBackground = "#2f5d6a";
+      black = "#ded4c4";
+      white = "#2f2a24";
+      red = "#9b3f36";
+      green = "#59724d";
+      yellow = "#a77938";
+      blue = "#2f5d6a";
+      magenta = "#7a4e68";
+      cyan = "#4f7f82";
+      accent = "#2f5d6a";
+      accent2 = "#9b6b2f";
+      muted = "#9a8d7b";
+      activeBorder = "#2f5d6a";
+      inactiveBorder = "#9a8d7b";
     };
-    "2.env" = mkPalette {
-      red = "#a14232";
-      green = "#788347";
-      yellow = "#d1a55a";
-      blue = "#1f5f86";
-      magenta = "#8b5b72";
-      cyan = "#5a9bb8";
-      accent = "#1f5f86";
-      accent2 = "#d1a55a";
-      muted = "#5f554f";
-      activeBorder = "#3d86a7";
-    };
-    "3.env" = mkPalette {
-      red = "#9d352f";
-      green = "#4d6b45";
-      yellow = "#d8c6a7";
-      blue = "#3d86a7";
-      magenta = "#b9853d";
-      cyan = "#86b6c7";
-      accent = "#3d86a7";
-      accent2 = "#d8c6a7";
-      muted = "#4f625b";
-      activeBorder = "#86b6c7";
-    };
-    "4.env" = mkPalette {
-      red = "#8e331c";
-      green = "#5a5b56";
-      yellow = "#f0a24b";
-      blue = "#252d34";
-      magenta = "#9d352f";
-      cyan = "#9a9891";
-      accent = "#d65a20";
-      accent2 = "#f0a24b";
-      muted = "#333435";
-      activeBorder = "#d65a20";
-    };
-    "5.env" = mkPalette {
-      red = "#a14232";
-      green = "#5a7564";
-      yellow = "#d8c6a7";
-      blue = "#1e5d78";
-      magenta = "#b9853d";
-      cyan = "#3d86a7";
-      accent = "#1e5d78";
-      accent2 = "#a14232";
-      muted = "#5a5b56";
-      activeBorder = "#3d86a7";
-    };
-    "6.env" = mkPalette {
-      red = "#a14232";
-      green = "#4d5c2f";
-      yellow = "#d1a55a";
-      blue = "#2f6f86";
-      magenta = "#c69781";
-      cyan = "#6f9e91";
-      accent = "#c69781";
-      accent2 = "#4d5c2f";
-      muted = "#4f4642";
-      activeBorder = "#c69781";
-    };
-    "10.env" = mkPalette {
+    "12.env" = mkPalette {
       red = "#E67E80";
       green = "#A7C080";
       yellow = "#DBBC7F";
@@ -129,9 +76,14 @@ let
   galleryTheme = pkgs.writeShellScriptBin "gallery-theme" ''
     set -eu
 
-    workspace="''${1:-10}"
+    workspace="''${1:-12}"
     if [ "$workspace" = "0" ]; then
       workspace=10
+    fi
+    if [ "$workspace" -ge 1 ] && [ "$workspace" -le 5 ]; then
+      workspace=11
+    elif [ "$workspace" -ge 6 ] && [ "$workspace" -le 10 ]; then
+      workspace=12
     fi
 
     config_dir="''${XDG_CONFIG_HOME:-$HOME/.config}/gallery-theme"
@@ -139,7 +91,7 @@ let
     palette="$config_dir/palettes/$workspace.env"
 
     if [ ! -r "$palette" ]; then
-      palette="$config_dir/palettes/10.env"
+      palette="$config_dir/palettes/12.env"
     fi
 
     mkdir -p "$state_dir"
@@ -210,8 +162,8 @@ in
     mkdir -p "$state_dir"
 
     if [ ! -e "$state_dir/current.env" ]; then
-      if [ -r "$HOME/.config/gallery-theme/palettes/10.env" ]; then
-        cp "$HOME/.config/gallery-theme/palettes/10.env" "$state_dir/current.env"
+      if [ -r "$HOME/.config/gallery-theme/palettes/12.env" ]; then
+        cp "$HOME/.config/gallery-theme/palettes/12.env" "$state_dir/current.env"
       else
         cat > "$state_dir/current.env" <<EOF
 THEME_BACKGROUND=#14161b

@@ -51,8 +51,25 @@ in {
       apply_layout
     '')
     (writeShellScriptBin "gallery-wallpaper" ''
-      gallery_image="${../assets/hyprland/dark-gallery.png}"
+      light_gallery_image="${../assets/hyprland/white-gallery.png}"
+      dark_gallery_image="${../assets/hyprland/dark-gallery.png}"
       black_image="${blackWallpaper}"
+
+      state_dir="''${XDG_RUNTIME_DIR:-/tmp}"
+      mode_file="$state_dir/gallery-mode"
+      mode="$(cat "$mode_file" 2>/dev/null || true)"
+      if [ "$mode" != "light" ]; then
+        mode=dark
+      fi
+      printf '%s\n' "$mode" > "$mode_file"
+
+      if [ "$mode" = "light" ]; then
+        gallery_image="$light_gallery_image"
+        gallery_workspace=11
+      else
+        gallery_image="$dark_gallery_image"
+        gallery_workspace=12
+      fi
 
       set_gallery_wallpaper() {
         ${awww}/bin/awww img --transition-type none --resize stretch --outputs DP-3 "$gallery_image"
@@ -86,8 +103,7 @@ in {
 
       for _ in $(${coreutils}/bin/seq 1 25); do
         if set_gallery_wallpaper && set_benq_wallpapers; then
-          state_dir="''${XDG_RUNTIME_DIR:-/tmp}"
-          printf '%s\n' 10 > "$state_dir/gallery-current-workspace"
+          printf '%s\n' "$gallery_workspace" > "$state_dir/gallery-current-workspace"
           exit 0
         fi
 
@@ -118,6 +134,13 @@ in {
       gallery-status >/dev/null 2>&1 &
       gallery-transition >/dev/null 2>&1 &
       gallery-signature >/dev/null 2>&1 &
+      ${coreutils}/bin/sleep 0.2
+
+      state_dir="''${XDG_RUNTIME_DIR:-/tmp}"
+      workspace="$(${coreutils}/bin/cat "$state_dir/gallery-current-workspace" 2>/dev/null || true)"
+      workspace="''${workspace:-12}"
+      gallery-theme "$workspace" >/dev/null 2>&1 || true
+      ${pkgs.quickshell}/bin/qs ipc -c gallery-status call status set "$workspace" >/dev/null 2>&1 || true
     '')
   ];
 
@@ -288,13 +311,13 @@ in {
     hl.animation({ leaf = "fade", enabled = true, speed = 7, bezier = "default" })
     hl.animation({ leaf = "workspaces", enabled = true, speed = 6, bezier = "default" })
 
-    hl.workspace_rule({ workspace = "1", monitor = "DP-3", default = true })
-    hl.workspace_rule({ workspace = "2", monitor = "DP-3" })
-    hl.workspace_rule({ workspace = "3", monitor = "DP-3" })
-    hl.workspace_rule({ workspace = "4", monitor = "DP-3" })
-    hl.workspace_rule({ workspace = "5", monitor = "DP-3" })
-    hl.workspace_rule({ workspace = "6", monitor = "DP-3" })
-    hl.workspace_rule({ workspace = "10", monitor = "DP-3" })
+    for _, workspace in ipairs({ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }) do
+      local rule = { workspace = tostring(workspace), monitor = "DP-3" }
+      if workspace == 12 then
+        rule.default = true
+      end
+      hl.workspace_rule(rule)
+    end
 
     hl.on("hyprland.start", function()
       hl.exec_cmd("hyprctl setcursor Qogir 24")
@@ -319,9 +342,11 @@ in {
     hl.bind(mod .. " + space", exec("pkill rofi || rofi -show drun"))
     hl.bind(mod .. " + SHIFT + space", exec("kando"))
 
-    for _, workspace in ipairs({ 1, 2, 3, 4, 5, 6, 0 }) do
-      hl.bind(mod .. " + " .. workspace, exec("gallery-enter " .. workspace))
+    for _, key in ipairs({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }) do
+      hl.bind(mod .. " + " .. key, exec("gallery-enter " .. key))
     end
+
+    hl.bind(mod .. " + minus", exec("gallery-toggle-mode"))
 
     hl.bind("CONTROL + mouse:272", hl.dsp.window.drag(), { mouse = true })
     hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
