@@ -171,7 +171,7 @@
     "quickshell/gallery-status/shell.qml".source = ../configs/quickshell/gallery-status/shell.qml;
     "quickshell/gallery-status/gallery.png".source = ../assets/hyprland/dark-gallery.png;
     "quickshell/gallery-transition/gallery.png".source = ../assets/hyprland/dark-gallery.png;
-    "quickshell/gallery-transition/painting-1.png".source = ../assets/hyprland/pirate-ship-dark.png;
+    "quickshell/gallery-transition/painting-1.png".source = ../assets/hyprland/white-gallery.png;
     "quickshell/gallery-transition/painting-2.png".source = ../assets/hyprland/painting-2.png;
     "quickshell/gallery-transition/painting-3.png".source = ../assets/hyprland/painting-3.png;
     "quickshell/gallery-transition/painting-4.png".source = ../assets/hyprland/painting-4.png;
