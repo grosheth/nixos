@@ -309,7 +309,7 @@ in {
     hl.animation({ leaf = "windowsOut", enabled = true, speed = 7, bezier = "default", style = "popin 80%" })
     hl.animation({ leaf = "border", enabled = true, speed = 10, bezier = "default" })
     hl.animation({ leaf = "fade", enabled = true, speed = 7, bezier = "default" })
-    hl.animation({ leaf = "workspaces", enabled = true, speed = 6, bezier = "default" })
+    hl.animation({ leaf = "workspaces", enabled = false, speed = 1, bezier = "default" })
 
     for _, workspace in ipairs({ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }) do
       local rule = { workspace = tostring(workspace), monitor = "DP-3" }
