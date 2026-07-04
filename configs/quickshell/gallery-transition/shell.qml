@@ -51,6 +51,9 @@ ShellRoot {
   }
 
   function wallpaperImage(ws) {
+    if (ws >= 1 && ws <= 6)
+      return "$HOME/.config/quickshell/gallery-transition/painting-" + String(ws) + ".png";
+
     return "$HOME/.config/quickshell/gallery-transition/gallery.png";
   }
 

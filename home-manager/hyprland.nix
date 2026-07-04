@@ -34,9 +34,9 @@ in {
       }
 
       apply_layout() {
-        ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:BNQ BenQ EX2780Q S6L01178019,2560x1440@144,0x0,1"
+        ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:BNQ BenQ EX2780Q 4BK01346019,2560x1440@144,0x0,1"
         ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:Samsung Electric Company LC34G55T HNTXA04571,3440x1440@120,2560x0,1"
-        ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:BNQ BenQ EX2780Q 4BK01346019,2560x1440@144,6000x0,1"
+        ${pkgs.hyprland}/bin/hyprctl keyword monitor "desc:BNQ BenQ EX2780Q S6L01178019,2560x1440@144,6000x0,1"
       }
 
       for _ in $(${coreutils}/bin/seq 1 25); do
