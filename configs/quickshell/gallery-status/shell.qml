@@ -9,6 +9,7 @@ ShellRoot {
   property bool panelOpen: false
   property bool compactOpen: true
   property int workspace: 12
+  property int darkGalleryWorkspace: 12
   property string mainScreen: "DP-3"
   property string currentTime: Qt.formatTime(new Date(), "HH:mm")
   property string currentDate: Qt.formatDate(new Date(), "ddd dd MMM")
@@ -224,6 +225,40 @@ ShellRoot {
 
     delegate: Component {
       PanelWindow {
+        id: ambientWin
+
+        required property var modelData
+        property bool isMainScreen: modelData.name === root.mainScreen
+
+        screen: modelData
+        visible: isMainScreen && root.workspace === root.darkGalleryWorkspace
+        color: "transparent"
+        exclusionMode: ExclusionMode.Ignore
+        focusable: false
+
+        anchors {
+          top: true
+          bottom: true
+          left: true
+          right: true
+        }
+
+        WlrLayershell.layer: WlrLayer.Bottom
+        WlrLayershell.namespace: "gallery-ambient"
+
+        DarkGalleryAmbient {
+          anchors.fill: parent
+          active: ambientWin.visible
+        }
+      }
+    }
+  }
+
+  Variants {
+    model: Quickshell.screens
+
+    delegate: Component {
+      PanelWindow {
         id: win
 
         required property var modelData
@@ -266,6 +301,12 @@ ShellRoot {
             source: root.wallpaperSource(root.workspace)
             fillMode: Image.Stretch
             smooth: true
+          }
+
+          DarkGalleryAmbient {
+            visible: win.isMainScreen && root.panelOpen && root.workspace === root.darkGalleryWorkspace
+            anchors.fill: parent
+            active: visible
           }
 
           Rectangle {
