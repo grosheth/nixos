@@ -9,7 +9,10 @@ ShellRoot {
   property bool overlayVisible: false
   property bool transitionDispatched: false
   property int targetWorkspace: 12
-  property int fadeDuration: 260
+  property int dimDuration: 320
+  property int relightDuration: 460
+  property color lightTint: "#fff4dc"
+  property color darkTint: "#8db8ff"
   property string mainScreen: "DP-3"
   property string wallpaperOutput: "DP-3"
 
@@ -136,7 +139,6 @@ ShellRoot {
           id: scene
           anchors.fill: parent
           color: "black"
-          opacity: 0
 
           Image {
             id: gallery
@@ -144,6 +146,21 @@ ShellRoot {
             fillMode: Image.Stretch
             smooth: true
             source: root.galleryImage(root.targetWorkspace)
+            opacity: 0
+          }
+
+          Rectangle {
+            id: tint
+            anchors.fill: parent
+            color: root.isLightWorkspace(root.targetWorkspace) ? root.lightTint : root.darkTint
+            opacity: 0
+          }
+
+          Rectangle {
+            id: blackout
+            anchors.fill: parent
+            color: "black"
+            opacity: 0
           }
         }
 
@@ -152,17 +169,36 @@ ShellRoot {
 
           ScriptAction {
             script: {
-              scene.opacity = 0;
+              gallery.opacity = 0;
+              tint.opacity = 0;
+              blackout.opacity = 0;
+              tint.color = root.isLightWorkspace(root.targetWorkspace) ? root.lightTint : root.darkTint;
               gallery.source = root.galleryImage(root.targetWorkspace);
             }
           }
 
-          NumberAnimation {
-            target: scene
-            property: "opacity"
-            to: 1
-            duration: root.fadeDuration
-            easing.type: Easing.InOutCubic
+          ParallelAnimation {
+            NumberAnimation {
+              target: blackout
+              property: "opacity"
+              to: 1
+              duration: root.dimDuration
+              easing.type: Easing.InOutCubic
+            }
+
+            SequentialAnimation {
+              PauseAnimation {
+                duration: 80
+              }
+
+              NumberAnimation {
+                target: tint
+                property: "opacity"
+                to: 0.16
+                duration: root.dimDuration - 80
+                easing.type: Easing.InOutCubic
+              }
+            }
           }
 
           ScriptAction {
@@ -173,16 +209,45 @@ ShellRoot {
             duration: 80
           }
 
-          NumberAnimation {
-            target: scene
-            property: "opacity"
-            to: 0
-            duration: root.fadeDuration
-            easing.type: Easing.InOutCubic
+          ParallelAnimation {
+            NumberAnimation {
+              target: gallery
+              property: "opacity"
+              to: 1
+              duration: root.relightDuration
+              easing.type: Easing.OutCubic
+            }
+
+            NumberAnimation {
+              target: blackout
+              property: "opacity"
+              to: 0
+              duration: root.relightDuration
+              easing.type: Easing.OutCubic
+            }
+
+            SequentialAnimation {
+              PauseAnimation {
+                duration: root.relightDuration * 0.45
+              }
+
+              NumberAnimation {
+                target: tint
+                property: "opacity"
+                to: 0
+                duration: root.relightDuration * 0.55
+                easing.type: Easing.OutCubic
+              }
+            }
           }
 
           ScriptAction {
-            script: root.overlayVisible = false
+            script: {
+              gallery.opacity = 0;
+              tint.opacity = 0;
+              blackout.opacity = 0;
+              root.overlayVisible = false;
+            }
           }
         }
       }
