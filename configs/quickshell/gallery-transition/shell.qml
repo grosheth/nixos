@@ -43,12 +43,10 @@ ShellRoot {
   }
 
   function enter(ws) {
-    if (overlayVisible)
-      return;
-
     targetWorkspace = ws;
     transitionDispatched = false;
-    overlayVisible = true;
+    overlayVisible = false;
+    commitTransition();
   }
 
   function commitTransition() {

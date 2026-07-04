@@ -9,7 +9,6 @@ ShellRoot {
   property bool panelOpen: false
   property bool compactOpen: true
   property int workspace: 12
-  property int darkGalleryWorkspace: 12
   property string mainScreen: "DP-3"
   property string currentTime: Qt.formatTime(new Date(), "HH:mm")
   property string currentDate: Qt.formatDate(new Date(), "ddd dd MMM")
@@ -60,6 +59,10 @@ ShellRoot {
 
   function isLightWorkspace(ws) {
     return (ws >= 1 && ws <= 5) || ws === 11;
+  }
+
+  function hasAmbientWorkspace(ws) {
+    return ws >= 1 && ws <= 12;
   }
 
   function palette(ws) {
@@ -231,7 +234,7 @@ ShellRoot {
         property bool isMainScreen: modelData.name === root.mainScreen
 
         screen: modelData
-        visible: isMainScreen && root.workspace === root.darkGalleryWorkspace
+        visible: isMainScreen && root.hasAmbientWorkspace(root.workspace)
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
         focusable: false
@@ -246,8 +249,9 @@ ShellRoot {
         WlrLayershell.layer: WlrLayer.Bottom
         WlrLayershell.namespace: "gallery-ambient"
 
-        DarkGalleryAmbient {
+        WallpaperAmbient {
           anchors.fill: parent
+          workspace: root.workspace
           active: ambientWin.visible
         }
       }
@@ -303,9 +307,10 @@ ShellRoot {
             smooth: true
           }
 
-          DarkGalleryAmbient {
-            visible: win.isMainScreen && root.panelOpen && root.workspace === root.darkGalleryWorkspace
+          WallpaperAmbient {
+            visible: win.isMainScreen && root.panelOpen && root.hasAmbientWorkspace(root.workspace)
             anchors.fill: parent
+            workspace: root.workspace
             active: visible
           }
 
