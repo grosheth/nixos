@@ -23,6 +23,8 @@ let
     "db" = "distrobox";
     "gg" = "lazygit";
     "reload" = "gallery-ui-reload";
+    "ui-start" = "gallery-ui-start";
+    "ui-stop" = "gallery-ui-stop";
     # Neovim
     "nvim" = "neovim";
     "n" = "nvim .";

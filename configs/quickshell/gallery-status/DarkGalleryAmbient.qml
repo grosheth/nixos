@@ -545,7 +545,7 @@ Item {
 
   Repeater {
     model: [
-      { "x": 610, "y": 165, "w": 330, "delay": 2600 },
+      { "x": 610, "y": 165, "w": 100, "delay": 2600 },
     ]
 
     delegate: Item {
@@ -565,7 +565,7 @@ Item {
       Rectangle {
         x: parent.width * frameGlint.pass
         y: 0
-        width: Math.max(18, parent.width * 0.16)
+        width: Math.max(1, parent.width * 0.16)
         height: parent.height
         radius: height
         color: "#DBBC7F"

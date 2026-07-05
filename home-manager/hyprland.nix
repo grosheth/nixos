@@ -112,6 +112,16 @@ in {
 
       exit 1
     '')
+    (writeShellScriptBin "gallery-ui-stop" ''
+      for config in gallery-status gallery-transition gallery-signature; do
+        ${pkgs.quickshell}/bin/qs kill -c "$config" --any-display >/dev/null 2>&1 || true
+      done
+    '')
+    (writeShellScriptBin "gallery-ui-start" ''
+      gallery-status >/dev/null 2>&1 &
+      gallery-transition >/dev/null 2>&1 &
+      gallery-signature >/dev/null 2>&1 &
+    '')
     (writeShellScriptBin "gallery-ui-reload" ''
       ${pkgs.systemd}/bin/systemctl --user stop kanshi.service >/dev/null 2>&1 || true
       ${pkgs.hyprland}/bin/hyprctl reload >/dev/null 2>&1 || true
