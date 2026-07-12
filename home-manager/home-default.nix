@@ -4,7 +4,7 @@ let
 
   # WM
   hyprland = true;
-  bspwm = false;
+  bspwm = true;
   i3 = false;
   sway = false;
 in

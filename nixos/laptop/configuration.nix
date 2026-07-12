@@ -95,6 +95,7 @@
     neofetch
     home-manager
     neovim
+    vim
     kitty
   ];
 

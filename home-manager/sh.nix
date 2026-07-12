@@ -26,11 +26,13 @@ let
     "ui-start" = "gallery-ui-start";
     "ui-stop" = "gallery-ui-stop";
     # Neovim
-    "nvim" = "neovim";
+    "nvim" = "nvim";
     "n" = "nvim .";
     "nv" = "nvim";
     "vim" = "nvim";
     "neovim" = "nvim";
+    # Keep a shortcut for the classic vim
+    "vi" = "vim";
 
     # ssh-manager alias
     "s" = "~/work/ssh-manager/target/debug/ssh-manager";
