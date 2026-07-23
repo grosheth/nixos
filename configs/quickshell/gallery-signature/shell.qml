@@ -101,7 +101,7 @@ ShellRoot {
           right: true
         }
 
-        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.layer: WlrLayer.Bottom
         WlrLayershell.namespace: "gallery-signature"
 
         Item {

@@ -112,6 +112,57 @@ in {
 
       exit 1
     '')
+    (writeShellScriptBin "gallery-move-window" ''
+      set -eu
+
+      state_dir="''${XDG_RUNTIME_DIR:-/tmp}"
+      mode_file="$state_dir/gallery-mode"
+      current_workspace_file="$state_dir/gallery-current-workspace"
+
+      target="''${1:-1}"
+      current="$(${coreutils}/bin/cat "$current_workspace_file" 2>/dev/null || true)"
+      if [ -z "$current" ]; then
+        current="$(${pkgs.hyprland}/bin/hyprctl activeworkspace -j 2>/dev/null | ${pkgs.jq}/bin/jq -r '.id // empty' 2>/dev/null || true)"
+      fi
+
+      mode="$(${coreutils}/bin/cat "$mode_file" 2>/dev/null || true)"
+      if [ -z "$mode" ]; then
+        case "$current" in
+          1|2|3|4|5|11) mode=light ;;
+          *) mode=dark ;;
+        esac
+      fi
+      if [ "$mode" != "light" ]; then
+        mode=dark
+      fi
+
+      slot=""
+      case "$target" in
+        main|hall|escape)
+          if [ "$mode" = "light" ]; then
+            workspace=11
+          else
+            workspace=12
+          fi
+          ;;
+        1|6) slot=1 ;;
+        2|7) slot=2 ;;
+        3|8) slot=3 ;;
+        4|9) slot=4 ;;
+        5|0) slot=5 ;;
+        *) slot=1 ;;
+      esac
+
+      if [ -n "$slot" ]; then
+        if [ "$mode" = "light" ]; then
+          workspace="$slot"
+        else
+          workspace="$((slot + 5))"
+        fi
+      fi
+
+      ${pkgs.hyprland}/bin/hyprctl dispatch movetoworkspacesilent "$workspace"
+    '')
     (writeShellScriptBin "gallery-ui-stop" ''
       for config in gallery-status gallery-transition gallery-signature; do
         ${pkgs.quickshell}/bin/qs kill -c "$config" --any-display >/dev/null 2>&1 || true
@@ -354,10 +405,14 @@ in {
 
     for _, key in ipairs({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }) do
       hl.bind(mod .. " + " .. key, exec("gallery-enter " .. key))
+      hl.bind(mod .. " + SHIFT + " .. key, exec("gallery-move-window " .. key))
     end
 
     hl.bind(mod .. " + minus", exec("gallery-toggle-mode"))
     hl.bind(mod .. " + escape", exec("gallery-enter-main"))
+    hl.bind(mod .. " + SHIFT + escape", exec("gallery-move-window main"))
+    hl.bind(mod .. " + TAB", exec("hyprctl dispatch cyclenext"))
+    hl.bind(mod .. " + SHIFT + TAB", exec("hyprctl dispatch cyclenext prev"))
 
     hl.bind("CONTROL + mouse:272", hl.dsp.window.drag(), { mouse = true })
     hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })

@@ -12,6 +12,16 @@ ShellRoot {
   property string mainScreen: "DP-3"
   property string currentTime: Qt.formatTime(new Date(), "HH:mm")
   property string currentDate: Qt.formatDate(new Date(), "ddd dd MMM")
+  property var launcherItems: [
+    { "label": ">_", "name": "Terminal", "command": ["ghostty"] },
+    { "label": "WEB", "name": "Browser", "command": ["brave"] },
+    { "label": "APP", "name": "Apps", "command": ["sh", "-c", "pkill rofi || rofi -show drun"] },
+    { "label": "WIN", "name": "Windows", "command": ["rofi", "-show", "window"] },
+    { "label": "VPN", "name": "VPN", "command": ["rofi-vpn"] },
+    { "label": "MUS", "name": "Media", "command": ["playerctl", "play-pause"] },
+    { "label": "SYS", "name": "Status", "command": ["gallery-status-toggle"] },
+    { "label": "LCK", "name": "Lock", "command": ["hyprlock"] }
+  ]
   property var status: ({
     "vpn": "OFF",
     "ip": "unknown",
@@ -107,6 +117,10 @@ ShellRoot {
     return root.alpha(root.palette(ws).accent, "d0");
   }
 
+  function surfaceFill(ws) {
+    return root.alpha(root.palette(ws).bg, root.isLightWorkspace(ws) ? "de" : "d6");
+  }
+
   function overlayPanelFill(ws) {
     return "transparent";
   }
@@ -121,6 +135,34 @@ ShellRoot {
 
   function normalizeWorkspace(ws) {
     return ws === 0 ? 10 : ws;
+  }
+
+  function workspaceForSlot(slot) {
+    return root.isLightWorkspace(root.workspace) ? slot : slot + 5;
+  }
+
+  function slotActive(slot) {
+    return root.workspace === root.workspaceForSlot(slot);
+  }
+
+  function modeLabel() {
+    return root.isLightWorkspace(root.workspace) ? "LIGHT" : "DARK";
+  }
+
+  function runCommand(command) {
+    actionProc.exec(command);
+  }
+
+  function enterSlot(slot) {
+    root.runCommand(["gallery-enter", String(slot)]);
+  }
+
+  function moveSlot(slot) {
+    root.runCommand(["gallery-move-window", String(slot)]);
+  }
+
+  function moveHall() {
+    root.runCommand(["gallery-move-window", "main"]);
   }
 
   function metricColor(value, warning, critical) {
@@ -223,6 +265,10 @@ ShellRoot {
     stdout: snapshotOut
   }
 
+  Process {
+    id: actionProc
+  }
+
   Variants {
     model: Quickshell.screens
 
@@ -263,6 +309,370 @@ ShellRoot {
 
     delegate: Component {
       PanelWindow {
+        id: hudWin
+
+        required property var modelData
+        property bool isMainScreen: modelData.name === root.mainScreen
+
+        screen: modelData
+        visible: isMainScreen && root.compactOpen && !root.panelOpen
+        implicitHeight: 58
+        color: "transparent"
+        exclusionMode: ExclusionMode.Ignore
+        focusable: false
+
+        anchors {
+          top: true
+          left: true
+          right: true
+        }
+
+        WlrLayershell.layer: WlrLayer.Bottom
+        WlrLayershell.namespace: "gallery-hud"
+
+        Item {
+          anchors.fill: parent
+
+          Rectangle {
+            id: microHud
+
+            width: Math.min(parent.width - 96, 1360)
+            height: 42
+            x: (parent.width - width) / 2
+            y: 8
+
+            color: root.surfaceFill(root.workspace)
+            radius: 4
+            border.width: 1
+            border.color: root.alpha(root.accent(root.workspace), "bb")
+
+            Rectangle {
+              width: 92
+              height: 1
+              x: 16
+              y: 10
+              color: root.alpha(root.accent2(root.workspace), "99")
+            }
+
+            Column {
+              width: 314
+              height: parent.height - 10
+              x: 18
+              y: 7
+              spacing: 1
+
+              Text {
+                width: parent.width
+                height: 16
+                text: "No. " + root.roomNumber(root.workspace) + " / " + root.roomName(root.workspace)
+                color: root.foreground(root.workspace)
+                font.family: "JetBrains Mono Nerd Font"
+                font.pixelSize: 12
+                font.bold: true
+                elide: Text.ElideRight
+              }
+
+              Text {
+                width: parent.width
+                height: 16
+                text: root.status.host + " / " + root.status.uptime + " / " + root.status.volume
+                color: root.alpha(root.quietText(root.workspace), "e6")
+                font.family: "JetBrains Mono Nerd Font"
+                font.pixelSize: 11
+                elide: Text.ElideRight
+              }
+            }
+
+            Row {
+              id: workspacePlaques
+
+              height: 30
+              spacing: 5
+              anchors.centerIn: parent
+
+              Rectangle {
+                width: 58
+                height: 28
+                radius: 3
+                color: root.workspace === (root.isLightWorkspace(root.workspace) ? 11 : 12) ? root.alpha(root.accent(root.workspace), "38") : "transparent"
+                border.width: 1
+                border.color: root.workspace === (root.isLightWorkspace(root.workspace) ? 11 : 12) ? root.accent(root.workspace) : root.alpha(root.muted(root.workspace), "aa")
+
+                Text {
+                  anchors.centerIn: parent
+                  text: "HALL"
+                  color: root.foreground(root.workspace)
+                  font.family: "JetBrains Mono Nerd Font"
+                  font.pixelSize: 11
+                  font.bold: true
+                }
+
+                MouseArea {
+                  anchors.fill: parent
+                  acceptedButtons: Qt.LeftButton | Qt.RightButton
+                  hoverEnabled: true
+                  cursorShape: Qt.PointingHandCursor
+                  onClicked: {
+                    if (mouse.button === Qt.RightButton) {
+                      root.moveHall();
+                    } else {
+                      root.runCommand(["gallery-enter-main"]);
+                    }
+                  }
+                }
+              }
+
+              Repeater {
+                model: [1, 2, 3, 4, 5]
+
+                delegate: Rectangle {
+                  id: workspaceButton
+
+                  property int slot: modelData
+                  property int targetWorkspace: root.workspaceForSlot(slot)
+                  property bool activeSlot: root.slotActive(slot)
+
+                  width: 42
+                  height: 28
+                  radius: 3
+                  color: activeSlot ? root.alpha(root.accent(root.workspace), "46") : "transparent"
+                  border.width: 1
+                  border.color: activeSlot ? root.accent(root.workspace) : root.alpha(root.muted(root.workspace), "99")
+
+                  Text {
+                    anchors.centerIn: parent
+                    text: root.roomNumber(workspaceButton.targetWorkspace)
+                    color: workspaceButton.activeSlot ? root.accent2(root.workspace) : root.foreground(root.workspace)
+                    font.family: "JetBrains Mono Nerd Font"
+                    font.pixelSize: 11
+                    font.bold: true
+                  }
+
+                  MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                      if (mouse.button === Qt.RightButton) {
+                        root.moveSlot(workspaceButton.slot);
+                      } else {
+                        root.enterSlot(workspaceButton.slot);
+                      }
+                    }
+                  }
+                }
+              }
+
+              Rectangle {
+                width: 68
+                height: 28
+                radius: 3
+                color: root.alpha(root.accent2(root.workspace), "22")
+                border.width: 1
+                border.color: root.alpha(root.accent2(root.workspace), "bb")
+
+                Text {
+                  anchors.centerIn: parent
+                  text: root.modeLabel()
+                  color: root.accent2(root.workspace)
+                  font.family: "JetBrains Mono Nerd Font"
+                  font.pixelSize: 11
+                  font.bold: true
+                }
+
+                MouseArea {
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  cursorShape: Qt.PointingHandCursor
+                  onClicked: root.runCommand(["gallery-toggle-mode"])
+                }
+              }
+            }
+
+            Row {
+              height: 24
+              spacing: 14
+              anchors {
+                right: parent.right
+                rightMargin: 18
+                verticalCenter: parent.verticalCenter
+              }
+
+              Text {
+                width: 74
+                height: parent.height
+                text: "VPN " + root.status.vpn
+                color: root.status.vpn === "OFF" ? root.palette(root.workspace).red : root.palette(root.workspace).green
+                font.family: "JetBrains Mono Nerd Font"
+                font.pixelSize: 11
+                font.bold: true
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignRight
+                elide: Text.ElideRight
+              }
+
+              Text {
+                width: 58
+                height: parent.height
+                text: "CPU " + root.status.cpu + "%"
+                color: root.metricColor(root.status.cpu, 70, 90)
+                font.family: "JetBrains Mono Nerd Font"
+                font.pixelSize: 11
+                font.bold: true
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignRight
+              }
+
+              Text {
+                width: 58
+                height: parent.height
+                text: "MEM " + root.status.mem + "%"
+                color: root.metricColor(root.status.mem, 70, 85)
+                font.family: "JetBrains Mono Nerd Font"
+                font.pixelSize: 11
+                font.bold: true
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignRight
+              }
+
+              Text {
+                width: 54
+                height: parent.height
+                text: root.currentTime
+                color: root.accent2(root.workspace)
+                font.family: "JetBrains Mono Nerd Font"
+                font.pixelSize: 15
+                font.bold: true
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignRight
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  Variants {
+    model: Quickshell.screens
+
+    delegate: Component {
+      PanelWindow {
+        id: dockWin
+
+        required property var modelData
+        property bool isMainScreen: modelData.name === root.mainScreen
+
+        screen: modelData
+        visible: isMainScreen && root.compactOpen && !root.panelOpen
+        implicitHeight: 56
+        color: "transparent"
+        exclusionMode: ExclusionMode.Ignore
+        focusable: false
+
+        anchors {
+          bottom: true
+          left: true
+          right: true
+        }
+
+        margins {
+          bottom: 0
+        }
+
+        WlrLayershell.layer: WlrLayer.Bottom
+        WlrLayershell.namespace: "gallery-dock"
+
+        Item {
+          anchors.fill: parent
+
+          Rectangle {
+            id: commandShelf
+
+            width: Math.min(parent.width - 96, 336)
+            height: 32
+            x: (parent.width - width) / 2
+            y: parent.height - height - 7
+
+            color: root.surfaceFill(root.workspace)
+            radius: 4
+            border.width: 1
+            border.color: root.alpha(root.accent(root.workspace), "aa")
+
+            Row {
+              anchors.centerIn: parent
+              spacing: 5
+
+              Repeater {
+                model: root.launcherItems
+
+                delegate: Rectangle {
+                  id: launcherButton
+
+                  property var item: modelData
+
+                  width: 34
+                  height: 22
+                  radius: 3
+                  color: launcherMouse.containsMouse ? root.alpha(root.accent(root.workspace), "36") : "transparent"
+                  border.width: 1
+                  border.color: launcherMouse.containsMouse ? root.accent(root.workspace) : root.alpha(root.muted(root.workspace), "99")
+
+                  Text {
+                    anchors.centerIn: parent
+                    text: launcherButton.item.label
+                    color: launcherMouse.containsMouse ? root.accent2(root.workspace) : root.foreground(root.workspace)
+                    font.family: "JetBrains Mono Nerd Font"
+                    font.pixelSize: 9
+                    font.bold: true
+                  }
+
+                  Rectangle {
+                    visible: launcherMouse.containsMouse
+                    width: Math.max(54, launcherLabel.implicitWidth + 14)
+                    height: 18
+                    x: (parent.width - width) / 2
+                    y: -22
+                    radius: 3
+                    color: root.alpha(root.palette(root.workspace).bg, "ee")
+                    border.width: 1
+                    border.color: root.alpha(root.accent(root.workspace), "aa")
+
+                    Text {
+                      id: launcherLabel
+
+                      anchors.centerIn: parent
+                      text: launcherButton.item.name
+                      color: root.foreground(root.workspace)
+                      font.family: "JetBrains Mono Nerd Font"
+                      font.pixelSize: 8
+                      font.bold: true
+                    }
+                  }
+
+                  MouseArea {
+                    id: launcherMouse
+
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: root.runCommand(launcherButton.item.command)
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  Variants {
+    model: Quickshell.screens
+
+    delegate: Component {
+      PanelWindow {
         id: win
 
         required property var modelData
@@ -291,7 +701,7 @@ ShellRoot {
           bottom: isMainScreen ? 0 : 34
         }
 
-        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.layer: (win.isMainScreen && root.panelOpen) ? WlrLayer.Overlay : WlrLayer.Bottom
         WlrLayershell.namespace: "gallery-status"
 
         Item {
