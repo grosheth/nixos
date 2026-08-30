@@ -1,4 +1,13 @@
 { pkgs, ... }:
+let
+  minikubeWithoutKubectl = pkgs.symlinkJoin {
+    name = "minikube-without-kubectl";
+    paths = [ pkgs.minikube ];
+    postBuild = ''
+      rm -f $out/bin/kubectl
+    '';
+  };
+in
 {
   home.packages = with pkgs; with gnome; [
     (writeShellScriptBin "rofi-projects" (builtins.readFile ../scripts/rofi-projects.sh))
@@ -47,10 +56,10 @@
     # rpi-imager
     usbutils
     code-cursor
-    minikube
+    minikubeWithoutKubectl
     terraform
     nodejs
-    elixir
+    beamPackages.elixir
     go
     gopls
     gcc

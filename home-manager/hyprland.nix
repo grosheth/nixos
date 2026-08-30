@@ -290,10 +290,8 @@ in {
     xwayland.enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.default;
     package = pkgs.hyprland;
-    # configType = lua;
-  };
-
-  xdg.configFile."hypr/hyprland.lua".text = ''
+    configType = "lua";
+    extraConfig = ''
     local mod = "ALT"
     local terminal = "ghostty"
 
@@ -437,4 +435,5 @@ in {
       no_anim = true,
     })
   '';
+  };
 }
