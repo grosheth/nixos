@@ -60,7 +60,8 @@ in
       keybindings = lib.mkOptionDefault {
         "${mod}+p" = "exec ${pkgs.dmenu}/bin/dmenu_run";
 
-        "${mod}+Return" = "exec ghostty";
+        "${mod}+Return" = "exec kitty";
+        # "${mod}+Return" = "exec ghostty";
         # Focus
         "${mod}+Left" = "focus left";
         "${mod}+Down" = "focus down";

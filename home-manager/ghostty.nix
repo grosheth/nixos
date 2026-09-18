@@ -12,10 +12,6 @@ let
     config-file = keybindings
     window-decoration = none
     window-padding-color = background
-
-    # background-opacity-cells = true
-    background-opacity = 0.0
-    background-blur = 0
   '';
 
   keybindingsConfig = ''

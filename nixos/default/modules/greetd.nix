@@ -7,9 +7,9 @@ let
     "XDG_DATA_DIRS=${sessionDataDir}/share:/run/current-system/sw/share"
     "${pkgs.dbus}/bin/dbus-run-session"
     (lib.getExe pkgs.cage)
-  ] ++ config.programs.regreet.cageArgs ++ [
+  ] ++ config.services.displayManager.regreet.cageArgs ++ [
     "--"
-    (lib.getExe config.programs.regreet.package)
+    (lib.getExe config.services.displayManager.regreet.package)
   ]);
 
   greeterBackground = pkgs.runCommand "regreet-gallery-background.png" {
@@ -45,7 +45,7 @@ in
     };
   };
 
-  programs.regreet = {
+  services.displayManager.regreet = {
     enable = true;
     cageArgs = [ "-s" "-m" "last" ];
     settings = {

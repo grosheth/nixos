@@ -141,10 +141,10 @@ in
 
   programs.rofi = {
     enable = true;
-    location = "center";
     theme = "custom";
-    font = "JetBrainsMonoNerdFontMono-Regular";
-    extraConfig = {
+    settings = {
+      location = 0;
+      font = "JetBrainsMonoNerdFontMono-Regular";
       show-icons = true;
       display-drun = "";
       disable-history = false;
