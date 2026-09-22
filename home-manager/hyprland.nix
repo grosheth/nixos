@@ -34,9 +34,9 @@ in {
       }
 
       apply_layout() {
-        ${pkgs.hyprland}/bin/hyprctl keyword monitor "DP-1,2560x1440@144,0x0,1"
-        ${pkgs.hyprland}/bin/hyprctl keyword monitor "DP-3,3440x1440@120,2560x0,1"
-        ${pkgs.hyprland}/bin/hyprctl keyword monitor "HDMI-A-1,2560x1440@144,6000x0,1"
+        ${pkgs.hyprland}/bin/hyprctl keyword monitor "HDMI-A-1,2560x1440@144,0x0,1"
+        ${pkgs.hyprland}/bin/hyprctl keyword monitor "DP-3,3440x1440@100,2560x0,1"
+        ${pkgs.hyprland}/bin/hyprctl keyword monitor "DP-1,2560x1440@144,6000x0,1"
       }
 
       for _ in $(${coreutils}/bin/seq 1 25); do
