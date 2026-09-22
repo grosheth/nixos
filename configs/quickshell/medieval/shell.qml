@@ -5,14 +5,7 @@ import QtQuick
 ShellRoot {
   id: root
 
-  // Keep every display within the Medieval set. Unknown displays use the main image.
-  function wallpaperFor(screenName) {
-    if (screenName === "HDMI-A-1")
-      return Qt.resolvedUrl("../../../assets/hyprland/Medieval/castle-round.png");
-    if (screenName === "DP-1")
-      return Qt.resolvedUrl("../../../assets/hyprland/Medieval/castle-tesse.png");
-    return Qt.resolvedUrl("../../../assets/hyprland/Medieval/medieval.png");
-  }
+  property url wallpaper: Quickshell.env("MEDIEVAL_WALLPAPER_URL")
 
   Variants {
     model: Quickshell.screens
@@ -38,7 +31,7 @@ ShellRoot {
 
         Image {
           anchors.fill: parent
-          source: root.wallpaperFor(modelData.name)
+          source: root.wallpaper
           fillMode: Image.PreserveAspectCrop
           asynchronous: true
         }
