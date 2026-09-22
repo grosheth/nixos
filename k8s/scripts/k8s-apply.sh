@@ -25,6 +25,11 @@ fi
 # shellcheck disable=SC1090
 source "$conf"
 
+if [ "${ENABLED:-true}" = "false" ]; then
+  echo "Skipping disabled app: $namespace/$app"
+  exit 0
+fi
+
 require_var() {
   local name="$1"
   local value="${!name:-}"
@@ -84,6 +89,9 @@ case "$METHOD" in
   raw)
     path="${MANIFESTS_PATH:-$app_dir/manifests}"
     path="$(resolve_path "$app_dir" "$path")"
+    if [ -f "$path/namespace.yaml" ]; then
+      kubectl apply -f "$path/namespace.yaml"
+    fi
     kubectl apply -f "$path"
     ;;
   *)
@@ -91,3 +99,13 @@ case "$METHOD" in
     exit 1
     ;;
  esac
+
+if [ -n "${RETIRED_NAMESPACE:-}" ] || [ -n "${RETIRED_RESOURCES:-}" ]; then
+  require_var RETIRED_NAMESPACE
+  require_var RETIRED_RESOURCES
+  if [ -n "${WAIT_FOR_ROLLOUT:-}" ]; then
+    kubectl rollout status "$WAIT_FOR_ROLLOUT" -n "${NAMESPACE:-$namespace}" --timeout=120s
+  fi
+  read -r -a retired_resources <<< "$RETIRED_RESOURCES"
+  kubectl delete "${retired_resources[@]}" -n "$RETIRED_NAMESPACE" --ignore-not-found
+fi
