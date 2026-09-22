@@ -37,6 +37,7 @@ in
     xclip
     xdotool
     scrot
+    upscayl
     gimp
     spotify
     discord

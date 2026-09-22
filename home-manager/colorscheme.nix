@@ -2,27 +2,32 @@
 
 let
   color = name: hex: { inherit name hex; };
+  selected = "medieval";
+  schemes = {
+    medieval = import ./colorschemes/medieval.nix { inherit color; };
+    everforest = {
+      name = "Everforest";
+      fg = color "foreground" "#D3C6AA";
+      bg = color "background" "#14161b";
+      foreground = color "foreground" "#D3C6AA";
+      background = color "background" "#14161b";
+      selection_foreground = color "selection_forground" "#000000";
+      selection_background = color "selection_background" "#FFFACD";
+      cursor = color "cursor" "#ffffff";
+      black = color "black" "#212026";
+      red = color "red" "#E67E80";
+      green = color "green" "#A7C080";
+      yellow = color "yellow" "#DBBC7F";
+      blue = color "blue" "#7FBBB3";
+      blue_alt = color "blue_alt" "#0bc9cf";
+      magenta = color "magenta" "#D699B6";
+      cyan = color "cyan" "#83C092";
+      purple = color "purple" "#E69875";
+      white = color "white" "#D3C6AA";
+    };
+  };
 in
-# everforest
-{
-  fg = color "foreground" "#D3C6AA";
-  bg = color "background" "#14161b";
-  foreground = color "foreground" "#D3C6AA";
-  background = color "background" "#14161b";
-  selection_foreground = color "selection_forground" "#000000";
-  selection_background = color "selection_background" "#FFFACD";
-  cursor     = color "cursor"     "#ffffff";
-  black      = color "black"      "#212026";
-  red        = color "red"        "#E67E80";
-  green      = color "green"      "#A7C080";
-  yellow     = color "yellow"     "#DBBC7F";
-  blue       = color "blue"       "#7FBBB3";
-  blue_alt   = color "blue_alt"   "#0bc9cf";
-  magenta    = color "magenta"    "#D699B6";
-  cyan       = color "cyan"       "#83C092";
-  purple     = color "purple"     "#E69875";
-  white      = color "white"      "#D3C6AA";
-}
+schemes.${selected}
 
 # kaolin
 # {

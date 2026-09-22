@@ -35,6 +35,7 @@ let
     background = ${colors.background.hex}
     foreground = ${colors.foreground.hex}
     selection-foreground = ${colors.selection_foreground.hex}
+    selection-background = ${colors.selection_background.hex}
     cursor-color = ${colors.cursor.hex}
     palette = 0=${colors.black.hex}
     palette = 1=${colors.red.hex}
@@ -44,14 +45,14 @@ let
     palette = 5=${colors.magenta.hex}
     palette = 6=${colors.cyan.hex}
     palette = 7=${colors.white.hex}
-    palette = 8=${colors.black.hex}
-    palette = 9=${colors.red.hex}
-    palette = 10=${colors.green.hex}
-    palette = 11=${colors.yellow.hex}
-    palette = 12=${colors.blue.hex}
-    palette = 13=${colors.magenta.hex}
-    palette = 14=${colors.cyan.hex}
-    palette = 15=${colors.white.hex}
+    palette = 8=${(colors.bright_black or colors.black).hex}
+    palette = 9=${(colors.bright_red or colors.red).hex}
+    palette = 10=${(colors.bright_green or colors.green).hex}
+    palette = 11=${(colors.bright_yellow or colors.yellow).hex}
+    palette = 12=${(colors.bright_blue or colors.blue).hex}
+    palette = 13=${(colors.bright_magenta or colors.magenta).hex}
+    palette = 14=${(colors.bright_cyan or colors.cyan).hex}
+    palette = 15=${(colors.bright_white or colors.white).hex}
   '';
   customThemeName = "custom";
 in

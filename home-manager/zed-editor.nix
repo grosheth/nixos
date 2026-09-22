@@ -9,32 +9,32 @@ let
   # Derived colors for UI elements (keeping some specific UI colors)
   # For colors not in colorscheme, we derive or keep sensible defaults
   uiColors = {
-    border = "#313244";
-    muted = "#7f849c";
-    disabled = "#6c7086";
-    hover = "#45475a";
-    selected = "#585b70";
-    accent_purple = "#cba6f7";
-    accent_pink = "#f5c2e7";
-    accent_blue = "#b4befe";
-    accent_peach = "#fab387";
-    accent_rosewater = "#f2cdcd";
-    accent_flamingo = "#f5e0dc";
-    accent_maroon = "#eba0ac";
-    accent_sky = "#89dceb";
-    accent_sapphire = "#74c7ec";
-    punctuation = "#9399b2";
+    border = (colorscheme.surface_blue or colorscheme.black).hex;
+    muted = (colorscheme.foreground_muted or colorscheme.white).hex;
+    disabled = (colorscheme.disabled or colorscheme.black).hex;
+    hover = (colorscheme.surface_raised or colorscheme.black).hex;
+    selected = (colorscheme.surface_blue or colorscheme.black).hex;
+    accent_purple = colorscheme.magenta.hex;
+    accent_pink = (colorscheme.bright_magenta or colorscheme.magenta).hex;
+    accent_blue = colorscheme.blue.hex;
+    accent_peach = (colorscheme.bright_amber or colorscheme.purple).hex;
+    accent_rosewater = (colorscheme.foreground_bright or colorscheme.white).hex;
+    accent_flamingo = (colorscheme.firelight or colorscheme.purple).hex;
+    accent_maroon = colorscheme.red.hex;
+    accent_sky = (colorscheme.bright_cyan or colorscheme.cyan).hex;
+    accent_sapphire = (colorscheme.bright_blue or colorscheme.blue).hex;
+    punctuation = (colorscheme.foreground_muted or colorscheme.white).hex;
   };
 
   customTheme =
   ''
     {
         "$schema": "https://zed.dev/schema/themes/v0.2.0.json",
-        "name": "Kaolin",
-        "author": "Kaolin",
+        "name": "${colorscheme.name}",
+        "author": "Custom",
         "themes": [
             {
-                "name": "Kaolin",
+                "name": "${colorscheme.name}",
                 "appearance": "dark",
                 "style": {
                     "accents": [
@@ -117,7 +117,7 @@ let
                     "terminal.ansi.background": "${colorscheme.background.hex}",
                     "terminal.foreground": "${colorscheme.foreground.hex}",
                     "terminal.dim_foreground": "${uiColors.muted}",
-                    "terminal.bright_foreground": "${colorscheme.foreground.hex}",
+                    "terminal.bright_foreground": "${(colorscheme.foreground_bright or colorscheme.foreground).hex}",
                     "terminal.ansi.black": "${colorscheme.black.hex}",
                     "terminal.ansi.red": "${colorscheme.red.hex}",
                     "terminal.ansi.green": "${colorscheme.green.hex}",
@@ -126,14 +126,14 @@ let
                     "terminal.ansi.magenta": "${colorscheme.magenta.hex}",
                     "terminal.ansi.cyan": "${colorscheme.cyan.hex}",
                     "terminal.ansi.white": "${colorscheme.white.hex}",
-                    "terminal.ansi.bright_black": "${uiColors.selected}",
-                    "terminal.ansi.bright_red": "${colorscheme.red.hex}",
-                    "terminal.ansi.bright_green": "${colorscheme.green.hex}",
-                    "terminal.ansi.bright_yellow": "${colorscheme.yellow.hex}",
-                    "terminal.ansi.bright_blue": "${colorscheme.blue.hex}",
-                    "terminal.ansi.bright_magenta": "${colorscheme.magenta.hex}",
-                    "terminal.ansi.bright_cyan": "${colorscheme.cyan.hex}",
-                    "terminal.ansi.bright_white": "${colorscheme.white.hex}",
+                    "terminal.ansi.bright_black": "${(colorscheme.bright_black or colorscheme.black).hex}",
+                    "terminal.ansi.bright_red": "${(colorscheme.bright_red or colorscheme.red).hex}",
+                    "terminal.ansi.bright_green": "${(colorscheme.bright_green or colorscheme.green).hex}",
+                    "terminal.ansi.bright_yellow": "${(colorscheme.bright_yellow or colorscheme.yellow).hex}",
+                    "terminal.ansi.bright_blue": "${(colorscheme.bright_blue or colorscheme.blue).hex}",
+                    "terminal.ansi.bright_magenta": "${(colorscheme.bright_magenta or colorscheme.magenta).hex}",
+                    "terminal.ansi.bright_cyan": "${(colorscheme.bright_cyan or colorscheme.cyan).hex}",
+                    "terminal.ansi.bright_white": "${(colorscheme.bright_white or colorscheme.white).hex}",
                     "terminal.ansi.dim_black": "${colorscheme.black.hex}",
                     "terminal.ansi.dim_red": "${colorscheme.red.hex}",
                     "terminal.ansi.dim_green": "${colorscheme.green.hex}",
@@ -728,7 +728,7 @@ let
         ]
     }
   '';
-  customThemeName = "Kaolin.json";
+  customThemeName = "${colorscheme.name}.json";
 in
 {
   home.file.".config/zed/themes/${customThemeName}".text = customTheme;
@@ -779,8 +779,8 @@ in
       };
       theme = {
         mode = "dark";
-        dark = "Kaolin";
-        light = "Kaolin";
+        dark = colorscheme.name;
+        light = colorscheme.name;
       };
       buffer_font_family = "JetBrainsMono Nerd Font";
       buffer_font_size = 15;
