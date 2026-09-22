@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: troubadour
+  namespace: troubadour
+  labels:
+    app: troubadour
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: troubadour
+  template:
+    metadata:
+      labels:
+        app: troubadour
+    spec:
+      containers:
+        - name: troubadour
+          image: registry.example.invalid/troubadour:REPLACE_ME
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: troubadour-env
+          env:
+            - name: DB_PATH
+              value: /data/troubadour.db
+            - name: UPLOAD_ROOT
+              value: /data/uploads
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: troubadour-data

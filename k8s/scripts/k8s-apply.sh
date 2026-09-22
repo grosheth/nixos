@@ -99,13 +99,3 @@ case "$METHOD" in
     exit 1
     ;;
  esac
-
-if [ -n "${RETIRED_NAMESPACE:-}" ] || [ -n "${RETIRED_RESOURCES:-}" ]; then
-  require_var RETIRED_NAMESPACE
-  require_var RETIRED_RESOURCES
-  if [ -n "${WAIT_FOR_ROLLOUT:-}" ]; then
-    kubectl rollout status "$WAIT_FOR_ROLLOUT" -n "${NAMESPACE:-$namespace}" --timeout=120s
-  fi
-  read -r -a retired_resources <<< "$RETIRED_RESOURCES"
-  kubectl delete "${retired_resources[@]}" -n "$RETIRED_NAMESPACE" --ignore-not-found
-fi
