@@ -6,23 +6,23 @@ in
 # medieval light
 {
   name = "Medieval Light";
-  fg = color "foreground" "#F0E6D4";
-  bg = color "background" "#10141B";
-  foreground = color "foreground" "#F0E6D4";
-  background = color "background" "#10141B";
-  selection_foreground = color "selection_foreground" "#10141B";
-  selection_background = color "selection_background" "#DA9855";
-  cursor = color "cursor" "#EAB174";
-  black = color "black" "#626775";
-  red = color "red" "#DB8A73";
-  green = color "green" "#9DB289";
-  yellow = color "yellow" "#E0B671";
-  blue = color "blue" "#94A9C4";
-  blue_alt = color "blue_alt" "#A3B7BE";
-  magenta = color "magenta" "#B29AB4";
-  cyan = color "cyan" "#A3B7BE";
-  purple = color "purple" "#EAB174";
-  white = color "white" "#F0E6D4";
+  fg = color "foreground" "#F7F0E4";
+  bg = color "background" "#171C24";
+  foreground = color "foreground" "#F7F0E4";
+  background = color "background" "#171C24";
+  selection_foreground = color "selection_foreground" "#171C24";
+  selection_background = color "selection_background" "#E5AB72";
+  cursor = color "cursor" "#F2C38F";
+  black = color "black" "#767C89";
+  red = color "red" "#E7A18D";
+  green = color "green" "#B3C49F";
+  yellow = color "yellow" "#EBC98F";
+  blue = color "blue" "#ACBCD2";
+  blue_alt = color "blue_alt" "#B7C9CE";
+  magenta = color "magenta" "#C7B1C8";
+  cyan = color "cyan" "#B7C9CE";
+  purple = color "purple" "#F2C38F";
+  white = color "white" "#F7F0E4";
 }
 
 # medieval
