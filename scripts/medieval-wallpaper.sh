@@ -4,7 +4,7 @@ set -euo pipefail
 script_path="$(readlink -f -- "${BASH_SOURCE[0]}")"
 repo_dir="$(cd -- "$(dirname -- "$script_path")/.." && pwd)"
 config_dir="$repo_dir/configs/quickshell/medieval"
-wallpaper_file="$repo_dir/assets/hyprland/Medieval/castle-night.png"
+wallpaper_file="$repo_dir/assets/hyprland/Medieval/map.png"
 
 case "${1:-start}" in
 start) ;;
