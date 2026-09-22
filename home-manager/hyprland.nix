@@ -23,6 +23,8 @@ in {
     wf-recorder
     slurp
     (writeShellScriptBin "gallery-layout" ''
+      set -e
+
       monitors_ready() {
         ${pkgs.hyprland}/bin/hyprctl monitors -j \
           | ${pkgs.jq}/bin/jq -e '
@@ -34,9 +36,11 @@ in {
       }
 
       apply_layout() {
-        ${pkgs.hyprland}/bin/hyprctl keyword monitor "HDMI-A-1,2560x1440@144,0x0,1"
-        ${pkgs.hyprland}/bin/hyprctl keyword monitor "DP-3,3440x1440@100,2560x0,1"
-        ${pkgs.hyprland}/bin/hyprctl keyword monitor "DP-1,2560x1440@144,6000x0,1"
+        ${pkgs.hyprland}/bin/hyprctl eval '
+          hl.monitor({ output = "HDMI-A-1", mode = "2560x1440@144", position = "0x0", scale = 1 })
+          hl.monitor({ output = "DP-3", mode = "3440x1440@100", position = "2560x0", scale = 1 })
+          hl.monitor({ output = "DP-1", mode = "2560x1440@144", position = "6000x0", scale = 1 })
+        '
       }
 
       for _ in $(${coreutils}/bin/seq 1 25); do
@@ -294,6 +298,10 @@ in {
     extraConfig = ''
     local mod = "ALT"
     local terminal = "kitty"
+
+    hl.monitor({ output = "HDMI-A-1", mode = "2560x1440@144", position = "0x0", scale = 1 })
+    hl.monitor({ output = "DP-3", mode = "3440x1440@100", position = "2560x0", scale = 1 })
+    hl.monitor({ output = "DP-1", mode = "2560x1440@144", position = "6000x0", scale = 1 })
 
     local function exec(command)
       return hl.dsp.exec_cmd(command)
