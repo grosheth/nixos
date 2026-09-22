@@ -293,7 +293,7 @@ in {
     configType = "lua";
     extraConfig = ''
     local mod = "ALT"
-    local terminal = "ghostty"
+    local terminal = "kitty"
 
     local function exec(command)
       return hl.dsp.exec_cmd(command)
